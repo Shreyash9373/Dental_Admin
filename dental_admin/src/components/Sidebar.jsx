@@ -32,6 +32,14 @@ const Sidebar = () => {
           </ul>
         </nav>
       </div>
+
+      {/* Content Area */}
+      <div className="flex-1 ml-64 p-4">
+        <main className="mt-4">
+          {/* <h1 className="text-2xl font-bold">Welcome to My App</h1>
+          <p className="mt-2">Here is the content of your application.</p> */}
+        </main>
+      </div>
     </div>
   );
 };
