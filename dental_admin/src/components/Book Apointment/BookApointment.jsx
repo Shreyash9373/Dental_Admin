@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import axios from 'axios';
@@ -27,18 +28,18 @@ const BookAppointment = () => {
 
   return (
     <div className="max-w-4xl my-10 bg-gradient-to-b from-blue-400 via-blue-500 to-cyan-500 mx-auto p-8 rounded-lg shadow-xl">
-      <h2 className="text-3xl font-semibold text-white mb-6">Book an Appointment</h2>
+      <h2 className="text-3xl font-semibold text-white mb-6 text-center">Book an Appointment</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 items-center flex flex-wrap gap-8">
-        
+
         {/* Left Column */}
         <div className="flex-1 items-center pt-4">
           {/* Full Name */}
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-200">Full Name</label>
+            <label htmlFor="fullName" className="block text-lg font-medium text-gray-200">Full Name</label>
             <input
               type="text"
               id="fullName"
-              className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
+              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
               {...register('fullName', { required: 'Full Name is required' })}
             />
             {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
@@ -50,11 +51,11 @@ const BookAppointment = () => {
         <div className="flex-1 items-center">
           {/* Appointment Date */}
           <div>
-            <label htmlFor="date" className="block text-sm font-medium text-gray-200">Appointment Date</label>
+            <label htmlFor="date" className="block text-lg font-medium text-gray-200">Appointment Date</label>
             <input
               type="date"
               id="date"
-              className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
+              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
               {...register('date', { required: 'Date is required' })}
             />
             {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
