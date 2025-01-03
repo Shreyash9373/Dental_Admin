@@ -1,11 +1,27 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+
 
 const BookApointment = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
+  const [responseData, setResponseData] = useState(null);
+  const [error, setError] = useState(null);
+ 
+ 
+  const onSubmit = async (data) => {
     console.log(data);  // Handle form submission (e.g., send to API)
+    try {
+      setError(null);  // Reset any previous error
+      const response = await axios.post('http://localhost:4000/api/reception/book-appointment', data);
+      setResponseData(response.data); // Assuming the response contains the data you want
+    } catch (error) {
+      setError(error.message);  // Handle any error during the request
+    }
+    if(responseData){
+      console.log(responseData);
+    }
   };
 
   return (
@@ -34,7 +50,7 @@ const BookApointment = () => {
               type="tel"
               id="contact"
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('contact', { required: 'Contact number is required' })}
+              {...register('mobileNo', { required: 'Contact number is required' })}
             />
             {errors.contact && <p className="text-red-500 text-sm mt-1">{errors.contact.message}</p>}
           </div>
@@ -46,7 +62,7 @@ const BookApointment = () => {
               type="email"
               id="email"
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('email', { required: 'Email is required' })}
+              {...register('emailId', { required: 'Email is required' })}
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
@@ -100,7 +116,7 @@ const BookApointment = () => {
             <select
               id="timeslot"
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('timeslot', { required: 'Timeslot selection is required' })}
+              {...register('timeSlot', { required: 'Timeslot selection is required' })}
             >
               <option value="">Select a Timeslot</option>
               <option value="9:00 AM">9:00 AM - 9:30 AM</option>
@@ -134,6 +150,7 @@ const BookApointment = () => {
           </button>
         </div>
       </form>
+      <div>{error && <h1>Error while uploading....{error}</h1> }</div>
     </div>
   );
 };
