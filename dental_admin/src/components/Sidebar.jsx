@@ -9,14 +9,24 @@ const Sidebar = () => {
         <h2 className="text-lg font-bold mb-4">My Sidebar</h2>
         <nav>
           <ul className="space-y-4">
-            <li>
+          <li>
               <NavLink
-                to="/schedule"
+                to="/usersenquiry"
                 className={({ isActive }) =>
                   isActive ? 'text-blue-400' : 'hover:text-gray-300'
                 }
               >
-                Schedule
+                User's Enquiry
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/scheduleappointments"
+                className={({ isActive }) =>
+                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                }
+              >
+                Scheduled Appointments
               </NavLink>
             </li>
             <li>
