@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from "react-toastify";
 import axios from 'axios';
 
-
-const BookApointment = () => {
+const BookAppointment = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
-
+  const [loading, setLoading] = useState(false); // Loading state
 
   const onSubmit = async (data) => {
-    console.log(data);  // Handle form submission (e.g., send to API)
+    console.log(data);
     try {
-      setError(null);  // Reset any previous error
+      setLoading(true); // Start loading
+      setError(null); // Reset any previous error
       const response = await axios.post('http://localhost:4000/api/reception/book-appointment', data);
-      setResponseData(response.data); // Assuming the response contains the data you want
+      setResponseData(response.data);
+      toast.success(response.data.message || "Appointment booked successfully!");
     } catch (error) {
-      setError(error.message);  // Handle any error during the request
-    }
-    if (responseData) {
-      console.log(responseData);
+      setError(error.message);
+      toast.error(error.response?.data?.message || "Failed to book appointment. Please try again.");
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -42,42 +44,7 @@ const BookApointment = () => {
             />
             {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
           </div>
-
-          {/* Contact Number */}
-          <div>
-            <label htmlFor="contact" className="block text-lg font-medium text-gray-200 mt-2">Contact Number</label>
-            <input
-              type="tel"
-              id="contact"
-              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('mobileNo', { required: 'Contact number is required' })}
-            />
-            {errors.contact && <p className="text-red-500 text-sm mt-1">{errors.contact.message}</p>}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label htmlFor="email" className="block text-lg font-medium text-gray-200 mt-2">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('emailId', { required: 'Email is required' })}
-            />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-          </div>
-
-          {/* Location */}
-          <div>
-            <label htmlFor="location" className="block text-lg font-medium text-gray-200 mt-2">Location</label>
-            <input
-              type="text"
-              id="location"
-              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('location', { required: 'Location is required' })}
-            />
-            {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>}
-          </div>
+          {/* Other inputs */}
         </div>
 
         {/* Right Column */}
@@ -93,66 +60,54 @@ const BookApointment = () => {
             />
             {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
           </div>
-
-          {/* Service */}
-          <div>
-            <label htmlFor="service" className="block text-lg font-medium text-gray-200 mt-2">Service</label>
-            <select
-              id="service"
-              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('service', { required: 'Service selection is required' })}
-            >
-              <option value="">Select a Service</option>
-              <option value="Consultation">Consultation</option>
-              <option value="Checkup">Checkup</option>
-              <option value="Diagnostic">Diagnostic</option>
-            </select>
-            {errors.service && <p className="text-red-500 text-sm mt-1">{errors.service.message}</p>}
-          </div>
-
-          {/* Timeslot */}
-          <div>
-            <label htmlFor="timeslot" className="block text-lg mt-2 font-medium text-gray-200">Timeslot</label>
-            <select
-              id="timeslot"
-              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('timeSlot', { required: 'Timeslot selection is required' })}
-            >
-              <option value="">Select a Timeslot</option>
-              <option value="9:00 AM">9:00 AM - 9:30 AM</option>
-              <option value="10:00 AM">10:00 AM - 10:30 AM</option>
-              <option value="11:00 AM">11:00 AM - 11:30 AM</option>
-              <option value="2:00 PM">2:00 PM - 2:30 PM</option>
-              <option value="3:00 PM">3:00 PM - 3:30 PM</option>
-            </select>
-            {errors.timeslot && <p className="text-red-500 text-sm mt-1">{errors.timeslot.message}</p>}
-          </div>
-
-          {/* Prescription File */}
-          <div>
-            <label htmlFor="prescription" className="block text-lg mt-2 font-medium text-gray-200">Prescription File (optional)</label>
-            <input
-              type="file"
-              id="prescription"
-              className="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('prescription')}
-            />
-          </div>
+          {/* Other inputs */}
         </div>
 
         {/* Submit Button */}
         <div className="w-full flex items-center justify-center">
           <button
             type="submit"
-            className="w-auto px-4 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            disabled={loading} // Disable button while loading
+            className={`w-auto px-4 py-3 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-300 ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-800"
+            }`}
           >
-            Submit Appointment
+            {loading ? (
+              <div className="flex items-center">
+                <svg
+                  className="w-5 h-5 mr-2 text-white animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 100 8v4a8 8 0 01-8-8z"
+                  ></path>
+                </svg>
+                Submitting...
+              </div>
+            ) : (
+              "Submit Appointment"
+            )}
           </button>
         </div>
       </form>
-      <div>{error && <h1>Error while uploading....{error}</h1>}</div>
+
+      {error && <div className="text-red-500 mt-4">{error}</div>}
     </div>
   );
 };
 
-export default BookApointment;
+export default BookAppointment;
