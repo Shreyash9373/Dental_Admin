@@ -1,19 +1,23 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+import logo from '../assets/Dr.Pakhare.png'
 
 const Sidebar = () => {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="fixed mt-12 top-0 left-0 h-full bg-gray-800 text-white w-64 p-4">
-        <h2 className="text-lg font-bold mb-4">My Sidebar</h2>
+      <div className="fixed top-0 left-0 h-full bg-gray-800 text-white w-64 p-4">
+        {/* <h2 className="text-lg font-bold mb-4">My Sidebar</h2> */}
+        <img src={logo} alt="" className='h-20 w-20 rounded-xl mb-10' />
         <nav>
           <ul className="space-y-4">
-          <li>
+            <li>
               <NavLink
                 to="/usersenquiry"
                 className={({ isActive }) =>
-                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                  isActive
+                    ? 'text-blue-400 font-bold'
+                    : 'hover:text-gray-300 font-normal'
                 }
               >
                 User's Enquiry
@@ -23,7 +27,9 @@ const Sidebar = () => {
               <NavLink
                 to="/scheduleappointments"
                 className={({ isActive }) =>
-                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                  isActive
+                    ? 'text-blue-400 font-bold'
+                    : 'hover:text-gray-300 font-normal'
                 }
               >
                 Scheduled Appointments
@@ -33,7 +39,9 @@ const Sidebar = () => {
               <NavLink
                 to="/bookapointment"
                 className={({ isActive }) =>
-                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                  isActive
+                    ? 'text-blue-400 font-bold'
+                    : 'hover:text-gray-300 font-normal'
                 }
               >
                 Book Appointment
@@ -42,16 +50,9 @@ const Sidebar = () => {
           </ul>
         </nav>
       </div>
-
-      {/* Content Area */}
-      <div className="flex-1 ml-64 p-4">
-        <main className="mt-4">
-          {/* <h1 className="text-2xl font-bold">Welcome to My App</h1>
-          <p className="mt-2">Here is the content of your application.</p> */}
-        </main>
-      </div>
     </div>
   );
 };
 
 export default Sidebar;
+

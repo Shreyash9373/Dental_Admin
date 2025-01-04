@@ -1,4 +1,4 @@
-import React , { useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
@@ -9,30 +9,25 @@ import UsersFriendly from "./components/Users Enquiry/UsersFriendly";
 
 function App() {
   return (
-    <div className="h-screen flex">
+    <div className="h-screen flex overflow-hidden">
       <BrowserRouter>
-        <div className="w-full h-auto flex-1 flex flex-col">
-           
-          <Navbar  />
+        {/* Sidebar */}
+        <Sidebar className="fixed top-0 left-0 w-64 h-full bg-gray-800 text-white" />
 
-      <div className="flex flex-row"> 
-        <Sidebar className="w-64 bg-gray-800 text-white" />
-
-        {/* Main Content Area */}
-        <div className="flex-1 flex flex-col">
+        {/* Main Content */}
+        <div className="flex-1 ml-64 flex flex-col bg-gray-200">
+          {/* Navbar */}
+          <Navbar />
 
           {/* Routes */}
-          <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
+          <div className="flex-1 p-4 overflow-y-auto">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
               <Route path="/usersenquiry" element={<UsersFriendly />} />
+              <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
               <Route path="/bookapointment" element={<BookApointment />} />
             </Routes>
           </div>
-        </div>
-      </div>
-
         </div>
       </BrowserRouter>
     </div>

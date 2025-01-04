@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from '../assets/Dr.Pakhare.png'
+
 
 const Navbar = () => {
 
   return (
-    <div className='z-10 w-full bg-gray-800 text-white sticky top-0'>
+    <div className='z-10 w-full bg-blue-800 text-white sticky top-0 p-5'>
       <div className='w-full flex flex-row justify-between items-center px-10'>
-        <img src={logo} alt="" className='h-16 w-16 rounded-xl' />
+        
         <button>Login</button>
       </div>
     </div>
