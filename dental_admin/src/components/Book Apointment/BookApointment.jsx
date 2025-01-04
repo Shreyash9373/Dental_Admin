@@ -42,6 +42,7 @@ const BookApointment = () => {
             <input
               type="text"
               id="fullName"
+              placeholder='Enter  full name'
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
               {...register('fullName', { required: 'Full Name is required' })}
             />
@@ -54,6 +55,7 @@ const BookApointment = () => {
             <input
               type="tel"
               id="contact"
+              placeholder='Enter  contact number'
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
               {...register('mobileNo', { required: 'Contact number is required' })}
             />
@@ -66,6 +68,7 @@ const BookApointment = () => {
             <input
               type="email"
               id="email"
+              placeholder='Enter  email address'
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
               {...register('emailId', { required: 'Email is required' })}
             />
@@ -78,6 +81,7 @@ const BookApointment = () => {
             <input
               type="text"
               id="location"
+              placeholder='Enter  location'
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
               {...register('location', { required: 'Location is required' })}
             />
