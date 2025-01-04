@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 const BookApointment = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset , formState: { errors } } = useForm();
   const [loading, setLoading] = useState(false); // Loading state
 
   const [responseData, setResponseData] = useState(null);
@@ -26,6 +26,7 @@ const BookApointment = () => {
       toast.error(error.response?.data?.message || "Failed to book appointment. Please try again.");
     } finally {
       setLoading(false); // Stop loading
+      reset(); // Reset the form
     }
   };
 
@@ -156,7 +157,7 @@ const BookApointment = () => {
                 : "bg-indigo-600 hover:bg-indigo-800"
             }`}
           >
-            {loading ? "Submitting..." : "Submit Appointment"}
+            {loading ? "Booking..." : "Book Appointment"}
           </button>
         </div>
       </form>
