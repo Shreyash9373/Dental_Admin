@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import axios from 'axios';
+
 
 const getWeekDates = (date) => {
   const currentDate = new Date(date);
@@ -74,14 +76,50 @@ const initialAppointmentsData = {
 };
 
 const ScheduleAppointment = () => {
+  
+  const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [responseData, setResponseData] = useState(null);
   const [appointments, setAppointments] = useState(initialAppointmentsData);
-
+  const [loading, setLoading] = useState(false); // Loading state
+  
   const today = new Date();
   const weekDates = getWeekDates(today);
 
-  const handleDateClick = (date) => {
+  const formatedDate = (dateString) => {
+    const date = new Date(dateString); // Create a Date object
+  
+    // Extract year, month, and day
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+  
+    return {"date":`${year}-${month}-${day}`};
+  };
+
+  const handleDateClick = async (date) => {
+    console.log(date);
+    
+    try {
+      const sendDate = formatedDate(date);
+      console.log("Date data type:",typeof(sendDate));
+      
+      setLoading(true); // Start loading
+      setError(null); // Reset any previous error
+      console.log(sendDate);
+      
+      const response = await axios.get('http://localhost:4000/api/reception/get-patient', sendDate);
+      setResponseData(response.data);
+    } catch (error) {
+      setError(error.message);
+      toast.error(error.response?.data?.message || "Failed to book appointment. Please try again.");
+    } finally {
+      setLoading(false); // Stop loading
+      console.log(responseData);
+      
+    }
+        
     setSelectedDate(date);
     setShowCalendar(false);
   };
