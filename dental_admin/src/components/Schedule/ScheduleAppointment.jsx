@@ -102,14 +102,14 @@ const ScheduleAppointment = () => {
     console.log(date);
     
     try {
-      const sendDate = formatedDate(date);
+      const sendDate =  formatedDate(date);
       console.log("Date data type:",typeof(sendDate));
       
       setLoading(true); // Start loading
       setError(null); // Reset any previous error
       console.log(sendDate);
       
-      const response = await axios.get('http://localhost:4000/api/reception/get-patient', sendDate);
+      const response = await axios.post('http://localhost:4000/api/reception/get-patient', sendDate);
       setResponseData(response.data);
     } catch (error) {
       setError(error.message);
