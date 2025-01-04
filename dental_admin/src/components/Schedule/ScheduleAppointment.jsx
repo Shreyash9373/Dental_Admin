@@ -16,6 +16,7 @@ const getWeekDates = (date) => {
   }
 
   return daysOfWeek;
+  
 };
 
 const initialAppointmentsData = {
