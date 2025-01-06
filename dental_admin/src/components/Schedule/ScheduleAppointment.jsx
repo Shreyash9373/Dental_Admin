@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import axios from 'axios';
+
 
 const getWeekDates = (date) => {
   const currentDate = new Date(date);
@@ -16,6 +18,7 @@ const getWeekDates = (date) => {
   }
 
   return daysOfWeek;
+  
 };
 
 const initialAppointmentsData = {
@@ -73,14 +76,54 @@ const initialAppointmentsData = {
 };
 
 const ScheduleAppointment = () => {
+  const[patientArray, setPatientArray] = useState([]);
+  const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [responseData, setResponseData] = useState(null);
   const [appointments, setAppointments] = useState(initialAppointmentsData);
-
+  const [loading, setLoading] = useState(false); // Loading state
+  
   const today = new Date();
   const weekDates = getWeekDates(today);
 
-  const handleDateClick = (date) => {
+  const formatedDate = (dateString) => {
+    const date = new Date(dateString); // Create a Date object
+  
+    // Extract year, month, and day
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+  
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleDateClick = async (date) => {
+    console.log(date);
+    try {
+      const sendDate = {
+        date:formatedDate(date)
+      } 
+      console.log("Date data type:",typeof(sendDate));
+      setLoading(true); // Start loading
+      setError(null); // Reset any previous error
+      console.log(sendDate);
+      const response = await axios.post('http://localhost:4000/api/reception/get-patient', sendDate);
+      console.log("Response from backend:", response.data);
+      setPatientArray(response.data.patient);
+      setResponseData(response.data);
+      console.log("Usestate log",responseData);
+
+    } catch (error) {
+      setError(error.message);
+      toast.error(error.response?.data?.message || "Failed to book appointment. Please try again.");
+    } finally {
+      setLoading(false); // Stop loading
+      // console.log(responseData);
+      console.log("Patient Array:",patientArray);
+      
+    }
+        
     setSelectedDate(date);
     setShowCalendar(false);
   };
@@ -162,29 +205,32 @@ const ScheduleAppointment = () => {
           <h3 className="text-xl font-semibold text-gray-700 mb-4">
             Appointments for {selectedDate.toDateString()}
           </h3>
-          {appointments[formatDate(selectedDate)] && appointments[formatDate(selectedDate)].length > 0 ? (
-
+          {patientArray && Array.isArray(patientArray) && patientArray.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full table-auto border-collapse border border-gray-300 shadow-lg rounded-lg">
                 <thead>
                   <tr className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Patient</th>
-                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Contact</th>
-                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Operation</th>
-                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Doctor</th>
-                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Time</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">FullName</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">MobileNo</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Email-Id</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Location</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Date</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Service</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">TimeSlot</th>
                     <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Status</th>
                     <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {appointments[formatDate(selectedDate)].map((appointment) => (
+                  {patientArray.map((appointment) => (
                     <tr key={appointment.id} className="hover:bg-blue-50 transition duration-150 ease-in-out">
-                      <td className="border border-gray-300 px-4 py-2">{appointment.name}</td>
-                      <td className="border border-gray-300 px-4 py-2">{appointment.contact}</td>
-                      <td className="border border-gray-300 px-4 py-2">{appointment.operation}</td>
-                      <td className="border border-gray-300 px-4 py-2">{appointment.doctor}</td>
-                      <td className="border border-gray-300 px-4 py-2">{appointment.time}</td>
+                      <td className="border border-gray-300 px-4 py-2">{appointment.fullName}</td>
+                      <td className="border border-gray-300 px-4 py-2">{appointment.mobileNo}</td>
+                      <td className="border border-gray-300 px-4 py-2">{appointment.emailId}</td>
+                      <td className="border border-gray-300 px-4 py-2">{appointment.location}</td>
+                      <td className="border border-gray-300 px-4 py-2">{appointment.date}</td>
+                      <td className="border border-gray-300 px-4 py-2">{appointment.service}</td>
+                      <td className="border border-gray-300 px-4 py-2">{appointment.timeSlot}</td>
                       <td className="border border-gray-300 px-4 py-2">
                         <span
                           className={`px-2 py-1 rounded-full text-sm font-medium ${appointment.status === "Pending"
