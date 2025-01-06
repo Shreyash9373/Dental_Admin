@@ -137,27 +137,12 @@ const Sidebar = () => {
           </nav>
         </div>
 
-        {/* Login/Logout Section */}
-        <div className="text-center border-t border-gray-600 pt-4">
-          {admin.isLoggedIn ? (
-            <div>
-              <p className="text-lg font-semibold">{admin.name}</p>
-              <button
-                onClick={handleLogout}
-                className="mt-2 bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={handleLogin}
-              className="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-600"
-            >
-              Login
-            </button>
-          )}
-        </div>
+      {/* Content Area */}
+      <div className="flex-1 ml-64 p-4">
+        <main className="mt-4 my-4">
+          {/* <h1 className="text-2xl font-bold">Welcome to My App</h1>
+          <p className="mt-2">Here is the content of your application.</p> */}
+        </main>
       </div>
     </div>
   );

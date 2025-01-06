@@ -241,16 +241,20 @@
 import React, { useState } from "react";
 
 const getWeekDates = (date) => {
-  const startOfWeek = new Date(date);
+  const currentDate = new Date(date);
   const daysOfWeek = [];
 
-  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+  // Start from 3 days before the given date
+  currentDate.setDate(currentDate.getDate() - 3);
+
+  // Collect 7 days (last 3 days, today, next 3 days)
   for (let i = 0; i < 7; i++) {
-    daysOfWeek.push(new Date(startOfWeek.getTime()));
-    startOfWeek.setDate(startOfWeek.getDate() + 1);
+    daysOfWeek.push(new Date(currentDate.getTime()));
+    currentDate.setDate(currentDate.getDate() + 1);
   }
 
   return daysOfWeek;
+  
 };
 
 const initialAppointmentsData = {
