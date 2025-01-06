@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import ScheduleAppointment from "./components/Schedule/ScheduleAppointment";
 import BookApointment from "./components/Book Apointment/BookApointment";
-import UsersFriendly from "./components/Users Enquiry/UsersFriendly";
+import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -63,7 +63,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
-              <Route path="/usersenquiry" element={<UsersFriendly />} />
+              <Route path="/usersenquiry" element={<UsersEnquiry />} />
               <Route path="/bookapointment" element={<BookApointment />} />
             </Routes>
           </div>
