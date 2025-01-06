@@ -89,7 +89,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import ScheduleAppointment from "./components/Schedule/ScheduleAppointment";
 import BookApointment from "./components/Book Apointment/BookApointment";
-import UsersFriendly from "./components/Users Enquiry/UsersFriendly";
+import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -152,6 +152,21 @@ function App() {
               </div>
             </div>
           </div>
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col">
+
+          {/* Routes */}
+          <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
+              <Route path="/usersenquiry" element={<UsersEnquiry />} />
+              <Route path="/bookapointment" element={<BookApointment />} />
+            </Routes>
+          </div>
+        </div>
+      </div>
+
         </div>
       </BrowserRouter>
     </div>
