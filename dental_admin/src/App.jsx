@@ -12,7 +12,7 @@ function App() {
     <div className="h-screen flex overflow-hidden">
       <BrowserRouter>
         {/* Sidebar */}
-        <Sidebar className="fixed top-0 left-0 w-64 h-full bg-gray-800 text-white" />
+        <Sidebar />
 
         {/* Main Content */}
         <div className="flex-1 ml-64 flex flex-col bg-gray-200">
