@@ -11,20 +11,20 @@ import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry";
 function App() {
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    setIsMobile(isMobileDevice);
-  }, []);
+  // useEffect(() => {
+  //   const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  //   setIsMobile(isMobileDevice);
+  // }, []);
 
-  if (isMobile) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <h1 className="text-3xl text-center">
-          Please switch to a desktop to view the contents
-        </h1>
-      </div>
-    );
-  }
+  // if (isMobile) {
+  //   return (
+  //     <div className="w-full h-screen flex justify-center items-center">
+  //       <h1 className="text-3xl text-center">
+  //         Please switch to a desktop to view the contents
+  //       </h1>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="h-screen flex">
