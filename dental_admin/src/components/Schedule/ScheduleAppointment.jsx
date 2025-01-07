@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 
 const getWeekDates = (date) => {
   const currentDate = new Date(date);
@@ -75,6 +76,13 @@ const ScheduleAppointment = () => {
   const [appointments, setAppointments] = useState(initialAppointmentsData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState(null);
+
+  useEffect(() => {
+    console.log(editingAppointment);
+  
+   
+  }, [editingAppointment])
+  
 
   const weekDates = getWeekDates(currentWeek);
 

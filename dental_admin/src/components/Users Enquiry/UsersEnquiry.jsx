@@ -55,8 +55,12 @@
 
 
 import React from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 
 const UsersEnquiry = () => {
+  const [userEnquiries, setUserEnquiries] = useState([{}]);
   // Dummy data for the inquiries
   const userInquiries = [
     {
@@ -102,6 +106,26 @@ const UsersEnquiry = () => {
       message: "I want to book an appointment for a routine dental checkup."
     }
   ];
+  useEffect(() => {
+    async function getEnquiry(){
+      try {
+      const response = await axios.get('http://localhost:4000/api/reception/get-Enquiry');
+      if (response.data && response.data.enquiryData) {
+        console.log(response.data);
+        setUserEnquiries(response.data.enquiryData);
+      }
+      } catch (error) {
+        console.log(error)
+      }
+      finally{
+        console.log(userEnquiries);
+      }
+      
+    }
+    getEnquiry();
+  }, [])
+  
+
 
   return (
     <div className="min-h-screen p-4 bg-gradient-to-br from-blue-300 via-blue-400 to-blue-500 rounded-xl">
@@ -113,7 +137,7 @@ const UsersEnquiry = () => {
       </h2>
       <div className="grid grid-cols-3 gap-4">
         {/* Cards */}
-        {userInquiries.map((inquiry, index) => (
+        {userEnquiries.map((inquiry, index) => (
           <div
             key={index}
             className="bg-white shadow-md rounded-lg flex flex-col justify-between p-4"
@@ -128,10 +152,7 @@ const UsersEnquiry = () => {
               </p>
               <p className="text-gray-700">
                 <span className="font-semibold">Phone:</span> {inquiry.phone}
-              </p>
-              <p className="text-gray-700">
-                <span className="font-semibold">Preferred Date:</span> {inquiry.preferredDate}
-              </p>
+              </p> 
             </div>
             <p className="text-gray-700 mt-2">
               <span className="font-semibold">Message:</span> {inquiry.message}
