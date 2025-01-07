@@ -31,7 +31,7 @@ const BookApointment = () => {
   };
 
   return (
-    <div className="max-w-4xl my-10 bg-gradient-to-b from-blue-400 via-blue-500 to-cyan-500 mx-auto p-8 rounded-lg shadow-xl">
+    <div className="max-w-4xl my-10 bg-gradient-to-b from-blue-400 via-blue-500 to-cyan-500 mx-auto p-4 rounded-lg shadow-xl">
       <h2 className="text-3xl font-semibold text-white mb-6">Book an Appointment</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 items-center flex flex-wrap gap-8">
         
