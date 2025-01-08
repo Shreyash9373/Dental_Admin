@@ -1,5 +1,7 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+  import React, { useState } from 'react';
+  import { NavLink } from 'react-router-dom';
+  // Replace these imports with the correct image files from your project.
+  import logo from '../assets/Dr.Pakhare1.jpeg';
 
 const Sidebar = () => {
   return (
@@ -85,4 +87,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+  export default Sidebar;
