@@ -10,6 +10,17 @@ const Sidebar = () => {
     isLoggedIn: true, // Replace with authentication logic
   });
 
+  // Uncomment and implement these if login/logout functionality is needed
+  // const handleLogout = () => {
+  //   setAdmin({ ...admin, isLoggedIn: false });
+  //   console.log('Logged out');
+  // };
+
+  // const handleLogin = () => {
+  //   setAdmin({ ...admin, isLoggedIn: true });
+  //   console.log('Logged in');
+  // };
+
   return (
     <div className="sticky top-0 left-0 h-full bg-[#062335] text-white w-64 p-4 flex flex-col justify-between">
       {/* Top Section */}
