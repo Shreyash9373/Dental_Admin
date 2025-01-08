@@ -154,6 +154,7 @@
 import React, { useState } from "react";
 
 const UsersEnquiry = () => {
+  const [userEnquiries, setUserEnquiries] = useState([{}]);
   // Dummy data for the inquiries
   const userInquiries = [
     {
