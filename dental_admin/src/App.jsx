@@ -104,7 +104,10 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import ScheduleAppointment from "./components/Schedule/ScheduleAppointment";
 import BookApointment from "./components/Book Apointment/BookApointment";
-import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry"; // Correct component
+import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry";
+import Blogs from "./components/Doctor Module/Blogs";
+import AddEvent from "./components/Doctor Module/AddEvent";
+import SeeAppointment from "./components/Doctor Module/SeeAppointment";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
