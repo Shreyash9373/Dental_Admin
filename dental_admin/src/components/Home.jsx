@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import logo from '../assets/Dr.Pakhare1.jpeg';
+import Login from './Login';
 
 const Home = () => {
   return (
-    <div>
-      welcome to dental clinic management system dashboard
+    <div className='flex justify-center items-center h-screen'>
+      {/* <h1 className='text-3xl'>Welcome to Dr. Pakhare Dental Clinic Management System Dashboard</h1> */}
+
+      <Login/>
     </div>
   )
 }
