@@ -39,6 +39,37 @@ const Sidebar = () => {
                 Book Appointment
               </NavLink>
             </li>
+
+            <li className='pt-8 border-t border-gray-700'>
+              <NavLink
+                to="/seeappointment"
+                className={({ isActive }) =>
+                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                }
+              >
+                See Apointments
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/addevent"
+                className={({ isActive }) =>
+                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                }
+              >
+                Add Event
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/blogs"
+                className={({ isActive }) =>
+                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                }
+              >
+                Blogs
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>

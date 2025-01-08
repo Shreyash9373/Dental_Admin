@@ -7,6 +7,9 @@ import Home from "./components/Home";
 import ScheduleAppointment from "./components/Schedule/ScheduleAppointment";
 import BookApointment from "./components/Book Apointment/BookApointment";
 import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry";
+import Blogs from "./components/Doctor Module/Blogs";
+import AddEvent from "./components/Doctor Module/AddEvent";
+import SeeAppointment from "./components/Doctor Module/SeeAppointment";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -65,6 +68,11 @@ function App() {
               <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
               <Route path="/usersenquiry" element={<UsersEnquiry />} />
               <Route path="/bookapointment" element={<BookApointment />} />
+              <Route path="/seeappointment" element={<SeeAppointment />} />
+              <Route path="/addevent" element={<AddEvent />} />
+              <Route path="/blogs" element={<Blogs />} />
+              
+
             </Routes>
           </div>
         </div>
