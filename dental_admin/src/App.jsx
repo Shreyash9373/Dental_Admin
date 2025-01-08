@@ -160,12 +160,15 @@ function App() {
             <Navbar />
             
             {/* Routes */}
-            <div className="flex-1 p-4 overflow-y-auto ml-64">
+            <div className="flex-1 p-4 overflow-y-auto">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/usersenquiry" element={<UsersEnquiry />} />
                 <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
                 <Route path="/bookapointment" element={<BookApointment />} />
+                <Route path="/addevent" element={<AddEvent />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/seeappointment" element={<SeeAppointment />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
