@@ -166,6 +166,9 @@ function App() {
                 <Route path="/usersenquiry" element={<UsersEnquiry />} />
                 <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
                 <Route path="/bookapointment" element={<BookApointment />} />
+                <Route path="/seeappointment" element={<SeeAppointment />} />
+                <Route path="/addevent" element={<AddEvent />} />
+                <Route path="/blogs" element={<Blogs />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
