@@ -23,6 +23,7 @@ const initialAppointmentsData = {
     {
       id: 1,
       name: "John Doe",
+      email: "shreyas@gmail.com",
       contact: "123-456-7890",
       operation: "Teeth Cleaning",
       doctor: "Dr. Smith",
@@ -32,6 +33,7 @@ const initialAppointmentsData = {
     {
       id: 2,
       name: "Jane Smith",
+      email: "shreyas@gmail.com",
       contact: "234-567-8901",
       operation: "Cavity Filling",
       doctor: "Dr. Brown",
@@ -39,10 +41,11 @@ const initialAppointmentsData = {
       status: "Pending",
     },
   ],
-  "2025-01-06": [
+  "2025-01-10": [
     {
       id: 3,
       name: "Shreyas Raut",
+      email: "shreyas@gmail.com",
       contact: "123-456-7890",
       operation: "Teeth Cleaning",
       doctor: "Dr. Smith",
@@ -52,6 +55,7 @@ const initialAppointmentsData = {
     {
       id: 4,
       name: "Aniket Tambe",
+      email: "shreyas@gmail.com",
       contact: "234-567-8901",
       operation: "Cavity Filling",
       doctor: "Dr. Brown",
@@ -61,6 +65,7 @@ const initialAppointmentsData = {
     {
       id: 5,
       name: "Smit Bharshankar",
+      email: "shreyas@gmail.com",
       contact: "234-567-8901",
       operation: "Dental Checkup",
       doctor: "Dr. Brown",
@@ -178,6 +183,9 @@ const ScheduleAppointment = () => {
                       Patient
                     </th>
                     <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      Email
+                    </th>
+                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
                       Contact
                     </th>
                     <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
@@ -201,6 +209,7 @@ const ScheduleAppointment = () => {
                   {appointments[formatDate(selectedDate)].map((appointment) => (
                     <tr key={appointment.id}>
                       <td className="border px-4 py-2">{appointment.name}</td>
+                      <td className="border px-4 py-2">{appointment.email}</td>
                       <td className="border px-4 py-2">{appointment.contact}</td>
                       <td className="border px-4 py-2">{appointment.operation}</td>
                       <td className="border px-4 py-2">{appointment.doctor}</td>
@@ -243,6 +252,20 @@ const ScheduleAppointment = () => {
                     setEditingAppointment({
                       ...editingAppointment,
                       name: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600">Patient Email</label>
+                <input
+                  type="text"
+                  className="border border-gray-300 rounded-lg w-full p-2"
+                  value={editingAppointment.email}
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      email: e.target.value,
                     })
                   }
                 />

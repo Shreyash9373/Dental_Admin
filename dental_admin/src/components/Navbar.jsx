@@ -29,7 +29,7 @@ const Navbar = () => {
     // <div className="py-5 px-14 flex justify-between items-center bg-[#062335]">
     <div className="h-20 py-7 px-14 flex justify-between items-center bg-[#253d4b]">
       <h1 className="text-xl font-bold text-gray-200">Dental Clinic Dashboard</h1>
-      
+
       {admin.isLoggedIn ? (
         <div className="flex items-center space-x-3">
           {/* Avatar with initials */}
