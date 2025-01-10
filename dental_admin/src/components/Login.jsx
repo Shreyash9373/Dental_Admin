@@ -62,7 +62,7 @@ const Login = () => {
           Not a {user}?{" "}
           <button
             onClick={handleUserChange}
-            className='text-white focus:outline-none'>
+            className='text-white underline focus:outline-none'>
             Login as{" "}
             <span className='capitalize'>
               {user === "doctor" ? "receptionist" : "doctor"}
