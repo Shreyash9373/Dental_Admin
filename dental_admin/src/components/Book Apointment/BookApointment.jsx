@@ -1,18 +1,40 @@
 
-import React , {useState} from 'react';
+import React , {useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import axios from 'axios';
 
 
 const BookApointment = () => {
-  const { register, handleSubmit, reset , formState: { errors } } = useForm();
+  const { register, handleSubmit , watch , reset , formState: { errors } } = useForm();
   const [loading, setLoading] = useState(false); // Loading state
-
+  const [availableSlots, setAvailableSlots] = useState([]); // Available time slots
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
  
- 
+  const selectedDate = watch("date"); // Watch selected date
+
+  useEffect(() => {
+    if (selectedDate) {
+      const fetchAvailableSlots = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:4000/api/reception/available-slots?date=${encodeURIComponent(selectedDate)}`
+          );
+
+          // Assuming the backend sends available slots in `response.data.availableSlots`
+          setAvailableSlots(response.data.availableSlots || []);
+          console.log(response.data.availableSlots)
+        } catch (error) {
+          console.error("Error fetching available slots:", error);
+          setAvailableSlots([]); // Reset available slots on error
+        }
+      };
+
+      fetchAvailableSlots();
+    }
+  }, [selectedDate]);
+
   const onSubmit = async (data) => {
     console.log(data);
     try {
@@ -122,20 +144,28 @@ const BookApointment = () => {
 
           {/* Timeslot */}
           <div>
-            <label htmlFor="timeslot" className="block text-sm font-medium text-gray-200">Timeslot</label>
+            <label htmlFor="timeslot" className="block text-sm font-medium text-gray-200">
+              Timeslot
+            </label>
             <select
               id="timeslot"
               className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('timeSlot', { required: 'Timeslot selection is required' })}
+              {...register("timeSlot", { required: "Timeslot selection is required" })}
             >
               <option value="">Select a Timeslot</option>
-              <option value="9:00 AM">9:00 AM - 9:30 AM</option>
-              <option value="10:00 AM">10:00 AM - 10:30 AM</option>
-              <option value="11:00 AM">11:00 AM - 11:30 AM</option>
-              <option value="2:00 PM">2:00 PM - 2:30 PM</option>
-              <option value="3:00 PM">3:00 PM - 3:30 PM</option>
+              {availableSlots.length > 0 ? (
+                availableSlots.map((slot) => (
+                  <option key={slot} value={slot}>
+                    {slot}
+                  </option>
+                ))
+              ) : (
+                <option disabled>No available slots</option>
+              )}
             </select>
-            {errors.timeslot && <p className="text-red-500 text-sm mt-1">{errors.timeslot.message}</p>}
+            {errors.timeSlot && (
+              <p className="text-red-500 text-sm mt-1">{errors.timeSlot.message}</p>
+            )}
           </div>
 
           {/* Prescription File */}
