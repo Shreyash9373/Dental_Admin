@@ -163,7 +163,7 @@ const ScheduleAppointment = () => {
                     <td>{appt.service}</td>
                     <td>{appt.timeSlot}</td>
                     <td>{new Date(appt.date).toISOString().split("T")[0]}</td>
-                    <td>{appt.location}</td>
+                    <td>{appt.status}</td>
                     <td>
                       <button
                         className="bg-blue-500 text-white px-2 py-1 rounded"
