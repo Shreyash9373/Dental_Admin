@@ -54,6 +54,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
             <ul className='space-y-4'>
               <li>
                 <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
                   to='/usersenquiry'
                   className={({ isActive }) =>
                     isActive
@@ -65,6 +66,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               </li>
               <li>
                 <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
                   to='/scheduleappointments'
                   className={({ isActive }) =>
                     isActive
@@ -76,6 +78,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               </li>
               <li>
                 <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
                   to='/bookapointment'
                   className={({ isActive }) =>
                     isActive
@@ -87,6 +90,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               </li>
               <li className='pt-8 border-t border-gray-700'>
                 <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
                   to='/seeappointment'
                   className={({ isActive }) =>
                     isActive ? "text-blue-400" : "hover:text-gray-300"
@@ -96,6 +100,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               </li>
               <li>
                 <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
                   to='/addevent'
                   className={({ isActive }) =>
                     isActive ? "text-blue-400" : "hover:text-gray-300"
@@ -105,6 +110,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               </li>
               <li>
                 <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
                   to='/blogs'
                   className={({ isActive }) =>
                     isActive ? "text-blue-400" : "hover:text-gray-300"
