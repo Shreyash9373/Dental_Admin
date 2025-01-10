@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const getWeekDates = (date) => {
   const currentDate = new Date(date);
@@ -23,6 +24,8 @@ const ScheduleAppointment = () => {
   const [editingAppointment, setEditingAppointment] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const { register, handleSubmit, reset } = useForm();  // react-hook-form
 
   const formatDate = (date) => date.toISOString().split("T")[0];
 
@@ -52,6 +55,44 @@ const ScheduleAppointment = () => {
     }
   };
 
+  const updatePatient = async (data) => {
+    try {
+      setLoading(true);
+      setError(null);
+  
+      // Include the _id in the data object
+      const updatedData = { ...data, _id: editingAppointment._id };
+      console.log(updatedData)
+      // Send the updated patient data to the API, with _id in the body
+      const response = await axios.put(
+        "http://localhost:4000/api/reception/update-patient",
+        updatedData
+      );
+  
+      // Update local state to reflect the changes made
+      const updatedAppointments = appointments[formatDate(selectedDate)].map(
+        (appt) =>
+          appt._id === editingAppointment._id
+            ? { ...appt, ...data }
+            : appt
+      );
+  
+      setAppointments((prev) => ({
+        ...prev,
+        [formatDate(selectedDate)]: updatedAppointments,
+      }));
+  
+      toast.success("Patient details updated successfully!");
+      closeEditModal(); // Close the modal after saving the changes
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update details.");
+      toast.error(err.response?.data?.message || "Failed to update details.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
   useEffect(() => {
     const date = formatDate(currentWeek);
     getScheduleAppointments(date);
@@ -66,8 +107,19 @@ const ScheduleAppointment = () => {
   };
 
   const openEditModal = (appointment) => {
-    setEditingAppointment({ ...appointment });
+    setEditingAppointment(appointment);
     setIsModalOpen(true);
+    reset({
+      fullName: appointment.fullName,
+      mobileNo: appointment.mobileNo,
+      emailId: appointment.emailId,
+      location: appointment.location,
+      date: appointment.date,
+      service: appointment.service,
+      timeSlot: appointment.timeSlot,
+      status: appointment.status,
+
+    });
   };
 
   const closeEditModal = () => {
@@ -75,16 +127,32 @@ const ScheduleAppointment = () => {
     setEditingAppointment(null);
   };
 
-  const handleSaveEdit = () => {
-    const date = formatDate(selectedDate);
-    setAppointments((prev) => ({
-      ...prev,
-      [date]: prev[date].map((appt) =>
-        appt.id === editingAppointment.id ? editingAppointment : appt , 
-      ),
-    }));
-    closeEditModal();
-  };
+  // const handleSaveEdit = async (data) => {
+  //   const updatedAppointments = appointments[formatDate(selectedDate)].map(
+  //     (appt) =>
+  //       appt._id === editingAppointment._id
+  //         ? { ...appt, ...data }
+  //         : appt
+  //   );
+
+  //   setAppointments((prev) => ({
+  //     ...prev,
+  //     [formatDate(selectedDate)]: updatedAppointments,
+  //   }));
+
+  //   closeEditModal();
+
+  //   // Optionally update the database here:
+  //   try {
+  //     await axios.put(
+  //       `http://localhost:4000/api/reception/update-patient/${editingAppointment._id}`,
+  //       data
+  //     );
+  //     toast.success("Patient details updated!");
+  //   } catch (err) {
+  //     toast.error("Failed to update patient details");
+  //   }
+  // };
 
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -132,7 +200,6 @@ const ScheduleAppointment = () => {
         ))}
       </div>
 
-        {/* Appointments */}
       {selectedDate && (
         <div className="bg-gray-50 p-6 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold text-gray-700 mb-4">
@@ -163,7 +230,7 @@ const ScheduleAppointment = () => {
                     <td>{appt.service}</td>
                     <td>{appt.timeSlot}</td>
                     <td>{new Date(appt.date).toISOString().split("T")[0]}</td>
-                    <td>{appt.location}</td>
+                    <td>{appt.status}</td>
                     <td>
                       <button
                         className="bg-blue-500 text-white px-2 py-1 rounded"
@@ -182,55 +249,60 @@ const ScheduleAppointment = () => {
         </div>
       )}
 
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h3 className="text-xl font-semibold mb-4">Edit Appointment</h3>
-            <form>
+      {/* Modal for editing appointment */}
+      {isModalOpen && editingAppointment && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-2xl font-semibold text-gray-700 mb-4">
+              Edit Appointment
+            </h3>
+            <form onSubmit={handleSubmit(updatePatient)}>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Patient Name
-                </label>
+                <label className="block text-gray-700">Patient Name</label>
                 <input
                   type="text"
-                  value={editingAppointment?.name || ""}
-                  onChange={(e) =>
-                    setEditingAppointment({
-                      ...editingAppointment,
-                      name: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 border rounded"
+                  {...register("fullName")}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Time
-                </label>
+                <label className="block text-gray-700">Contact</label>
                 <input
-                  type="time"
-                  value={editingAppointment?.time || ""}
-                  onChange={(e) =>
-                    setEditingAppointment({
-                      ...editingAppointment,
-                      time: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 border rounded"
+                  type="text"
+                  {...register("mobileNo")}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
                 />
               </div>
-              <div className="flex justify-end gap-4">
+              <div className="mb-4">
+                <label className="block text-gray-700">Time Slot</label>
+                <input
+                  type="text"
+                  {...register("timeSlot")}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Status</label>
+                <select
+                  {...register("status")}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
+                >
+                  <option value="Scheduled">Scheduled</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div className="flex justify-end">
                 <button
                   type="button"
-                  className="px-4 py-2 bg-gray-400 text-white rounded"
                   onClick={closeEditModal}
+                  className="bg-gray-300 px-4 py-2 rounded-lg mr-4"
                 >
                   Cancel
                 </button>
                 <button
-                  type="button"
-                  className="px-4 py-2 bg-blue-600 text-white rounded"
-                  onClick={handleSaveEdit}
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
                 >
                   Save
                 </button>
