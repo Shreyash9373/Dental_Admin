@@ -138,7 +138,7 @@ const ScheduleAppointment = () => {
           className="p-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600"
           onClick={() => handleWeekChange(1)}
         >
-          &gt;
+          
         </button>
       </div>
 
