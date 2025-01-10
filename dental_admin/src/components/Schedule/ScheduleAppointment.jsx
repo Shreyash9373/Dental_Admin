@@ -80,7 +80,7 @@ const ScheduleAppointment = () => {
     setAppointments((prev) => ({
       ...prev,
       [date]: prev[date].map((appt) =>
-        appt.id === editingAppointment.id ? editingAppointment : appt , 
+        appt.id === editingAppointment.id ? editingAppointment : appt,
       ),
     }));
     closeEditModal();
@@ -114,11 +114,10 @@ const ScheduleAppointment = () => {
         {weekDates.map((date, index) => (
           <button
             key={index}
-            className={`p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${
-              selectedDate?.toDateString() === date.toDateString()
+            className={`p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${selectedDate?.toDateString() === date.toDateString()
                 ? "ring-2 ring-yellow-400"
                 : ""
-            }`}
+              }`}
             onClick={() => {
               setSelectedDate(date);
               getScheduleAppointments(formatDate(date));
@@ -132,9 +131,9 @@ const ScheduleAppointment = () => {
         ))}
       </div>
 
-        {/* Appointments */}
-      {selectedDate && (
-        <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+      {/* Appointments */}
+      {/* {selectedDate && (
+        <div className="bg-gray-50 p-2 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold text-gray-700 mb-4">
             Appointments for {selectedDate.toDateString()}
           </h3>
@@ -143,7 +142,7 @@ const ScheduleAppointment = () => {
           ) : error ? (
             <p className="text-red-500">{error}</p>
           ) : appointments[formatDate(selectedDate)]?.length > 0 ? (
-            <table className="min-w-full border border-gray-300">
+            <table className="w-full border border-gray-300">
               <thead>
                 <tr className="bg-blue-500 text-white">
                   <th className="px-4 py-2">Patient</th>
@@ -180,8 +179,66 @@ const ScheduleAppointment = () => {
             <p className="text-gray-500">No appointments for this day.</p>
           )}
         </div>
-      )}
+      )} */}
 
+{selectedDate && (
+  <div className="bg-gray-50 p-2 rounded-lg shadow-xl">
+    <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+      Appointments for {selectedDate.toDateString()}
+    </h3>
+    {loading ? (
+      <p className="text-gray-500">Loading...</p>
+    ) : error ? (
+      <p className="text-red-500">{error}</p>
+    ) : appointments[formatDate(selectedDate)]?.length > 0 ? (
+      <table className="w-full border-collapse text-base">
+        <thead>
+          <tr className="bg-blue-600 text-white">
+            <th className="px-6 py-3 text-left">Patient</th>
+            <th className="px-6 py-3 text-left">Contact</th>
+            <th className="px-6 py-3 text-left">Operation</th>
+            <th className="px-6 py-3 text-left">Time-Slot</th>
+            <th className="px-6 py-3 text-left">Date</th>
+            <th className="px-6 py-3 text-left">Status</th>
+            <th className="px-6 py-3 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {appointments[formatDate(selectedDate)]?.map((appt, index) => (
+            <tr
+              key={appt._id}
+              className={`${
+                index % 2 === 0 ? 'bg-white' : 'bg-gray-100'
+              } border-b border-gray-200`}
+            >
+              <td className="px-6 py-4">{appt.fullName}</td>
+              <td className="px-6 py-4">{appt.mobileNo}</td>
+              <td className="px-6 py-4">{appt.service}</td>
+              <td className="px-6 py-4">{appt.timeSlot}</td>
+              <td className="px-6 py-4">
+                {new Date(appt.date).toISOString().split('T')[0]}
+              </td>
+              <td className="px-6 py-4">{appt.location}</td>
+              <td className="px-6 py-4 text-center">
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  onClick={() => openEditModal(appt)}
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p className="text-gray-500">No appointments for this day.</p>
+    )}
+  </div>
+)}
+
+
+      {/* Edit Form */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
