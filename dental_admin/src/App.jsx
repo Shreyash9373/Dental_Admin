@@ -46,7 +46,7 @@ function App() {
           <div className="flex-1 flex flex-col bg-gray-200">
             {/* Navbar */}
             <Navbar />
-            
+
             {/* Routes */}
             <div className="flex-1 p-4 overflow-y-auto">
               <Routes>
