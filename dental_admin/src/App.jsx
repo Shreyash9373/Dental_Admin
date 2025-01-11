@@ -126,7 +126,7 @@ function App() {
   // }
 
   return (
-    <div className='h-screen flex overflow-hidden'>
+    <div className='h-screen flex overflow-hidden lg:block'>
       <BrowserRouter>
         <ToastContainer
           position='top-right'
@@ -157,7 +157,7 @@ function App() {
           />
 
           {/* Main Content */}
-          <div className='flex-1 flex flex-col bg-gray-200 w-screen'>
+          <div className='flex-1 flex flex-col bg-gray-200 min-h-screen w-screen'>
             {/* Navbar */}
             <Navbar
               isHamburgerOpen={isHamburgerOpen}
