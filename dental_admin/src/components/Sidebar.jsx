@@ -59,7 +59,8 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
                   }>
                   User's Enquiry
                 </NavLink>
@@ -71,7 +72,8 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
                   }>
                   Scheduled Appointments
                 </NavLink>
@@ -83,7 +85,8 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
                   }>
                   Book Appointment
                 </NavLink>
@@ -93,7 +96,9 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   onClick={(e) => setIsHamburgerOpen(false)}
                   to='/seeappointment'
                   className={({ isActive }) =>
-                    isActive ? "text-blue-400" : "hover:text-gray-300"
+                    isActive
+                      ? "text-blue-400"
+                      : "hover:text-gray-300" + " w-full inline-block"
                   }>
                   See Apointments
                 </NavLink>
