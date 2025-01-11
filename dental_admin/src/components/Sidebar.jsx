@@ -33,7 +33,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
       <div
         className={`transition duration-200 ease-in-out sticky z-50 top-0 left-0 h-full bg-[#062335] text-white w-64 p-4 flex flex-col justify-between ${
           isHamburgerOpen ? "translate-x-64" : "-translate-x-64"
-        } md:-translate-x-0`}>
+        } lg:-translate-x-0`}>
         {/* Top Section */}
         <div>
           {/* Logo */}
@@ -45,7 +45,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
             />
             <button
               onClick={(e) => setIsHamburgerOpen((prev) => !prev)}
-              className='text-white text-4xl self-start md:hidden'>
+              className='text-white text-4xl self-start lg:hidden'>
               <IoClose />
             </button>
           </div>

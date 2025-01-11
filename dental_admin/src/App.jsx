@@ -148,7 +148,7 @@ function App() {
           }}
         />
         {/* Main App Layout */}
-        <div className=' -translate-x-64 h-auto flex flex-row md:-translate-x-0'>
+        <div className=' -translate-x-64 h-auto flex flex-row lg:-translate-x-0'>
           {/* Sidebar */}
           <Sidebar
             className='w-64 bg-gray-800 text-white'

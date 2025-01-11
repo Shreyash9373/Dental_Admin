@@ -4,7 +4,7 @@ import Login from "./Login";
 
 const Home = () => {
   return (
-    <div className='flex justify-center items-center h-screen md:w-[calc(100%-256px)]'>
+    <div className='flex justify-center items-center h-screen lg:w-[calc(100%-256px)]'>
       {/* <h1 className='text-3xl'>Welcome to Dr. Pakhare Dental Clinic Management System Dashboard</h1> */}
 
       <Login />

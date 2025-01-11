@@ -36,7 +36,7 @@ const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
         onClick={(e) => {
           setIsHamburgerOpen((prev) => !prev);
         }}
-        className='text-white text-xl mr-12 md:hidden'>
+        className='text-white text-xl mr-12 lg:hidden'>
         <RxHamburgerMenu />
       </button>
       <h1 className='text-lg font-bold text-gray-200'>
