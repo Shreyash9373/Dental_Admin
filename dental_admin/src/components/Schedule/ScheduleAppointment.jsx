@@ -201,7 +201,7 @@ const ScheduleAppointment = () => {
       </div>
 
       {selectedDate && (
-        <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+        <div className="bg-gray-50 p-4 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold text-gray-700 mb-4">
             Appointments for {selectedDate.toDateString()}
           </h3>
@@ -212,14 +212,14 @@ const ScheduleAppointment = () => {
           ) : appointments[formatDate(selectedDate)]?.length > 0 ? (
             <table className="min-w-full border border-gray-300">
               <thead>
-                <tr className="bg-blue-500 text-white">
-                  <th className="px-4 py-2">Patient</th>
-                  <th className="px-4 py-2">Contact</th>
-                  <th className="px-4 py-2">Operation</th>
-                  <th className="px-4 py-2">Time-Slot</th>
-                  <th className="px-4 py-2">Date</th>
-                  <th className="px-4 py-2">Status</th>
-                  <th className="px-4 py-2">Actions</th>
+                <tr className="bg-blue-500 text-white text-left">
+                  <th className="py-2">Patient Name</th>
+                  <th className="py-2">Contact</th>
+                  <th className="py-2">Operation</th>
+                  <th className="py-2">Time-Slot</th>
+                  <th className="py-2">Date</th>
+                  <th className="py-2">Status</th>
+                  <th className="py-2">Actions</th>
                 </tr>
               </thead>
               <tbody>
