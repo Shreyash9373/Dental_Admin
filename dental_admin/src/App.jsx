@@ -14,12 +14,13 @@ import SeeAppointment from "./components/Doctor Module/SeeAppointment";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
   return (
-    <div className="h-screen flex overflow-hidden">
+    <div className='h-screen flex overflow-hidden lg:block'>
       <BrowserRouter>
         <ToastContainer
-          position="top-right"
+          position='top-right'
           autoClose={3000}
           hideProgressBar={false}
           newestOnTop={true}
@@ -38,26 +39,36 @@ function App() {
           }}
         />
         {/* Main App Layout */}
-        <div className="w-full h-auto flex flex-row">
+        <div className=' -translate-x-64 h-auto flex flex-row lg:-translate-x-0'>
           {/* Sidebar */}
-          <Sidebar className="w-64 bg-gray-800 text-white" />
+          <Sidebar
+            className='w-64 bg-gray-800 text-white'
+            isHamburgerOpen={isHamburgerOpen}
+            setIsHamburgerOpen={setIsHamburgerOpen}
+          />
 
           {/* Main Content */}
-          <div className="flex-1 flex flex-col bg-gray-200">
+          <div className='flex-1 flex flex-col bg-gray-200 min-h-screen w-screen'>
             {/* Navbar */}
-            <Navbar />
-            
+            <Navbar
+              isHamburgerOpen={isHamburgerOpen}
+              setIsHamburgerOpen={setIsHamburgerOpen}
+            />
+
             {/* Routes */}
-            <div className="flex-1 p-4 overflow-y-auto">
+            <div className='flex-1 p-4 overflow-y-auto'>
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/usersenquiry" element={<UsersEnquiry />} />
-                <Route path="/scheduleappointments" element={<ScheduleAppointment />} />
-                <Route path="/bookapointment" element={<BookApointment />} />
-                <Route path="/addevent" element={<AddEvent />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/seeappointment" element={<SeeAppointment />} />
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path='/' element={<Home />} />
+                <Route path='/usersenquiry' element={<UsersEnquiry />} />
+                <Route
+                  path='/scheduleappointments'
+                  element={<ScheduleAppointment />}
+                />
+                <Route path='/bookapointment' element={<BookApointment />} />
+                <Route path='/addevent' element={<AddEvent />} />
+                <Route path='/blogs' element={<Blogs />} />
+                <Route path='/seeappointment' element={<SeeAppointment />} />
+                <Route path='*' element={<Navigate to='/' />} />
               </Routes>
             </div>
           </div>
