@@ -10,17 +10,6 @@ const Sidebar = () => {
     isLoggedIn: true, // Replace with authentication logic
   });
 
-  // Uncomment and implement these if login/logout functionality is needed
-  // const handleLogout = () => {
-  //   setAdmin({ ...admin, isLoggedIn: false });
-  //   console.log('Logged out');
-  // };
-
-  // const handleLogin = () => {
-  //   setAdmin({ ...admin, isLoggedIn: true });
-  //   console.log('Logged in');
-  // };
-
   return (
     <div className="sticky top-0 left-0 h-full bg-[#062335] text-white w-64 p-4 flex flex-col justify-between">
       {/* Top Section */}
@@ -77,7 +66,7 @@ const Sidebar = () => {
               <NavLink
                 to="/seeappointment"
                 className={({ isActive }) =>
-                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                  isActive ? 'text-blue-400 font-bold' : 'hover:text-gray-300 font-normal'
                 }
               >
                 See Apointments
@@ -87,7 +76,7 @@ const Sidebar = () => {
               <NavLink
                 to="/addevent"
                 className={({ isActive }) =>
-                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                  isActive ? 'text-blue-400 font-bold' : 'hover:text-gray-300 font-normal'
                 }
               >
                 Add Event
@@ -97,7 +86,7 @@ const Sidebar = () => {
               <NavLink
                 to="/blogs"
                 className={({ isActive }) =>
-                  isActive ? 'text-blue-400' : 'hover:text-gray-300'
+                  isActive ? 'text-blue-400 font-bold' : 'hover:text-gray-300 font-normal'
                 }
               >
                 Blogs
