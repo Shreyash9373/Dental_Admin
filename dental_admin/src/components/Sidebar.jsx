@@ -12,17 +12,6 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
     isLoggedIn: true, // Replace with authentication logic
   });
 
-  // Uncomment and implement these if login/logout functionality is needed
-  // const handleLogout = () => {
-  //   setAdmin({ ...admin, isLoggedIn: false });
-  //   console.log('Logged out');
-  // };
-
-  // const handleLogin = () => {
-  //   setAdmin({ ...admin, isLoggedIn: true });
-  //   console.log('Logged in');
-  // };
-
   return (
     <>
       {/* Overlay */}
@@ -97,8 +86,9 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   to='/seeappointment'
                   className={({ isActive }) =>
                     isActive
-                      ? "text-blue-400"
-                      : "hover:text-gray-300" + " w-full inline-block"
+                      ? "text-blue-400 font-bold"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
                   }>
                   See Apointments
                 </NavLink>
@@ -108,7 +98,9 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   onClick={(e) => setIsHamburgerOpen(false)}
                   to='/addevent'
                   className={({ isActive }) =>
-                    isActive ? "text-blue-400" : "hover:text-gray-300"
+                    isActive
+                      ? "text-blue-400 font-bold"
+                      : "hover:text-gray-300 font-normal"
                   }>
                   Add Event
                 </NavLink>
@@ -118,7 +110,9 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   onClick={(e) => setIsHamburgerOpen(false)}
                   to='/blogs'
                   className={({ isActive }) =>
-                    isActive ? "text-blue-400" : "hover:text-gray-300"
+                    isActive
+                      ? "text-blue-400 font-bold"
+                      : "hover:text-gray-300 font-normal"
                   }>
                   Blogs
                 </NavLink>
