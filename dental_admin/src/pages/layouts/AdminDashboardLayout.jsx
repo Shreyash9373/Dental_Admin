@@ -9,15 +9,14 @@ const AdminDashboardLayout = () => {
   const { isLoggedIn } = useAuth();
 
   return isLoggedIn ? (
-    <div className=' -translate-x-64 h-auto flex flex-row lg:-translate-x-0'>
+    <div className='h-auto flex flex-row'>
       {/* Sidebar */}
       <Sidebar
-        className='w-64 bg-gray-800 text-white'
         isHamburgerOpen={isHamburgerOpen}
         setIsHamburgerOpen={setIsHamburgerOpen}
       />
       {/* Main Content */}
-      <div className='flex-1 flex flex-col bg-gray-200 min-h-screen w-screen'>
+      <div className='flex flex-col bg-gray-200 min-h-screen w-full'>
         {/* Navbar */}
         <Navbar
           isHamburgerOpen={isHamburgerOpen}
@@ -25,7 +24,7 @@ const AdminDashboardLayout = () => {
         />
 
         {/* Routes */}
-        <div className='flex-1 p-4 overflow-y-auto'>
+        <div className=' p-4 overflow-y-auto'>
           <Outlet />
         </div>
       </div>
