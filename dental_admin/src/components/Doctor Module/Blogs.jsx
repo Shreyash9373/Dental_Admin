@@ -19,7 +19,7 @@ const Blogs = () => {
     try {
       const formData = new FormData(); // Using FormData for file upload
       formData.append("title", data.title);
-      formData.append("content", data.content);
+      formData.append("description", data.description);
       formData.append("image", data.image[0]); // File input is an array
 
       // Make a POST request to the API endpoint
@@ -83,8 +83,8 @@ const Blogs = () => {
               Blog Content
             </label>
             <textarea
-              id="content"
-              {...register("content", { required: "Blog content is required" })}
+              id="description"
+              {...register("description", { required: "Blog content is required" })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               rows="5"
               placeholder="Enter blog content"
