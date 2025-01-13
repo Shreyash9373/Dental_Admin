@@ -1,3 +1,4 @@
+// ANIKET
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -59,7 +60,7 @@ const ScheduleAppointment = () => {
     try {
       setLoading(true);
       setError(null);
-  
+
       // Include the _id in the data object
       const updatedData = { ...data, _id: editingAppointment._id };
       console.log(updatedData)
@@ -68,7 +69,7 @@ const ScheduleAppointment = () => {
         "http://localhost:4000/api/reception/update-patient",
         updatedData
       );
-  
+
       // Update local state to reflect the changes made
       const updatedAppointments = appointments[formatDate(selectedDate)].map(
         (appt) =>
@@ -76,12 +77,12 @@ const ScheduleAppointment = () => {
             ? { ...appt, ...data }
             : appt
       );
-  
+
       setAppointments((prev) => ({
         ...prev,
         [formatDate(selectedDate)]: updatedAppointments,
       }));
-  
+
       toast.success("Patient details updated successfully!");
       closeEditModal(); // Close the modal after saving the changes
     } catch (err) {
@@ -91,7 +92,7 @@ const ScheduleAppointment = () => {
       setLoading(false);
     }
   };
-  
+
 
   useEffect(() => {
     const date = formatDate(currentWeek);
@@ -182,11 +183,10 @@ const ScheduleAppointment = () => {
         {weekDates.map((date, index) => (
           <button
             key={index}
-            className={`p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${
-              selectedDate?.toDateString() === date.toDateString()
+            className={`p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${selectedDate?.toDateString() === date.toDateString()
                 ? "ring-2 ring-yellow-400"
                 : ""
-            }`}
+              }`}
             onClick={() => {
               setSelectedDate(date);
               getScheduleAppointments(formatDate(date));
@@ -287,7 +287,7 @@ const ScheduleAppointment = () => {
                   {...register("status")}
                   className="w-full p-2 border border-gray-300 rounded-lg"
                 >
-                  <option value="Scheduled">Scheduled</option>
+                  <option value="Postponed">Postponed</option>
                   <option value="Completed">Completed</option>
                   <option value="Cancelled">Cancelled</option>
                 </select>
