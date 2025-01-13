@@ -19,7 +19,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
 
   return (
-    <div className='h-screen flex overflow-hidden lg:block'>
+    <div className='h-screen flex lg:block'>
       <BrowserRouter>
         <ToastContainer
           position='top-right'
@@ -63,7 +63,7 @@ function App() {
             {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
             <Route index element={<Navigate to='user-enquiry' />} />
 
-            <Route path='user-enquiry' element={<UsersEnquiry />} index />
+            <Route path='user-enquiry' element={<UsersEnquiry />} />
             <Route
               path='schedule-appointments'
               element={<ScheduleAppointment />}

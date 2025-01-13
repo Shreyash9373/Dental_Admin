@@ -203,6 +203,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const AddEvent = () => {
   const [isFormVisible, setIsFormVisible] = useState(false); // Toggle form visibility
@@ -226,21 +227,21 @@ const AddEvent = () => {
       formData.append("image", data.image[0]); // Access the file from the array
 
       // API POST request
-      const response = await axios.post("http://localhost:5000/api/events", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post("http://localhost:4000/api/doctor/add-event", formData);
+      if(response.success){
+         toast.success(response.data.message || "Event Added successfully!");
+      }
 
       console.log("Event created successfully:", response.data);
 
       // Clear the form
       reset();
       setIsFormVisible(false);
-      alert("Event created successfully!");
+     
     } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to add event. Please try again.");
+      
       console.error("Error creating event:", error);
-      alert("Failed to create the event.");
     }
   };
 
