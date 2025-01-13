@@ -16,11 +16,11 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
     <>
       {/* Overlay */}
       <div
-        className={`h-screen w-screen absolute z-40 top-0 right-0 bottom-0 left-0 translate-x-0 bg-black opacity-50 transition-opacity ease-in-out duration-200 ${
+        className={`h-screen w-screen fixed z-40 top-0 right-0 bottom-0 left-0 translate-x-0 bg-black opacity-50 transition-opacity ease-in-out duration-200 ${
           !isHamburgerOpen ? "hidden" : "block"
         }`}></div>
       <div
-        className={`transition duration-200 ease-in-out absolute z-50 top-0 left-0 bottom-0 h-screen bg-[#062335] text-white w-64 p-4 flex flex-col justify-between ${
+        className={`transition duration-200 ease-in-out fixed z-50 top-0 left-0 bottom-0 h-screen bg-[#062335] text-white w-64 p-4 flex flex-col justify-between ${
           isHamburgerOpen ? "translate-x-0" : "-translate-x-64"
         } lg:-translate-x-0 lg:sticky`}>
         {/* Top Section */}
