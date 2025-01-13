@@ -89,7 +89,7 @@ const Sidebar = () => {
                   isActive ? 'text-blue-400 font-bold' : 'hover:text-gray-300 font-normal'
                 }
               >
-                Blogs
+                Add Blogs
               </NavLink>
             </li>
           </ul>
