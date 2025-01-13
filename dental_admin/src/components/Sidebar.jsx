@@ -44,7 +44,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               <li>
                 <NavLink
                   onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/usersenquiry'
+                  to='/admin/dashboard/user-enquiry'
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
@@ -57,7 +57,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               <li>
                 <NavLink
                   onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/scheduleappointments'
+                  to='/admin/dashboard/schedule-appointments'
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
@@ -70,7 +70,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               <li>
                 <NavLink
                   onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/bookapointment'
+                  to='/admin/dashboard/book-apointment'
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
@@ -83,7 +83,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               <li className='pt-8 border-t border-gray-700'>
                 <NavLink
                   onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/seeappointment'
+                  to='/admin/dashboard/see-appointment'
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
@@ -96,11 +96,12 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               <li>
                 <NavLink
                   onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/addevent'
+                  to='/admin/dashboard/add-event'
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
                   }>
                   Add Event
                 </NavLink>
@@ -108,11 +109,12 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               <li>
                 <NavLink
                   onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/blogs'
+                  to='/admin/dashboard/blogs'
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
                   }>
                   Blogs
                 </NavLink>

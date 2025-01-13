@@ -11,10 +11,12 @@ import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry";
 import Blogs from "./components/Doctor Module/Blogs";
 import AddEvent from "./components/Doctor Module/AddEvent";
 import SeeAppointment from "./components/Doctor Module/SeeAppointment";
+import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
+import LoginPage from "./pages/LoginPage";
+import AuthProvider from "./context/AuthContext";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
-  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
   return (
     <div className='h-screen flex overflow-hidden lg:block'>
@@ -38,24 +40,55 @@ function App() {
             fontFamily: "sans-serif",
           }}
         />
-        {/* Main App Layout */}
-        <div className=' -translate-x-64 h-auto flex flex-row lg:-translate-x-0'>
-          {/* Sidebar */}
+
+        <Routes>
+          {/* <Route path='/admin' element={<Navigate to="/admin/login" />} /> */}
+
+          <Route
+            path='/admin/login'
+            element={
+              <AuthProvider>
+                <LoginPage />
+              </AuthProvider>
+            }
+          />
+
+          <Route
+            path='/admin/dashboard'
+            element={
+              <AuthProvider>
+                <AdminDashboardLayout />
+              </AuthProvider>
+            }>
+            {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
+            <Route index element={<Navigate to='user-enquiry' />} />
+            <Route path='user-enquiry' element={<UsersEnquiry />} index />
+            <Route
+              path='schedule-appointments'
+              element={<ScheduleAppointment />}
+            />
+            <Route path='book-apointment' element={<BookApointment />} />
+            <Route path='add-event' element={<AddEvent />} />
+            <Route path='blogs' element={<Blogs />} />
+            <Route path='see-appointment' element={<SeeAppointment />} />
+          </Route>
+
+          <Route path='*' element={<Navigate to='/admin/login' />} />
+        </Routes>
+
+        {/* <div className=' -translate-x-64 h-auto flex flex-row lg:-translate-x-0'>
           <Sidebar
             className='w-64 bg-gray-800 text-white'
             isHamburgerOpen={isHamburgerOpen}
             setIsHamburgerOpen={setIsHamburgerOpen}
           />
 
-          {/* Main Content */}
           <div className='flex-1 flex flex-col bg-gray-200 min-h-screen w-screen'>
-            {/* Navbar */}
             <Navbar
               isHamburgerOpen={isHamburgerOpen}
               setIsHamburgerOpen={setIsHamburgerOpen}
             />
 
-            {/* Routes */}
             <div className='flex-1 p-4 overflow-y-auto'>
               <Routes>
                 <Route path='/' element={<Home />} />
@@ -72,7 +105,7 @@ function App() {
               </Routes>
             </div>
           </div>
-        </div>
+        </div> */}
       </BrowserRouter>
     </div>
   );
