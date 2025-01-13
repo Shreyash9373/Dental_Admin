@@ -1,3 +1,4 @@
+//ANIKET
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 // Replace this with the correct image file path from your project.
@@ -16,13 +17,13 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
     <>
       {/* Overlay */}
       <div
-        className={`h-screen w-screen absolute z-40 top-0 translate-x-64 bg-black opacity-50 transition-opacity ease-in-out duration-200 ${
-          !isHamburgerOpen && "hidden"
+        className={`h-screen w-screen absolute z-40 top-0 right-0 bottom-0 left-0 translate-x-0 bg-black opacity-50 transition-opacity ease-in-out duration-200 ${
+          !isHamburgerOpen ? "hidden" : "block"
         }`}></div>
       <div
-        className={`transition duration-200 ease-in-out sticky z-50 top-0 left-0 min-h-screen bg-[#062335] text-white w-64 p-4 flex flex-col justify-between ${
-          isHamburgerOpen ? "translate-x-64" : "-translate-x-64"
-        } lg:-translate-x-0`}>
+        className={`transition duration-200 ease-in-out absolute z-50 top-0 left-0 bottom-0 h-screen bg-[#062335] text-white w-64 p-4 flex flex-col justify-between ${
+          isHamburgerOpen ? "translate-x-0" : "-translate-x-64"
+        } lg:-translate-x-0 lg:sticky`}>
         {/* Top Section */}
         <div>
           {/* Logo */}
@@ -103,7 +104,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                       : "hover:text-gray-300 font-normal" +
                         " w-full inline-block"
                   }>
-                  Add Event
+                  Add Events
                 </NavLink>
               </li>
               <li>
@@ -116,7 +117,20 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                       : "hover:text-gray-300 font-normal" +
                         " w-full inline-block"
                   }>
-                  Blogs
+                  Add Blogs
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
+                  to='/admin/dashboard/updatepassword'
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-400 font-bold"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
+                  }>
+                  Update Password
                 </NavLink>
               </li>
             </ul>
