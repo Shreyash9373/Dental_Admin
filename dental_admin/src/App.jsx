@@ -20,7 +20,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
 
   return (
-    <div className="h-screen flex lg:block">
+    <div className='min-h-screen w-screen lg:block'>
       <BrowserRouter>
         <ToastContainer
           position="top-right"
