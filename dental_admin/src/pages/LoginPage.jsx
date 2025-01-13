@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-const Login = () => {
+const LoginPage = () => {
   const [user, setUser] = useState("receptionist");
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false); // Loading state
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
+  const { isLoggedIn } = useAuth();
 
   const handleUserChange = () => {
     setUser((prev) => (prev === "doctor" ? "receptionist" : "doctor"));
@@ -37,9 +40,11 @@ const Login = () => {
     }
   };
 
-  return (
-    <div className='bg-gradient-to-b from-blue-400 via-blue-500 to-cyan-500 flex justify-center items-center'>
-      <div className='shadow-2xl shadow-blue-500/50 p-12 flex flex-col gap-2'>
+  return isLoggedIn ? (
+    <Navigate to='/admin/dashboard' />
+  ) : (
+    <div className='w-screen h-screen flex justify-center items-center'>
+      <div className='shadow-2xl bg-gradient-to-b from-blue-400 via-blue-500 to-cyan-500 shadow-gray-500 p-12 flex flex-col gap-2'>
         <h1 className='text-white font-semibold mb-7 text-center text-xl md:text-3xl lg:text-5xl'>
           <span className='capitalize'>{user}</span> Login
         </h1>
@@ -82,4 +87,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
