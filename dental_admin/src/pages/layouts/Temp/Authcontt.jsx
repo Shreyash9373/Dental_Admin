@@ -1,12 +1,14 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [ user , setUser ] = useState({name:"" , role:"", status:true })
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: true,
+        user, 
+        setUser
       }}>
       {children}
     </AuthContext.Provider>

@@ -1,47 +1,39 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import Axios for making API requests
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Blogs = () => {
   const [isFormVisible, setIsFormVisible] = useState(false); // To toggle the blog form
-  const [blogData, setBlogData] = useState({
-    title: "",
-    content: "",
-    image: null,
-  });
 
-  // Handle input changes for text fields
-  const handleInputChange = (e) => {
-    setBlogData({ ...blogData, [e.target.name]: e.target.value });
-  };
-
-  // Handle file input change for image
-  const handleFileChange = (e) => {
-    setBlogData({ ...blogData, image: e.target.files[0] });
-  };
+  // react-hook-form setup
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // Handle form submission
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
       const formData = new FormData(); // Using FormData for file upload
-      formData.append("title", blogData.title);
-      formData.append("content", blogData.content);
-      formData.append("image", blogData.image);
+      formData.append("title", data.title);
+      formData.append("content", data.content);
+      formData.append("image", data.image[0]); // File input is an array
 
       // Make a POST request to the API endpoint
-      const response = await axios.post("http://localhost:5000/api/blogs", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axios.post("http://localhost:4000/api/doctor/add-blog", formData, {
+       if (response) {
+        toast.success("Blog added successfully")
+       }
       });
 
       console.log("Blog created successfully:", response.data);
 
-      // Clear the form and close it
-      setBlogData({ title: "", content: "", image: null });
+      // Reset the form and close it
+      reset();
       setIsFormVisible(false);
-      alert("Blog post created successfully!");
     } catch (error) {
       console.error("Error creating blog:", error);
       alert("Failed to create the blog post.");
@@ -64,7 +56,7 @@ const Blogs = () => {
       {/* Blog Post Form */}
       {isFormVisible && (
         <form
-          onSubmit={handleFormSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="mt-4 bg-gray-100 p-4 rounded shadow-md"
         >
           <div className="mb-4">
@@ -76,14 +68,12 @@ const Blogs = () => {
             </label>
             <input
               type="text"
-              name="title"
               id="title"
-              value={blogData.title}
-              onChange={handleInputChange}
+              {...register("title", { required: "Blog title is required" })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter blog title"
-              required
             />
+            {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
           </div>
 
           <div className="mb-4">
@@ -94,15 +84,13 @@ const Blogs = () => {
               Blog Content
             </label>
             <textarea
-              name="content"
               id="content"
-              value={blogData.content}
-              onChange={handleInputChange}
+              {...register("content", { required: "Blog content is required" })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               rows="5"
               placeholder="Enter blog content"
-              required
             ></textarea>
+            {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>}
           </div>
 
           <div className="mb-4">
@@ -114,13 +102,12 @@ const Blogs = () => {
             </label>
             <input
               type="file"
-              name="image"
               id="image"
               accept="image/*"
-              onChange={handleFileChange}
+              {...register("image", { required: "Blog image is required" })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
             />
+            {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>}
           </div>
 
           <button
