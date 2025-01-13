@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/Navbar";
 import { useAuth } from "../../context/AuthContext";
 
 const AdminDashboardLayout = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-  const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-
-  // useEffect(() => {
-  //   if (!isLoggedIn) navigate("/admin/login");
-  // }, []);
 
   return isLoggedIn ? (
     <div className=' -translate-x-64 h-auto flex flex-row lg:-translate-x-0'>

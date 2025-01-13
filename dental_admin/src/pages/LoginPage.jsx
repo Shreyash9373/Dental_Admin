@@ -11,12 +11,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false); // Loading state
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-
-  useEffect(() => {
-    if (isLoggedIn) navigate("/admin/dashboard");
-  }, []);
 
   const handleUserChange = () => {
     setUser((prev) => (prev === "doctor" ? "receptionist" : "doctor"));

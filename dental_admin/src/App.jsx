@@ -42,8 +42,7 @@ function App() {
         />
 
         <Routes>
-          {/* <Route path='/admin' element={<Navigate to="/admin/login" />} /> */}
-
+          {/* Login Route */}
           <Route
             path='/admin/login'
             element={
@@ -53,6 +52,7 @@ function App() {
             }
           />
 
+          {/* Admin Dashboard */}
           <Route
             path='/admin/dashboard'
             element={
@@ -62,6 +62,7 @@ function App() {
             }>
             {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
             <Route index element={<Navigate to='user-enquiry' />} />
+
             <Route path='user-enquiry' element={<UsersEnquiry />} index />
             <Route
               path='schedule-appointments'
@@ -73,6 +74,7 @@ function App() {
             <Route path='see-appointment' element={<SeeAppointment />} />
           </Route>
 
+          {/* Wildcard to catch anything else */}
           <Route path='*' element={<Navigate to='/admin/login' />} />
         </Routes>
 
