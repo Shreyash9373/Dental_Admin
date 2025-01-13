@@ -1,3 +1,4 @@
+//ANIKET
 import React, { useState } from "react";
 import { FaLessThan } from "react-icons/fa";
 import { FaGreaterThan } from "react-icons/fa";
@@ -22,7 +23,7 @@ const UsersEnquiry = () => {
       name: "Aniket Tambe",
       email: "aniket@gmail.com",
       phone: "+8411988255",
-      preferredDate: "2025-01-15",
+      preferredDate: "2025-01-12",
       message: "I need a consultation for a toothache. Please schedule an appointment for me.",
     },
     {
@@ -41,63 +42,68 @@ const UsersEnquiry = () => {
     },
     {
       name: "Anjali Mehta",
-      email: "shreya@gmail.com",
+      email: "anjali@gmail.com",
       phone: "+7897897890",
-      preferredDate: "2025-01-30",
+      preferredDate: "2025-02-01",
       message: "I want to book an appointment for a routine dental checkup.",
     },
     {
-      name: "Anjali Mehta",
-      email: "shreya@gmail.com",
-      phone: "+7897897890",
-      preferredDate: "2025-01-30",
-      message: "I want to book an appointment for a routine dental checkup.",
+      name: "Vishal Joshi",
+      email: "vishal@gmail.com",
+      phone: "+9876543210",
+      preferredDate: "2025-02-05",
+      message: "I need to consult for my cavities. Please let me know the slots.",
     },
     {
-      name: "Anjali Mehta",
-      email: "shreya@gmail.com",
-      phone: "+7897897890",
-      preferredDate: "2025-01-30",
-      message: "I want to book an appointment for a routine dental checkup.",
+      name: "Ritika Kaur",
+      email: "ritika@gmail.com",
+      phone: "+7418529630",
+      preferredDate: "2025-02-10",
+      message: "I would like to schedule a dental cleaning appointment. Can you confirm availability?",
     },
     {
-      name: "Anjali Mehta",
-      email: "shreya@gmail.com",
-      phone: "+7897897890",
-      preferredDate: "2025-01-30",
-      message: "I want to book an appointment for a routine dental checkup.",
+      name: "Amit Yadav",
+      email: "amit@gmail.com",
+      phone: "+9712345678",
+      preferredDate: "2025-02-15",
+      message: "I am looking for a consultation regarding dental implants.",
     },
     {
-      name: "Anjali Mehta",
-      email: "shreya@gmail.com",
-      phone: "+7897897890",
-      preferredDate: "2025-01-30",
-      message: "I want to book an appointment for a routine dental checkup.",
+      name: "Neha Gupta",
+      email: "neha@gmail.com",
+      phone: "+7896541230",
+      preferredDate: "2025-02-20",
+      message: "I need to book an appointment for a wisdom tooth extraction.",
     },
     {
-      name: "Anjali Mehta",
-      email: "shreya@gmail.com",
-      phone: "+7897897890",
-      preferredDate: "2025-01-30",
-      message: "I want to book an appointment for a routine dental checkup.",
+      name: "Rahul Deshmukh",
+      email: "rahul@gmail.com",
+      phone: "+8523697410",
+      preferredDate: "2025-02-25",
+      message: "I am interested in a dental consultation for my teeth alignment.",
     },
-    // Add more dummy data if needed for pagination
+    {
+      name: "Madhuri Patil",
+      email: "madhuri@gmail.com",
+      phone: "+9911223344",
+      preferredDate: "2025-03-01",
+      message: "I need an appointment for a regular dental checkup.",
+    }
+    
   ]);
-  
-  const [searchTerm, setSearchTerm] = useState(""); // State for the search input
-  const [currentPage, setCurrentPage] = useState(1); // State for the current page
-  const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
-  const [selectedInquiry, setSelectedInquiry] = useState(null); // State for selected inquiry
-  const usersPerPage = 10; // Number of users to display per page
 
-  // Filter the inquiries based on the search term
-  const filteredInquiries = userEnquiries.filter((inquiry) =>
-    inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    inquiry.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    inquiry.phone.includes(searchTerm)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const usersPerPage = 10;
+
+  const filteredInquiries = userEnquiries.filter(
+    (inquiry) =>
+      inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      inquiry.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      inquiry.phone.includes(searchTerm)
   );
 
-  // Get the current page's users
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredInquiries.slice(indexOfFirstUser, indexOfLastUser);
@@ -131,8 +137,32 @@ const UsersEnquiry = () => {
   // Total pages calculation
   const totalPages = Math.ceil(filteredInquiries.length / usersPerPage);
 
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedUsers(currentUsers.map((user) => user.email)); // Select all current users
+    } else {
+      setSelectedUsers([]); // Deselect all
+    }
+  };
+
+  const handleUserSelection = (email) => {
+    setSelectedUsers((prevSelected) =>
+      prevSelected.includes(email)
+        ? prevSelected.filter((user) => user !== email)
+        : [...prevSelected, email]
+    );
+  };
+
+  const handleDeleteSelected = () => {
+    const updatedEnquiries = userEnquiries.filter(
+      (user) => !selectedUsers.includes(user.email)
+    );
+    setUserEnquiries(updatedEnquiries);
+    setSelectedUsers([]); // Clear selected users after deletion
+  };
+
   return (
-    <div className="min-h-screen rounded-xl p-4 bg-white flex flex-col items-center">
+    <div className="min-h-screen rounded-xl p-4 bg-white flex flex-col items-center overflow-y-auto">
       {/* Search Section */}
       <div className="flex flex-col items-center justify-center w-full py-10 ">
         <h2 className="text-3xl font-bold text-black mb-6 text-center">
@@ -154,6 +184,13 @@ const UsersEnquiry = () => {
         <table className="table-auto w-full border-collapse">
           <thead>
             <tr>
+              <th className="px-4 py-2 border-b text-left text-sm font-semibold">
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  checked={currentUsers.length === selectedUsers.length}
+                />
+              </th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Name</th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Email</th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Phone</th>
@@ -165,11 +202,14 @@ const UsersEnquiry = () => {
           <tbody>
             {currentUsers.length > 0 ? (
               currentUsers.map((inquiry, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-gray-100 cursor-pointer"
-                  onClick={() => openModal(inquiry)}
-                >
+                <tr key={index} className="hover:bg-gray-100">
+                  <td className="px-4 py-2 border-b text-sm">
+                    <input
+                      type="checkbox"
+                      checked={selectedUsers.includes(inquiry.email)}
+                      onChange={() => handleUserSelection(inquiry.email)}
+                    />
+                  </td>
                   <td className="px-4 py-2 border-b text-sm">{inquiry.name}</td>
                   <td className="px-4 py-2 border-b text-sm">{inquiry.email}</td>
                   <td className="px-4 py-2 border-b text-sm">{inquiry.phone}</td>
@@ -222,23 +262,15 @@ const UsersEnquiry = () => {
         </button>
       </div>
 
-      {/* Modal (Popup) */}
-      {modalVisible && selectedInquiry && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-6 w-96">
-            <h3 className="text-xl font-semibold mb-4">Inquiry Details</h3>
-            <p><strong>Name:</strong> {selectedInquiry.name}</p>
-            <p><strong>Email:</strong> {selectedInquiry.email}</p>
-            <p><strong>Phone:</strong> {selectedInquiry.phone}</p>
-            <p><strong>Preferred Date:</strong> {selectedInquiry.preferredDate}</p>
-            <p><strong>Message:</strong> {selectedInquiry.message}</p>
-            <button
-              onClick={closeModal}
-              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
-            >
-              Close
-            </button>
-          </div>
+      {/* Delete Button (only shown when a user is selected) */}
+      {selectedUsers.length > 0 && (
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={handleDeleteSelected}
+            className="px-6 py-2 bg-red-500 text-white rounded-lg"
+          >
+            Delete Selected
+          </button>
         </div>
       )}
     </div>
