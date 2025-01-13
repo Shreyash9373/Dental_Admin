@@ -246,8 +246,7 @@ const AddEvent = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Events</h1>
-      <p className="mb-4">Add new events here</p>
+      <h1 className="text-2xl font-bold mb-4">Add Events</h1>
 
       {/* Button to toggle form */}
       <button

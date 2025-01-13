@@ -14,6 +14,7 @@ import SeeAppointment from "./components/Doctor Module/SeeAppointment";
 import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./context/AuthContext";
+import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -72,6 +73,7 @@ function App() {
             <Route path='add-event' element={<AddEvent />} />
             <Route path='blogs' element={<Blogs />} />
             <Route path='see-appointment' element={<SeeAppointment />} />
+            <Route path='updatepassword' element={<UpdatePassword />} />
           </Route>
 
           {/* Wildcard to catch anything else */}

@@ -103,7 +103,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                       : "hover:text-gray-300 font-normal" +
                         " w-full inline-block"
                   }>
-                  Add Event
+                  Add Events
                 </NavLink>
               </li>
               <li>
@@ -116,7 +116,20 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                       : "hover:text-gray-300 font-normal" +
                         " w-full inline-block"
                   }>
-                  Blogs
+                  Add Blogs
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
+                  to='/admin/dashboard/updatepassword'
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-400 font-bold"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
+                  }>
+                  Update Password
                 </NavLink>
               </li>
             </ul>
