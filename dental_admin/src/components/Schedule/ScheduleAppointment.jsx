@@ -1,3 +1,4 @@
+// ANIKET
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -278,7 +279,7 @@ const ScheduleAppointment = () => {
                 <select
                   {...register("status")}
                   className='w-full p-2 border border-gray-300 rounded-lg'>
-                  <option value='Scheduled'>Scheduled</option>
+                  <option value='Postponed'>Postponed</option>
                   <option value='Completed'>Completed</option>
                   <option value='Cancelled'>Cancelled</option>
                 </select>
