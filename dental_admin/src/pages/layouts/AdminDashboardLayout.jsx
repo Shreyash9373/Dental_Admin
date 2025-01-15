@@ -9,6 +9,10 @@ const AdminDashboardLayout = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const { isLoggedIn } = useAuth();
 
+  useEffect(() => {
+    document.body.style.overflow = isHamburgerOpen ? "hidden" : "";
+  }, [isHamburgerOpen]);
+
   return isLoggedIn ? (
     <div className='h-auto flex flex-row'>
       {/* Sidebar */}
