@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/Dr.Pakhare1.jpeg";
 
 import { IoClose } from "react-icons/io5";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
   // Example admin state
@@ -12,6 +13,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
     name: "Dr. Pakhare", // Replace with dynamic data
     isLoggedIn: true, // Replace with authentication logic
   });
+  const { authUser } = useAuth();
 
   return (
     <>
@@ -42,97 +44,104 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
           {/* Navigation Links */}
           <nav className='border-t border-gray-600 pt-4'>
             <ul className='space-y-4'>
-              <li>
-                <NavLink
-                  onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/admin/dashboard/user-enquiry'
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal" +
-                        " w-full inline-block"
-                  }>
-                  User's Enquiry
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/admin/dashboard/schedule-appointments'
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal" +
-                        " w-full inline-block"
-                  }>
-                  Scheduled Appointments
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/admin/dashboard/book-apointment'
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal" +
-                        " w-full inline-block"
-                  }>
-                  Book Appointment
-                </NavLink>
-              </li>
-              <li className='pt-8 border-t border-gray-700'>
-                <NavLink
-                  onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/admin/dashboard/see-appointment'
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal" +
-                        " w-full inline-block"
-                  }>
-                  See Apointments
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/admin/dashboard/add-event'
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal" +
-                        " w-full inline-block"
-                  }>
-                  Add Events
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/admin/dashboard/blogs'
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal" +
-                        " w-full inline-block"
-                  }>
-                  Add Blogs
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  onClick={(e) => setIsHamburgerOpen(false)}
-                  to='/admin/dashboard/updatepassword'
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-bold"
-                      : "hover:text-gray-300 font-normal" +
-                        " w-full inline-block"
-                  }>
-                  Update Password
-                </NavLink>
-              </li>
+              {authUser.role === "receptionist" ? (
+                <>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/user-enquiry'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      User's Enquiry
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/schedule-appointments'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      Scheduled Appointments
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/book-apointment'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      Book Appointment
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/see-appointment'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      See Apointments
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/add-event'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      Add Events
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/blogs'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      Add Blogs
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/updatepassword'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      Update Password
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </nav>
         </div>

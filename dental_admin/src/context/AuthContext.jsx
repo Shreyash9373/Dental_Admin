@@ -1,13 +1,22 @@
 //ANIKET
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [authUser, setAuthUser] = useState({
+    username: "",
+    // role: "receptionist",
+    role: "doctor",
+  });
+  console.log("From AuthContext", authUser);
+
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: true,
+        authUser,
+        setAuthUser,
       }}>
       {children}
     </AuthContext.Provider>
