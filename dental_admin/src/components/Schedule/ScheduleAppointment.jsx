@@ -124,33 +124,6 @@ const ScheduleAppointment = () => {
     setEditingAppointment(null);
   };
 
-  // const handleSaveEdit = async (data) => {
-  //   const updatedAppointments = appointments[formatDate(selectedDate)].map(
-  //     (appt) =>
-  //       appt._id === editingAppointment._id
-  //         ? { ...appt, ...data }
-  //         : appt
-  //   );
-
-  //   setAppointments((prev) => ({
-  //     ...prev,
-  //     [formatDate(selectedDate)]: updatedAppointments,
-  //   }));
-
-  //   closeEditModal();
-
-  //   // Optionally update the database here:
-  //   try {
-  //     await axios.put(
-  //       `http://localhost:4000/api/reception/update-patient/${editingAppointment._id}`,
-  //       data
-  //     );
-  //     toast.success("Patient details updated!");
-  //   } catch (err) {
-  //     toast.error("Failed to update patient details");
-  //   }
-  // };
-
   return (
     <div className='mx-auto p-6 bg-white shadow-md rounded-lg'>
       <h2 className='text-3xl font-bold text-gray-800 mb-6 text-center'>
@@ -177,11 +150,10 @@ const ScheduleAppointment = () => {
         {weekDates.map((date, index) => (
           <button
             key={index}
-            className={`min-w-32 flex-grow p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${
-              selectedDate?.toDateString() === date.toDateString()
-                ? "ring-2 ring-yellow-400"
-                : ""
-            }`}
+            className={`min-w-32 flex-grow p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${selectedDate?.toDateString() === date.toDateString()
+              ? "ring-2 ring-yellow-400"
+              : ""
+              }`}
             onClick={() => {
               setSelectedDate(date);
               getScheduleAppointments(formatDate(date));
@@ -195,6 +167,7 @@ const ScheduleAppointment = () => {
       </div>
 
       {selectedDate && (
+        
         <div className='bg-gray-50 p-4 rounded-lg shadow-md'>
           <h3 className='text-xl font-semibold text-gray-700 mb-4'>
             Appointments for {selectedDate.toDateString()}
@@ -204,42 +177,85 @@ const ScheduleAppointment = () => {
           ) : error ? (
             <p className='text-red-500'>{error}</p>
           ) : appointments[formatDate(selectedDate)]?.length > 0 ? (
-            <table className='min-w-full border border-gray-300'>
-              <thead>
-                <tr className='bg-blue-500 text-white text-left'>
-                  <th className='py-2'>Patient Name</th>
-                  <th className='py-2'>Contact</th>
-                  <th className='py-2'>Operation</th>
-                  <th className='py-2'>Time-Slot</th>
-                  <th className='py-2'>Date</th>
-                  <th className='py-2'>Status</th>
-                  <th className='py-2'>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
+            <>
+              {/* Table for Desktop View */}
+              <div className='hidden lg:block overflow-x-auto'>
+                <table className='min-w-full border border-gray-300'>
+                  <thead>
+                    <tr className='bg-blue-500 text-white text-left'>
+                      <th className='py-2 px-4'>Patient Name</th>
+                      <th className='py-2 px-4'>Contact</th>
+                      <th className='py-2 px-4'>Operation</th>
+                      <th className='py-2 px-4'>Time-Slot</th>
+                      <th className='py-2 px-4'>Date</th>
+                      <th className='py-2 px-4'>Status</th>
+                      <th className='py-2 px-4'>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {appointments[formatDate(selectedDate)]?.map((appt) => (
+                      <tr key={appt._id} className='border-t'>
+                        <td className='py-2 px-4'>{appt.fullName}</td>
+                        <td className='py-2 px-4'>{appt.mobileNo}</td>
+                        <td className='py-2 px-4'>{appt.service}</td>
+                        <td className='py-2 px-4'>{appt.timeSlot}</td>
+                        <td className='py-2 px-4'>
+                          {new Date(appt.date).toISOString().split('T')[0]}
+                        </td>
+                        <td className='py-2 px-4'>{appt.status}</td>
+                        <td className='py-2 px-4'>
+                          <button
+                            className='bg-blue-500 text-white px-2 py-1 rounded'
+                            onClick={() => openEditModal(appt)}>
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Cards for Mobile View */}
+              <div className='block lg:hidden space-y-4'>
                 {appointments[formatDate(selectedDate)]?.map((appt) => (
-                  <tr key={appt._id}>
-                    <td>{appt.fullName}</td>
-                    <td>{appt.mobileNo}</td>
-                    <td>{appt.service}</td>
-                    <td>{appt.timeSlot}</td>
-                    <td>{new Date(appt.date).toISOString().split("T")[0]}</td>
-                    <td>{appt.status}</td>
-                    <td>
-                      <button
-                        className='bg-blue-500 text-white px-2 py-1 rounded'
-                        onClick={() => openEditModal(appt)}>
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
+                  <div
+                    key={appt._id}
+                    className='p-4 border border-gray-300 rounded-lg shadow'>
+                    <p>
+                      <span className='font-semibold'>Name:</span> {appt.fullName}
+                    </p>
+                    <p>
+                      <span className='font-semibold'>Contact:</span> {appt.mobileNo}
+                    </p>
+                    <p>
+                      <span className='font-semibold'>Operation:</span> {appt.service}
+                    </p>
+                    <p>
+                      <span className='font-semibold'>Time Slot:</span> {appt.timeSlot}
+                    </p>
+                    <p>
+                      <span className='font-semibold'>Date:</span>{' '}
+                      {new Date(appt.date).toISOString().split('T')[0]}
+                    </p>
+                    <p>
+                      <span className='font-semibold'>Status:</span> {appt.status}
+                    </p>
+                    <button
+                      className='bg-blue-500 text-white px-4 py-2 mt-2 rounded'
+                      onClick={() => openEditModal(appt)}>
+                      Edit
+                    </button>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </>
           ) : (
             <p className='text-gray-500'>No appointments for this day.</p>
           )}
         </div>
+
+
       )}
 
       {/* Modal for editing appointment */}
