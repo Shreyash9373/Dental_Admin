@@ -1,5 +1,5 @@
-//ANIKET
-import React, { useEffect, useState } from "react";
+// ANIKET
+import React, { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/Navbar";
@@ -7,32 +7,35 @@ import { useAuth } from "../../context/AuthContext";
 
 const AdminDashboardLayout = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { authUser } = useAuth();
 
-  return isLoggedIn ? (
-    <div className=' -translate-x-64 h-auto flex flex-row lg:-translate-x-0'>
+  if (!authUser?.isLoggedIn) {
+    return <Navigate to='/admin/login' />;
+  }
+
+  return (
+    <div className='flex flex-row h-auto min-h-screen'>
       {/* Sidebar */}
       <Sidebar
-        className='w-64 bg-gray-800 text-white'
         isHamburgerOpen={isHamburgerOpen}
         setIsHamburgerOpen={setIsHamburgerOpen}
+        className='w-64 bg-gray-800 text-white'
       />
+
       {/* Main Content */}
-      <div className='flex-1 flex flex-col bg-gray-200 min-h-screen w-screen'>
+      <div className='flex-1 flex flex-col bg-gray-200'>
         {/* Navbar */}
         <Navbar
           isHamburgerOpen={isHamburgerOpen}
           setIsHamburgerOpen={setIsHamburgerOpen}
         />
 
-        {/* Routes */}
-        <div className='flex-1 p-4 overflow-y-auto'>
+        {/* Content */}
+        <main className='flex-1 p-4 overflow-y-auto'>
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
-  ) : (
-    <Navigate to='/admin/login' />
   );
 };
 
