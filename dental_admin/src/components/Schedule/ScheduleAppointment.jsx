@@ -26,7 +26,7 @@ const ScheduleAppointment = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { register, handleSubmit, reset } = useForm();  // react-hook-form
+  const { register, handleSubmit, reset } = useForm(); // react-hook-form
 
   const formatDate = (date) => date.toISOString().split("T")[0];
 
@@ -71,7 +71,7 @@ const ScheduleAppointment = () => {
 
       // Include the _id in the data object
       const updatedData = { ...data, _id: editingAppointment._id };
-      console.log(updatedData)
+      console.log(updatedData);
       // Send the updated patient data to the API, with _id in the body
       const response = await axios.put(
         "http://localhost:4000/api/reception/update-patient",
@@ -83,9 +83,7 @@ const ScheduleAppointment = () => {
       // Update local state to reflect the changes made
       const updatedAppointments = appointments[formatDate(selectedDate)].map(
         (appt) =>
-          appt._id === editingAppointment._id
-            ? { ...appt, ...data }
-            : appt
+          appt._id === editingAppointment._id ? { ...appt, ...data } : appt
       );
 
       setAppointments((prev) => ({
@@ -102,7 +100,6 @@ const ScheduleAppointment = () => {
       setLoading(false);
     }
   };
-
 
   useEffect(() => {
     const date = formatDate(currentWeek);
@@ -129,7 +126,6 @@ const ScheduleAppointment = () => {
       service: appointment.service,
       timeSlot: appointment.timeSlot,
       status: appointment.status,
-
     });
   };
 
@@ -140,43 +136,40 @@ const ScheduleAppointment = () => {
 
 
   return (
-    <div className="mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className='mx-auto p-6 bg-white shadow-md rounded-lg'>
+      <h2 className='text-3xl font-bold text-gray-800 mb-6 text-center'>
         Dental Clinic Schedule
       </h2>
 
-      <div className="flex justify-between items-center mb-6">
+      <div className='flex justify-between items-center mb-6'>
         <button
-          className="p-2 bg-blue-500 text-white rounded-lg shadow-md font-bold hover:bg-blue-600"
-          onClick={() => handleWeekChange(-1)}
-        >
+          className='p-2 bg-blue-500 text-white rounded-lg shadow-md font-bold hover:bg-blue-600'
+          onClick={() => handleWeekChange(-1)}>
           &lt;
         </button>
-        <div className="text-lg font-bold text-gray-600">
+        <div className='text-lg font-bold text-gray-600'>
           {weekDates[0].toDateString()} - {weekDates[6].toDateString()}
         </div>
         <button
-          className="p-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600"
-          onClick={() => handleWeekChange(1)}
-        >
+          className='p-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600'
+          onClick={() => handleWeekChange(1)}>
           &gt;
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-4 mb-6">
+      <div className='flex flex-wrap gap-4 justify-center mb-6'>
         {weekDates.map((date, index) => (
           <button
             key={index}
-            className={`p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${selectedDate?.toDateString() === date.toDateString()
-                ? "ring-2 ring-yellow-400"
-                : ""
+            className={`min-w-32 flex-grow p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${selectedDate?.toDateString() === date.toDateString()
+              ? "ring-2 ring-yellow-400"
+              : ""
               }`}
             onClick={() => {
               setSelectedDate(date);
               getScheduleAppointments(formatDate(date));
-            }}
-          >
-            <span className="block font-bold">
+            }}>
+            <span className='block font-bold'>
               {date.toDateString().split(" ")[0]}
             </span>
             <span>{date.getDate()}</span>
@@ -192,7 +185,7 @@ const ScheduleAppointment = () => {
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
-            <p className="text-red-500">{error}</p>
+            <p className='text-red-500'>{error}</p>
           ) : appointments[formatDate(selectedDate)]?.length > 0 ? (
             <table className="min-w-full border border-gray-300">
               <thead>
@@ -231,63 +224,62 @@ const ScheduleAppointment = () => {
             <p className="text-gray-500">No appointments for this day.</p>
           )}
         </div>
+
+
       )}
 
       {/* Modal for editing appointment */}
       {isModalOpen && editingAppointment && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-2xl font-semibold text-gray-700 mb-4">
+        <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center'>
+          <div className='bg-white p-6 rounded-lg shadow-lg w-96'>
+            <h3 className='text-2xl font-semibold text-gray-700 mb-4'>
               Edit Appointment
             </h3>
             <form onSubmit={handleSubmit(updatePatient)}>
-              <div className="mb-4">
-                <label className="block text-gray-700">Patient Name</label>
+              <div className='mb-4'>
+                <label className='block text-gray-700'>Patient Name</label>
                 <input
-                  type="text"
+                  type='text'
                   {...register("fullName")}
-                  className="w-full p-2 border border-gray-300 rounded-lg"
+                  className='w-full p-2 border border-gray-300 rounded-lg'
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Contact</label>
+              <div className='mb-4'>
+                <label className='block text-gray-700'>Contact</label>
                 <input
-                  type="text"
+                  type='text'
                   {...register("mobileNo")}
-                  className="w-full p-2 border border-gray-300 rounded-lg"
+                  className='w-full p-2 border border-gray-300 rounded-lg'
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Time Slot</label>
+              <div className='mb-4'>
+                <label className='block text-gray-700'>Time Slot</label>
                 <input
-                  type="text"
+                  type='text'
                   {...register("timeSlot")}
-                  className="w-full p-2 border border-gray-300 rounded-lg"
+                  className='w-full p-2 border border-gray-300 rounded-lg'
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Status</label>
+              <div className='mb-4'>
+                <label className='block text-gray-700'>Status</label>
                 <select
                   {...register("status")}
-                  className="w-full p-2 border border-gray-300 rounded-lg"
-                >
-                  <option value="Postponed">Postponed</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
+                  className='w-full p-2 border border-gray-300 rounded-lg'>
+                  <option value='Postponed'>Postponed</option>
+                  <option value='Completed'>Completed</option>
+                  <option value='Cancelled'>Cancelled</option>
                 </select>
               </div>
-              <div className="flex justify-end">
+              <div className='flex justify-end'>
                 <button
-                  type="button"
+                  type='button'
                   onClick={closeEditModal}
-                  className="bg-gray-300 px-4 py-2 rounded-lg mr-4"
-                >
+                  className='bg-gray-300 px-4 py-2 rounded-lg mr-4'>
                   Cancel
                 </button>
                 <button
-                  type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                >
+                  type='submit'
+                  className='bg-blue-500 text-white px-4 py-2 rounded-lg'>
                   Save
                 </button>
               </div>

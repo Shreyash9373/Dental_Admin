@@ -53,16 +53,6 @@ const Blogs = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Add Blogs</h1>
 
-      {/* Button to open the form */}
-      <button
-        onClick={() => setIsFormVisible(!isFormVisible)}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        {isFormVisible ? "Cancel" : "Create Blog Post"}
-      </button>
-
-      {/* Blog Post Form */}
-      {isFormVisible && (
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-4 bg-gray-100 p-4 rounded shadow-md"
@@ -125,7 +115,6 @@ const Blogs = () => {
             Post Blog
           </button>
         </form>
-      )}
     </div>
   );
 };

@@ -53,10 +53,11 @@ const AddEvent = () => {
       // Clear the form
       setEventData({ date: "", time: "", location: "", description: "", image: null });
       setIsFormVisible(false);
-      alert("Event created successfully!");
+     
     } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to add event. Please try again.");
+      
       console.error("Error creating event:", error);
-      alert("Failed to create the event.");
     }
   };
 
@@ -64,16 +65,6 @@ const AddEvent = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Add Events</h1>
 
-      {/* Button to toggle form */}
-      <button
-        onClick={() => setIsFormVisible(!isFormVisible)}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        {isFormVisible ? "Cancel" : "Add New Event"}
-      </button>
-
-      {/* Event Form */}
-      {isFormVisible && (
         <form
           onSubmit={handleFormSubmit}
           className="mt-4 bg-gray-100 p-4 rounded shadow-md"
@@ -194,7 +185,6 @@ const AddEvent = () => {
             Post Event
           </button>
         </form>
-      )}
     </div>
   );
 };

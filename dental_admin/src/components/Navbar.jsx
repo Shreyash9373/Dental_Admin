@@ -31,7 +31,7 @@ const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
 
   return (
     // <div className="py-5 px-14 flex justify-between items-center bg-[#062335]">
-    <div className='h-20 px-3 py-1 flex justify-between items-center bg-[#253d4b] md:px-5 md:py-3'>
+    <div className='h-20 px-3 py-1 sticky top-0 left-0 right-0 z-30 flex justify-between items-center bg-[#253d4b] md:px-5 md:py-3'>
       <button
         onClick={(e) => {
           setIsHamburgerOpen((prev) => !prev);

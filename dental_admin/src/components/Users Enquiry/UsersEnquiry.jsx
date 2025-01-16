@@ -17,7 +17,7 @@ const UsersEnquiry = () => {
       email: "smit@gmail.com",
       phone: "+9876543210",
       preferredDate: "2025-01-15",
-      message: "I need a consultation for a toothache. Please schedule an appointment for me.",
+      message: "I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache.",
     },
     {
       name: "Aniket Tambe",
@@ -89,7 +89,6 @@ const UsersEnquiry = () => {
       preferredDate: "2025-03-01",
       message: "I need an appointment for a regular dental checkup.",
     }
-    
   ]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -139,9 +138,9 @@ const UsersEnquiry = () => {
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedUsers(currentUsers.map((user) => user.email)); // Select all current users
+      setSelectedUsers(currentUsers.map((user) => user.email));
     } else {
-      setSelectedUsers([]); // Deselect all
+      setSelectedUsers([]);
     }
   };
 
@@ -158,7 +157,7 @@ const UsersEnquiry = () => {
       (user) => !selectedUsers.includes(user.email)
     );
     setUserEnquiries(updatedEnquiries);
-    setSelectedUsers([]); // Clear selected users after deletion
+    setSelectedUsers([]);
   };
 
   return (
@@ -194,7 +193,9 @@ const UsersEnquiry = () => {
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Name</th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Email</th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Phone</th>
-              <th className="px-4 py-2 border-b text-left text-sm font-semibold">Preferred Date</th>
+              <th className="px-4 py-2 border-b text-left text-sm font-semibold">
+                Inquiry Date
+              </th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Message</th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Action</th>
             </tr>
@@ -262,7 +263,7 @@ const UsersEnquiry = () => {
         </button>
       </div>
 
-      {/* Delete Button (only shown when a user is selected) */}
+      {/* Delete Button */}
       {selectedUsers.length > 0 && (
         <div className="flex justify-end mt-4">
           <button

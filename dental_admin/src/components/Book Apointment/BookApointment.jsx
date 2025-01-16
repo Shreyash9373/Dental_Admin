@@ -2,16 +2,21 @@
 import React , {useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
-import axios from 'axios';
-
+import axios from "axios";
 
 const BookApointment = () => {
-  const { register, handleSubmit , watch , reset , formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [loading, setLoading] = useState(false); // Loading state
   const [availableSlots, setAvailableSlots] = useState([]); // Available time slots
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
- 
+
   const selectedDate = watch("date"); // Watch selected date
 
   useEffect(() => {
@@ -212,9 +217,8 @@ const BookApointment = () => {
         </div>
       )}
 
-      {error && <div className="text-red-500 mt-4">{error}</div>}
+      {error && <div className='text-red-500 mt-4'>{error}</div>}
     </div>
-  
   );
 };
 
