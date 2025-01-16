@@ -5,8 +5,8 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState({
-    username: "",
-    // role: "receptionist",
+    username: "admin",
+    isLoggedIn:true,
     role: "doctor"
   });
   console.log("From AuthContext", authUser);
@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: true,
         authUser,
         setAuthUser,
       }}>

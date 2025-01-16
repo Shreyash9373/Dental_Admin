@@ -10,9 +10,8 @@ const LoginPage = () => {
   const [user, setUser] = useState("receptionist");
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false); // Loading state
-  const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
-  const { isLoggedIn, authUser, setAuthUser } = useAuth();
+  const { authUser, setAuthUser } = useAuth();
 
   const handleUserChange = () => {
     setUser((prev) => (prev === "doctor" ? "receptionist" : "doctor"));
@@ -27,17 +26,17 @@ const LoginPage = () => {
         "http://localhost:4000/api/dashboard/login",
         data,{withCredentials:true}
       );
-      setResponseData(response.data);
+      
       console.log("response:", response.data);
 
-      if (response.data.success) {
-        toast.success("Login success!");
-        setAuthUser((prev) => ({
-          ...prev,
-          username: response.data.user.username,
-          role: response.data.user.role,
-        }));
-      } else {
+     if(response.data && response.data.user){
+    toast.success("Login successfully");
+    setAuthUser({
+      username: response.data.user.username,
+      role: response.data.user.role,
+      isLoggedIn:true
+    })
+     } else {
         toast.error(`Login failed! ${response.data.message}`);
       }
     } catch (error) {
@@ -51,7 +50,7 @@ const LoginPage = () => {
     }
   };
 
-  return isLoggedIn ? (
+  return authUser.isLoggedIn ? (
     <Navigate to='/admin/dashboard' />
   ) : (
     <div className='w-screen h-screen flex justify-center items-center'>
