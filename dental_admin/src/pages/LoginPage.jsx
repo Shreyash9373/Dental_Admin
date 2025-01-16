@@ -25,7 +25,7 @@ const LoginPage = () => {
       setError(null); // Reset any previous error
       const response = await axios.post(
         "http://localhost:4000/api/dashboard/login",
-        data
+        data,{withCredentials:true}
       );
       setResponseData(response.data);
       console.log("response:", response.data);

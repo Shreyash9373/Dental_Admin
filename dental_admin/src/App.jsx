@@ -65,7 +65,7 @@ function App() {
             {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
             <Route index element={<Navigate to="user-enquiry" />} />
 
-            <Route path='user-enquiry' element={<UsersEnquiry />} index />
+            <Route path="user-enquiry" element={<UsersEnquiry />} index />
             <Route
               path="schedule-appointments"
               element={<ScheduleAppointment />}

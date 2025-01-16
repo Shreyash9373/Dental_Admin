@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const UpdatePassword = () => {
@@ -15,37 +16,45 @@ const UpdatePassword = () => {
 
   const [role, setRole] = useState(""); // State to manage the selected role
   const [doctors, setDoctors] = useState([]); // State to store doctors list
-  const newPassword = watch("newPassword"); // For confirm password validation
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const[password,setPassword]=useState("");
+  const[confirmpassword,setConfirmPassword]=useState("");
+
+  //const newPassword = watch("newPassword"); // For confirm password validation
 
   // Fetch the list of doctors when the role is selected as "Doctor"
-  useEffect(() => {
-    if (role === "doctor") {
-      axios
-        .get("http://localhost:4000/api/doctors") // Replace with your API endpoint
-        .then((response) => setDoctors(response.data))
-        .catch((error) => console.error("Failed to fetch doctors:", error));
-    }
-  }, [role]);
+  // useEffect(() => {
+  //   if (role === "doctor") {
+  //     axios
+  //       .get("http://localhost:4000/api/doctors") // Replace with your API endpoint
+  //       .then((response) => setDoctors(response.data))
+  //       .catch((error) => console.error("Failed to fetch doctors:", error));
+  //   }
+  // }, [role]);
 
   const onSubmit = async (data) => {
     try {
       
-       console.log(data);
+      console.log(data);
       const response = await axios.post(
         "http://localhost:4000/api/dashboard/change-password",
-        data
+        data, {withCredentials:true}
       );
       if (response) {
         toast.success(response.data.message || "Password Updated successfully!");
       }
      
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to update password.");
+      toast.error(
+              error.response?.data?.message ||
+                "Failed to book appointment. Please try again."
+            );
     }
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="p-4 max-w-md mx-auto relative">
       {/* Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -151,7 +160,7 @@ const UpdatePassword = () => {
           </label>
           <input
             id="newPassword"
-            type="password"
+            type={showPassword ? "text" : "password"}
             {...register("Password", {
               required: "New password is required",
               minLength: {
@@ -159,11 +168,23 @@ const UpdatePassword = () => {
                 message: "Password must be at least 6 characters long",
               },
             })}
+            onChange={(e)=>setPassword(e.target.value)}
             className={`mt-1 block w-full border ${
               errors.Password ? "border-red-500" : "border-gray-300"
             } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             placeholder="Enter new password"
           />
+          {
+            password.length > 0 && 
+          (
+           <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-10 top-[12.5rem]"
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+          )}
           {errors.Password && (
             <p className="text-red-500 text-sm mt-1">
               {errors.Password.message}
@@ -181,7 +202,7 @@ const UpdatePassword = () => {
           </label>
           <input
             id="confirmPassword"
-            type="password"
+            type={showConfirmPassword ? "text":"password"}
             {...register("confirmPassword", {
               required: "Confirm password is required",
               validate: (value) => {
@@ -189,11 +210,26 @@ const UpdatePassword = () => {
                 return value === password || "Passwords do not match";
               }
             })}
+            onChange={(e)=>setConfirmPassword(e.target.value)}
+
             className={`mt-1 block w-full border ${
               errors.confirmPassword ? "border-red-500" : "border-gray-300"
             } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             placeholder="Confirm new password"
           />
+          {
+            confirmpassword.length > 0 && (
+              <button
+              type="button"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              className="absolute right-10 bottom-[6.5rem]"
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+
+            )}
+          
+         
           {errors.confirmPassword && (
             <p className="text-red-500 text-sm mt-1">
               {errors.confirmPassword.message}
