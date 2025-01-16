@@ -15,6 +15,9 @@ import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./context/AuthContext";
 import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
+import DoctorLayout from "./pages/layouts/DoctorLayout";
+import ReceptionistLayout from "./pages/layouts/ReceptionistLayout";
+import RoleBasedRedirect from "./components/RoleBasedRedirect";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -23,7 +26,7 @@ function App() {
     <div className='min-h-screen w-screen lg:block'>
       <BrowserRouter>
         <ToastContainer
-          position="top-right"
+          position='top-right'
           autoClose={3000}
           hideProgressBar={false}
           newestOnTop={true}
@@ -41,11 +44,11 @@ function App() {
             fontFamily: "sans-serif",
           }}
         />
-        
+
         <Routes>
-          {/* Login Route */}
+          {/* Admin Login Route */}
           <Route
-            path="/admin/login"
+            path='/admin/login'
             element={
               <AuthProvider>
                 <LoginPage />
@@ -53,32 +56,43 @@ function App() {
             }
           />
 
-          {/* Admin Dashboard */}
+          {/* Admin Dashboard Routes */}
           <Route
-            path="/admin/dashboard"
+            path='/admin/dashboard'
             element={
               <AuthProvider>
                 <AdminDashboardLayout />
               </AuthProvider>
-            }
-          >
-            {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
-            <Route index element={<Navigate to="user-enquiry" />} />
+            }>
+            {/* Redirect based on role */}
+            <Route index element={<RoleBasedRedirect />} />
 
-            <Route path='user-enquiry' element={<UsersEnquiry />} index />
-            <Route
-              path="schedule-appointments"
-              element={<ScheduleAppointment />}
-            />
-            <Route path="book-apointment" element={<BookApointment />} />
-            <Route path="add-event" element={<AddEvent />} />
-            <Route path="blogs" element={<Blogs />} />
-            <Route path="see-appointment" element={<SeeAppointment />} />
-            <Route path="updatepassword" element={<UpdatePassword />} />
+            {/* Doctor Routes */}
+            <Route path='doctor' element={<DoctorLayout />}>
+              {/* Redirect from /admin/dashboard to /admin/dashboard/add-event */}
+              <Route index element={<Navigate to='see-appointment' />} />
+
+              <Route path='add-event' element={<AddEvent />} />
+              <Route path='blogs' element={<Blogs />} />
+              <Route path='see-appointment' element={<SeeAppointment />} />
+              <Route path='updatepassword' element={<UpdatePassword />} />
+            </Route>
+
+            {/* Receptionist Routes */}
+            <Route path='receptionist' element={<ReceptionistLayout />}>
+              {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
+              <Route index element={<Navigate to='user-enquiry' />} />
+              <Route path='user-enquiry' element={<UsersEnquiry />} index />
+              <Route
+                path='schedule-appointments'
+                element={<ScheduleAppointment />}
+              />
+              <Route path='book-apointment' element={<BookApointment />} />{" "}
+            </Route>
           </Route>
 
           {/* Wildcard to catch anything else */}
-          <Route path="*" element={<Navigate to="/admin/login" />} />
+          <Route path='*' element={<Navigate to='/admin/login' />} />
         </Routes>
       </BrowserRouter>
     </div>
