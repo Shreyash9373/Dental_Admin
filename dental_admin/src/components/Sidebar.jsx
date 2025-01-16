@@ -49,7 +49,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/user-enquiry'
+                      to='/admin/dashboard/receptionist/user-enquiry'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
@@ -62,7 +62,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/schedule-appointments'
+                      to='/admin/dashboard/receptionist/schedule-appointments'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
@@ -75,7 +75,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/book-apointment'
+                      to='/admin/dashboard/receptionist/book-apointment'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
@@ -91,7 +91,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/see-appointment'
+                      to='/admin/dashboard/doctor/see-appointment'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
@@ -104,7 +104,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/add-event'
+                      to='/admin/dashboard/doctor/add-event'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
@@ -117,7 +117,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/blogs'
+                      to='/admin/dashboard/doctor/blogs'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
@@ -130,7 +130,7 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/updatepassword'
+                      to='/admin/dashboard/doctor/updatepassword'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
