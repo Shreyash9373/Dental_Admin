@@ -36,7 +36,7 @@ const SeeAppointment = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/reception/get-patient",
-        { date: formattedDate }
+        { date: formattedDate },{withCredentials:true}
       );
 
       setAppointments((prev) => ({

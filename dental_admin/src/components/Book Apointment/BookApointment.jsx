@@ -26,7 +26,7 @@ const BookApointment = () => {
           const response = await axios.get(
             `http://localhost:4000/api/reception/available-slots?date=${encodeURIComponent(
               selectedDate
-            )}`
+            )}`,{withCredentials:true}
           );
 
           // Assuming the backend sends available slots in `response.data.availableSlots`
@@ -49,7 +49,7 @@ const BookApointment = () => {
       setError(null); // Reset any previous error
       const response = await axios.post(
         "http://localhost:4000/api/reception/book-appointment",
-        data
+        data,{withCredentials:true}
       );
       setResponseData(response.data);
       toast.success(

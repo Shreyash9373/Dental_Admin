@@ -26,7 +26,7 @@ const AddEvent = () => {
       formData.append("image", data.image[0]); // Access the file from the array
 
       // API POST request
-      const response = await axios.post("http://localhost:4000/api/doctor/add-event", formData);
+      const response = await axios.post("http://localhost:4000/api/doctor/add-event", formData,{withCredentials:true});
       if(response.success){
          toast.success(response.data.message || "Event Added successfully!");
       }
