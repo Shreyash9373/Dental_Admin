@@ -16,41 +16,51 @@ const BookApointment = () => {
 
   useEffect(() => {
     if (selectedDate) {
-      const fetchAvailableSlots = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:4000/api/reception/available-slots?date=${encodeURIComponent(selectedDate)}`
-          );
+        console.log("Selected date:", selectedDate); // Log selected date
+        const fetchAvailableSlots = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:4000/api/reception/available-slots?date=${encodeURIComponent(selectedDate)}`,
+                    { withCredentials: true } // Ensure cookies are included
+                );
+                console.log("Available slots response:", response.data); // Log response
+                setAvailableSlots(response.data.availableSlots || []);
+            } catch (error) {
+                console.error("Error fetching available slots:", error.message); // Log errors
+                setAvailableSlots([]);
+            }
+        };
 
-          // Assuming the backend sends available slots in `response.data.availableSlots`
-          setAvailableSlots(response.data.availableSlots || []);
-          console.log(response.data.availableSlots)
-        } catch (error) {
-          console.error("Error fetching available slots:", error);
-          setAvailableSlots([]); // Reset available slots on error
-        }
-      };
-
-      fetchAvailableSlots();
+        fetchAvailableSlots();
     }
-  }, [selectedDate]);
+}, [selectedDate]);
+
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log("Form submission data:", data); // Debugging form data
     try {
-      setLoading(true); // Start loading
-      setError(null); // Reset any previous error
-      const response = await axios.post('http://localhost:4000/api/reception/book-appointment', data);
-      setResponseData(response.data);
-      toast.success(response.data.message || "Appointment booked successfully!");
+        setLoading(true);
+        setError(null);
+
+        const response = await axios.post(
+            "http://localhost:4000/api/reception/book-appointment",
+            data,
+            { withCredentials: true } // Include cookies in request
+        );
+
+        console.log("Booking response:", response.data); // Log success response
+        setResponseData(response.data);
+        toast.success(response.data.message || "Appointment booked successfully!");
     } catch (error) {
-      setError(error.message);
-      toast.error(error.response?.data?.message || "Failed to book appointment. Please try again.");
+        console.error("Booking error:", error.message); // Log error message
+        setError(error.response?.data?.message || "Failed to book appointment. Please try again.");
+        toast.error(error.response?.data?.message || "Failed to book appointment. Please try again.");
     } finally {
-      setLoading(false); // Stop loading
-      reset(); // Reset the form
+        setLoading(false);
+        reset(); // Reset the form after completion
     }
-  };
+};
+
 
   return (
     <div className="max-w-4xl my-10 bg-gradient-to-b from-blue-400 via-blue-500 to-cyan-500 mx-auto p-4 rounded-lg shadow-xl">

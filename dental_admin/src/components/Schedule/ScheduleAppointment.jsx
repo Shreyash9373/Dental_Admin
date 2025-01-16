@@ -39,8 +39,15 @@ const ScheduleAppointment = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/reception/get-patient",
-        { date: formattedDate }
-      );
+        { date: formattedDate },
+        {
+            withCredentials: true, // Include cookies in the request
+            // headers: {
+            //   Authorization: `Bearer ${token}`, // Include JWT
+            // },
+        }
+    );
+    
 
       setAppointments((prev) => ({
         ...prev,
@@ -49,6 +56,7 @@ const ScheduleAppointment = () => {
 
       console.log("Patient Data: ", response.data.patient);
     } catch (err) {
+      console.log(err)
       setError(err.response?.data?.message || "Failed to fetch appointments.");
       toast.error(err.response?.data?.message || "Failed to get Appointments.");
     } finally {
@@ -67,7 +75,9 @@ const ScheduleAppointment = () => {
       // Send the updated patient data to the API, with _id in the body
       const response = await axios.put(
         "http://localhost:4000/api/reception/update-patient",
-        updatedData
+        updatedData , { withCredentials: true , headers: {
+          Authorization: `Bearer ${token}`, // Include JWT
+        }}
       );
 
       // Update local state to reflect the changes made
@@ -128,32 +138,6 @@ const ScheduleAppointment = () => {
     setEditingAppointment(null);
   };
 
-  // const handleSaveEdit = async (data) => {
-  //   const updatedAppointments = appointments[formatDate(selectedDate)].map(
-  //     (appt) =>
-  //       appt._id === editingAppointment._id
-  //         ? { ...appt, ...data }
-  //         : appt
-  //   );
-
-  //   setAppointments((prev) => ({
-  //     ...prev,
-  //     [formatDate(selectedDate)]: updatedAppointments,
-  //   }));
-
-  //   closeEditModal();
-
-  //   // Optionally update the database here:
-  //   try {
-  //     await axios.put(
-  //       `http://localhost:4000/api/reception/update-patient/${editingAppointment._id}`,
-  //       data
-  //     );
-  //     toast.success("Patient details updated!");
-  //   } catch (err) {
-  //     toast.error("Failed to update patient details");
-  //   }
-  // };
 
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg">

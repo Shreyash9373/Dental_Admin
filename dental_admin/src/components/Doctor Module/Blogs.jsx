@@ -23,11 +23,20 @@ const Blogs = () => {
       formData.append("image", data.image[0]); // File input is an array
 
       // Make a POST request to the API endpoint
-      const response = await axios.post("http://localhost:4000/api/doctor/add-blog", formData, {
-       if (response) {
-        toast.success("Blog added successfully")
-       }
-      });
+      const response = await axios.post(
+        "http://localhost:4000/api/doctor/add-blog",
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true, // Include cookies in the request
+        }
+    );
+
+    if (response && response.status === 200) {
+      toast.success("Blog added successfully");
+  }
 
       console.log("Blog created successfully:", response.data);
 

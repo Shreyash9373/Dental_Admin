@@ -26,7 +26,7 @@ const LoginPage = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/dashboard/login",
-        data
+        data, {withCredentials:true}
       );
 
       console.log("response:", response.data);

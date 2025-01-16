@@ -37,11 +37,16 @@ const AddEvent = () => {
       formData.append("image", eventData.image);
 
       // API POST request
-      const response = await axios.post("http://localhost:5000/api/events", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/events",
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true, // Include cookies in the request
+        }
+    );
 
       console.log("Event created successfully:", response.data);
 
