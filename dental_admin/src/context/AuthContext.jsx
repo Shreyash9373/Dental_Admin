@@ -6,8 +6,8 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState({
     username: "",
-    // role: "receptionist",
-    role: "doctor",
+    role: "receptionist",
+    // role: "doctor",
   });
   console.log("From AuthContext", authUser);
 
