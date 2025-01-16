@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 
 const UpdatePassword = () => {
   const {
@@ -27,12 +29,16 @@ const UpdatePassword = () => {
 
   const onSubmit = async (data) => {
     try {
+      
+       console.log(data);
       const response = await axios.post(
-        "http://localhost:4000/api/reception/change-password",
+        "http://localhost:4000/api/dashboard/change-password",
         data
       );
-      alert(response.data.message || "Password updated successfully!");
-      reset(); // Reset the form after successful submission
+      if (response) {
+        toast.success(response.data.message || "Password Updated successfully!");
+      }
+     
     } catch (error) {
       alert(error.response?.data?.message || "Failed to update password.");
     }
@@ -57,10 +63,10 @@ const UpdatePassword = () => {
           </label>
           <select
             id="role"
-            {...register("role", {
-              required: "Role is required",
-              onChange: (e) => setRole(e.target.value),
-            })}
+            // {...register("role", {
+            //   required: "Role is required",
+            //   onChange: (e) => setRole(e.target.value),
+            // })}
             className={`mt-1 block w-full border ${
               errors.role ? "border-red-500" : "border-gray-300"
             } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
@@ -75,7 +81,7 @@ const UpdatePassword = () => {
         </div>
 
         {/* Doctor's Name Dropdown */}
-        {role === "doctor" && (
+        {/* {role === "doctor" && (
           <div className="mb-4">
             <label
               htmlFor="doctorName"
@@ -105,10 +111,10 @@ const UpdatePassword = () => {
               </p>
             )}
           </div>
-        )}
+        )} */}
 
         {/* Receptionist Name */}
-        {role === "receptionist" && (
+        {/* {role === "receptionist" && (
           <div className="mb-4">
             <label
               htmlFor="receptionistName"
@@ -133,12 +139,12 @@ const UpdatePassword = () => {
               </p>
             )}
           </div>
-        )}
+        )} */}
 
         {/* New Password */}
         <div className="mb-4">
           <label
-            htmlFor="newPassword"
+            htmlFor="Password"
             className="block text-sm font-medium text-gray-700"
           >
             New Password
@@ -146,7 +152,7 @@ const UpdatePassword = () => {
           <input
             id="newPassword"
             type="password"
-            {...register("newPassword", {
+            {...register("Password", {
               required: "New password is required",
               minLength: {
                 value: 6,
@@ -154,13 +160,13 @@ const UpdatePassword = () => {
               },
             })}
             className={`mt-1 block w-full border ${
-              errors.newPassword ? "border-red-500" : "border-gray-300"
+              errors.Password ? "border-red-500" : "border-gray-300"
             } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             placeholder="Enter new password"
           />
-          {errors.newPassword && (
+          {errors.Password && (
             <p className="text-red-500 text-sm mt-1">
-              {errors.newPassword.message}
+              {errors.Password.message}
             </p>
           )}
         </div>
@@ -178,8 +184,10 @@ const UpdatePassword = () => {
             type="password"
             {...register("confirmPassword", {
               required: "Confirm password is required",
-              validate: (value) =>
-                value === newPassword || "Passwords do not match",
+              validate: (value) => {
+                const password = watch("Password"); // Retrieve the value of the Password field
+                return value === password || "Passwords do not match";
+              }
             })}
             className={`mt-1 block w-full border ${
               errors.confirmPassword ? "border-red-500" : "border-gray-300"
