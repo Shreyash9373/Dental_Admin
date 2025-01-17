@@ -77,6 +77,7 @@ function App() {
               <Route path='blogs' element={<Blogs />} />
               <Route path='see-appointment' element={<SeeAppointment />} />
               <Route path='updatepassword' element={<UpdatePassword />} />
+              <Route path='addmember' element={<AddMember />} />
             </Route>
 
             {/* Receptionist Routes */}
