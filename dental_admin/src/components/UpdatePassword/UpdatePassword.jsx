@@ -13,13 +13,16 @@ const UpdatePassword = () => {
     reset,
     formState: { errors },
   } = useForm();
+  
+  
 
-  const [role, setRole] = useState(""); // State to manage the selected role
+  const [role, setRole] = useState("doctor"); // State to manage the selected role
   const [doctors, setDoctors] = useState([]); // State to store doctors list
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const[password,setPassword]=useState("");
   const[confirmpassword,setConfirmPassword]=useState("");
+  
 
   //const newPassword = watch("newPassword"); // For confirm password validation
 
@@ -72,10 +75,11 @@ const UpdatePassword = () => {
           </label>
           <select
             id="role"
-            // {...register("role", {
-            //   required: "Role is required",
-            //   onChange: (e) => setRole(e.target.value),
-            // })}
+            defaultValue="doctor"
+            {...register("role", {
+              required: "Role is required",
+              onChange: (e) => setRole(e.target.value),
+            })}
             className={`mt-1 block w-full border ${
               errors.role ? "border-red-500" : "border-gray-300"
             } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
@@ -89,47 +93,16 @@ const UpdatePassword = () => {
           )}
         </div>
 
-        {/* Doctor's Name Dropdown */}
-        {/* {role === "doctor" && (
-          <div className="mb-4">
-            <label
-              htmlFor="doctorName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Select Doctor's Name
-            </label>
-            <select
-              id="doctorName"
-              {...register("doctorName", {
-                required: "Please select a doctor's name",
-              })}
-              className={`mt-1 block w-full border ${
-                errors.doctorName ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-            >
-              <option value="">Select Doctor</option>
-              {doctors.map((doctor) => (
-                <option key={doctor.id} value={doctor.name}>
-                  {doctor.name}
-                </option>
-              ))}
-            </select>
-            {errors.doctorName && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.doctorName.message}
-              </p>
-            )}
-          </div>
-        )} */}
+        
 
-        {/* Receptionist Name */}
-        {/* {role === "receptionist" && (
+        {/* User Name */}
           <div className="mb-4">
             <label
               htmlFor="receptionistName"
               className="block text-sm font-medium text-gray-700"
+              
             >
-              Receptionist's Name
+              {role == "receptionist"?"Receptionist name":"Doctor Name"}
             </label>
             <input
               id="receptionistName"
@@ -148,7 +121,7 @@ const UpdatePassword = () => {
               </p>
             )}
           </div>
-        )} */}
+       
 
         {/* New Password */}
         <div className="mb-4">

@@ -35,7 +35,8 @@ const AdminDashboardLayout = () => {
       </div>
     </div>
   ) : (
-    <Navigate to='/admin/login' />
+    <Navigate to='/admin/login' />//For Smit
+
   );
 };
 
