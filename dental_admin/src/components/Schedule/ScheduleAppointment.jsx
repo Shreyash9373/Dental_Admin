@@ -39,7 +39,7 @@ const ScheduleAppointment = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/reception/get-patient",
-        { date: formattedDate }
+        { date: formattedDate },{withCredentials:true}
       );
 
       setAppointments((prev) => ({
@@ -67,7 +67,7 @@ const ScheduleAppointment = () => {
       // Send the updated patient data to the API, with _id in the body
       const response = await axios.put(
         "http://localhost:4000/api/reception/update-patient",
-        updatedData
+        updatedData,{withCredentials:true}
       );
 
       // Update local state to reflect the changes made

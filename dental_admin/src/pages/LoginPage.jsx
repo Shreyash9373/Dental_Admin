@@ -10,26 +10,35 @@ const LoginPage = () => {
   const [user, setUser] = useState("receptionist");
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false); // Loading state
-  const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
-  const { isLoggedIn } = useAuth();
+  const { authUser, setAuthUser } = useAuth();
 
   const handleUserChange = () => {
     setUser((prev) => (prev === "doctor" ? "receptionist" : "doctor"));
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     try {
       setLoading(true); // Start loading
       setError(null); // Reset any previous error
       const response = await axios.post(
         "http://localhost:4000/api/dashboard/login",
-        data
+        data,{withCredentials:true}
       );
-      setResponseData(response.data);
+      
       console.log("response:", response.data);
-      toast.success("Login  successfully!");
+
+     if(response.data && response.data.user){
+    toast.success("Login successfully");
+    setAuthUser({
+      username: response.data.user.username,
+      role: response.data.user.role,
+      isLoggedIn:true
+    })
+     } else {
+        toast.error(`Login failed! ${response.data.message}`);
+      }
     } catch (error) {
       setError(error.message);
       toast.error(
@@ -41,7 +50,7 @@ const LoginPage = () => {
     }
   };
 
-  return isLoggedIn ? (
+  return authUser.isLoggedIn ? (
     <Navigate to='/admin/dashboard' />
   ) : (
     <div className='w-screen h-screen flex justify-center items-center'>

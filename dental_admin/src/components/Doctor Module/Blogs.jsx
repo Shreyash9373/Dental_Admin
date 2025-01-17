@@ -24,9 +24,10 @@ const Blogs = () => {
 
       // Make a POST request to the API endpoint
       const response = await axios.post("http://localhost:5000/api/blogs", formData, {
+        withCredentials:true,
         headers: {
           "Content-Type": "multipart/form-data",
-        },
+        }
       });
 
       console.log("Blog created successfully:", response.data);
