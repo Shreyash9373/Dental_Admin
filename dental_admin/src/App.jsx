@@ -18,6 +18,7 @@ import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
 import DoctorLayout from "./pages/layouts/DoctorLayout";
 import ReceptionistLayout from "./pages/layouts/ReceptionistLayout";
 import RoleBasedRedirect from "./components/RoleBasedRedirect";
+import AddMember from "./components/Doctor Module/AddMember";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);

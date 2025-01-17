@@ -167,7 +167,7 @@ const ScheduleAppointment = () => {
       </div>
 
       {selectedDate && (
-        
+
         <div className='bg-gray-50 p-4 rounded-lg shadow-md'>
           <h3 className='text-xl font-semibold text-gray-700 mb-4'>
             Appointments for {selectedDate.toDateString()}
