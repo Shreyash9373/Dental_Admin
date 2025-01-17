@@ -15,6 +15,7 @@ import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./context/AuthContext";
 import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
+import AddMember from "./components/Doctor Module/AddMember";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -75,6 +76,7 @@ function App() {
             <Route path="blogs" element={<Blogs />} />
             <Route path="see-appointment" element={<SeeAppointment />} />
             <Route path="updatepassword" element={<UpdatePassword />} />
+            <Route path="addmember" element={<AddMember />} />
           </Route>
 
           {/* Wildcard to catch anything else */}

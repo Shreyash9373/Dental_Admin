@@ -123,6 +123,19 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
               <li>
                 <NavLink
                   onClick={(e) => setIsHamburgerOpen(false)}
+                  to='/admin/dashboard/addmember'
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-400 font-bold"
+                      : "hover:text-gray-300 font-normal" +
+                        " w-full inline-block"
+                  }>
+                  Add Member
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  onClick={(e) => setIsHamburgerOpen(false)}
                   to='/admin/dashboard/updatepassword'
                   className={({ isActive }) =>
                     isActive
