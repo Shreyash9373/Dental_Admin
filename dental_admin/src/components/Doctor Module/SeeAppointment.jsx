@@ -175,10 +175,10 @@ const SeeAppointment = () => {
                               .split("T")[0]}
                           </td>
                           <td className="border px-4 py-2">
-                            {appointment.operationStatus}
+                            {appointment.status}
                           </td>
                           <td className="border px-4 py-2">
-                            {appointment.amount} ₹
+                            {appointment.paymentAmount} ₹
                           </td>
                           <td className="border px-4 py-2">
                             {appointment.paymentStatus}

@@ -23,7 +23,7 @@ const Blogs = () => {
       formData.append("image", data.image[0]); // File input is an array
 
       // Make a POST request to the API endpoint
-      const response = await axios.post("http://localhost:5000/api/blogs", formData, {
+      const response = await axios.post("http://localhost:4000/api/doctor/add-blog", formData, {
         withCredentials:true,
         headers: {
           "Content-Type": "multipart/form-data",
