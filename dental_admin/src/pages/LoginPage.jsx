@@ -7,15 +7,10 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
-  const [user, setUser] = useState("receptionist");
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(null);
   const { authUser, setAuthUser } = useAuth();
-
-  const handleUserChange = () => {
-    setUser((prev) => (prev === "doctor" ? "receptionist" : "doctor"));
-  };
 
   const onSubmit = async (data) => {
     // console.log(data);
@@ -24,19 +19,20 @@ const LoginPage = () => {
       setError(null); // Reset any previous error
       const response = await axios.post(
         "http://localhost:4000/api/dashboard/login",
-        data,{withCredentials:true}
+        data,
+        { withCredentials: true }
       );
-      
+
       console.log("response:", response.data);
 
-     if(response.data && response.data.user){
-    toast.success("Login successfully");
-    setAuthUser({
-      username: response.data.user.username,
-      role: response.data.user.role,
-      isLoggedIn:true
-    })
-     } else {
+      if (response.data && response.data.user) {
+        toast.success("Login successfully");
+        setAuthUser({
+          username: response.data.user.username,
+          role: response.data.user.role,
+          isLoggedIn: true,
+        });
+      } else {
         toast.error(`Login failed! ${response.data.message}`);
       }
     } catch (error) {
@@ -56,7 +52,7 @@ const LoginPage = () => {
     <div className='w-screen h-screen flex justify-center items-center'>
       <div className='shadow-2xl bg-gradient-to-b from-blue-400 via-blue-500 to-cyan-500 shadow-gray-500 p-12 flex flex-col gap-2'>
         <h1 className='text-white font-semibold mb-7 text-center text-xl md:text-3xl lg:text-5xl'>
-          <span className='capitalize'>{user}</span> Login
+          Login
         </h1>
         {/* Login form */}
         <form
@@ -80,18 +76,6 @@ const LoginPage = () => {
             {loading ? "Loading..." : "Login"}
           </button>
         </form>
-
-        <div className='text-sm text-center'>
-          Not a {user}?{" "}
-          <button
-            onClick={handleUserChange}
-            className='text-white underline focus:outline-none'>
-            Login as{" "}
-            <span className='capitalize'>
-              {user === "doctor" ? "receptionist" : "doctor"}
-            </span>
-          </button>
-        </div>
       </div>
     </div>
   );
