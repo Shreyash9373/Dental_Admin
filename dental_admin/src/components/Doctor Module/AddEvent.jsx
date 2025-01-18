@@ -27,7 +27,7 @@ const AddEvent = () => {
 
       // API POST request
       const response = await axios.post("http://localhost:4000/api/doctor/add-event", formData,{withCredentials:true});
-      if(response.success){
+      if(response.data.success){
          toast.success(response.data.message || "Event Added successfully!");
       }
 
