@@ -235,12 +235,12 @@ const BookApointment = () => {
           </div>
               {/* Profile Phtot File */}
           <div className="flex-1">
-            <label htmlFor="prescription" className="block text-sm font-medium text-gray-200">Photo (optional)</label>
+            <label htmlFor="photo" className="block text-sm font-medium text-gray-200">Photo (optional)</label>
             <input
               type="file"
-              id="prescription"
+              id="photo"
               className="w-full p-3 mt-2 border-2  border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
-              {...register('prescription')}
+              {...register('photo')}
             />
           </div>
         </div>
