@@ -39,7 +39,7 @@ const ScheduleAppointment = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/reception/get-patient",
-        { date: formattedDate },{withCredentials:true}
+        { date: formattedDate }, { withCredentials: true }
       );
 
       setAppointments((prev) => ({
@@ -56,31 +56,68 @@ const ScheduleAppointment = () => {
     }
   };
 
+  // const updatePatient = async (data) => {
+  //   try {
+  //     setLoading(true);
+  //     setError(null);
+
+  //     // Include the _id in the data object
+  //     const updatedData = { ...data, _id: editingAppointment._id };
+  //     console.log(updatedData);
+  //     // Send the updated patient data to the API, with _id in the body
+  //     const response = await axios.put(
+  //       "http://localhost:4000/api/reception/update-patient",
+  //       updatedData, { withCredentials: true }
+  //     );
+
+  //     // Update local state to reflect the changes made
+  //     const updatedAppointments = appointments[formatDate(selectedDate)].map(
+  //       (appt) =>
+  //         appt._id === editingAppointment._id ? { ...appt, ...data } : appt
+  //     );
+
+  //     setAppointments((prev) => ({
+  //       ...prev,
+  //       [formatDate(selectedDate)]: updatedAppointments,
+  //     }));
+
+  //     toast.success("Patient details updated successfully!");
+  //     closeEditModal(); // Close the modal after saving the changes
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || "Failed to update details.");
+  //     toast.error(err.response?.data?.message || "Failed to update details.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
   const updatePatient = async (data) => {
     try {
       setLoading(true);
       setError(null);
-
-      // Include the _id in the data object
+  
+      // Include the _id and paymentAmount in the data object
       const updatedData = { ...data, _id: editingAppointment._id };
       console.log(updatedData);
-      // Send the updated patient data to the API, with _id in the body
+  
+      // Send the updated patient data to the API, with _id and paymentAmount in the body
       const response = await axios.put(
         "http://localhost:4000/api/reception/update-patient",
-        updatedData,{withCredentials:true}
+        updatedData, { withCredentials: true }
       );
-
+  
       // Update local state to reflect the changes made
       const updatedAppointments = appointments[formatDate(selectedDate)].map(
         (appt) =>
           appt._id === editingAppointment._id ? { ...appt, ...data } : appt
       );
-
+  
       setAppointments((prev) => ({
         ...prev,
         [formatDate(selectedDate)]: updatedAppointments,
       }));
-
+  
       toast.success("Patient details updated successfully!");
       closeEditModal(); // Close the modal after saving the changes
     } catch (err) {
@@ -90,7 +127,7 @@ const ScheduleAppointment = () => {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     const date = formatDate(currentWeek);
     getScheduleAppointments(date);
@@ -188,7 +225,9 @@ const ScheduleAppointment = () => {
                       <th className='py-2 px-4'>Operation</th>
                       <th className='py-2 px-4'>Time-Slot</th>
                       <th className='py-2 px-4'>Date</th>
-                      <th className='py-2 px-4'>Status</th>
+                      <th className='py-2 px-4'>Operation Status</th>
+                      <th className='py-2 px-4'>Amount (₹)</th>
+                      <th className='py-2 px-4'>Payment Status</th>
                       <th className='py-2 px-4'>Actions</th>
                     </tr>
                   </thead>
@@ -203,6 +242,8 @@ const ScheduleAppointment = () => {
                           {new Date(appt.date).toISOString().split('T')[0]}
                         </td>
                         <td className='py-2 px-4'>{appt.status}</td>
+                        <td className='py-2 px-4'>{appt.paymentAmount ? `${appt.paymentAmount}` : 'Not Set'}</td>
+                        <td className='py-2 px-4'>{appt.paymentStatus || 'Pending'}</td>
                         <td className='py-2 px-4'>
                           <button
                             className='bg-blue-500 text-white px-2 py-1 rounded'
@@ -240,6 +281,12 @@ const ScheduleAppointment = () => {
                     </p>
                     <p>
                       <span className='font-semibold'>Status:</span> {appt.status}
+                    </p>
+                    <p>
+                      <span className='font-semibold'>Payment Amount:</span> {appt.paymentAmount ? `₹ ${appt.paymentAmount}` : 'Not Set'}
+                    </p>
+                    <p>
+                      <span className='font-semibold'>Payment Status:</span> {appt.paymentStatus || 'Pending'}
                     </p>
                     <button
                       className='bg-blue-500 text-white px-4 py-2 mt-2 rounded'
@@ -300,6 +347,25 @@ const ScheduleAppointment = () => {
                   <option value='Cancelled'>Cancelled</option>
                 </select>
               </div>
+              <div className='mb-4'>
+                <label className='block text-gray-700'>Payment Amount (₹)</label>
+                <input
+                  type='number'
+                  {...register("paymentAmount")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'
+                  placeholder='Enter the payment amount'
+                />
+              </div>
+              <div className='mb-4'>
+                <label className='block text-gray-700'>Payment Status</label>
+                <select
+                  {...register("paymentStatus")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'>
+                  <option value='Pending'>Pending</option>
+                  <option value='Paid'>Paid</option>
+                </select>
+              </div>
+
               <div className='flex justify-end'>
                 <button
                   type='button'
