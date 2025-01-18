@@ -1,23 +1,38 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const AddMember = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const newPassword = watch('password'); // For confirm password validation
 
   // Handle form submission
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     // Check if passwords match
     if (data.password !== data.confirmPassword) {
-      alert("Password doesn't match!");
+      toast.error("Password and Confirm Password does not match!");
       return;
     }
 
     // Log the form data to the console
     console.log(data);
-
+     try {
+      const response=await axios.post("http://localhost:4000/api/dashboard/addMember",data,{withCredentials:true})
+      console.log("Response",response.data);
+      if(response.data.success){
+        toast.success("Member Added Successfully");
+      }
+      else{
+        toast.error("Failed to Add Member");
+      }
+     } catch (error) {
+      console.log(error);
+      toast.error(error|| "Internal server error, Please try again after some time");
+     }
+    
     // Simulate member creation (send data to the server here)
-    alert("Member created successfully!");
+    //alert("Member created successfully!");
   };
 
   return (
