@@ -56,16 +56,15 @@ function App() {
               {/* Redirect based on role */}
               <Route index element={<RoleBasedRedirect />} />
 
-              {/* Doctor Routes */}
-              <Route path='doctor' element={<DoctorLayout />}>
-                {/* Redirect from /admin/dashboard to /admin/dashboard/add-event */}
-                <Route index element={<Navigate to='see-appointment' />} />
-
+            {/* Doctor Routes */}
+            <Route path='doctor' element={<DoctorLayout />}>
+              {/* Redirect from /admin/dashboard to /admin/dashboard/add-event */}
+              <Route index element={<Navigate to='see-appointment' />} />
               <Route path='add-event' element={<AddEvent />} />
               <Route path='blogs' element={<Blogs />} />
               <Route path='see-appointment' element={<SeeAppointment />} />
               <Route path='updatepassword' element={<UpdatePassword />} />
-              <Route path='addmember' element={<AddMember />} />
+              <Route path="addMember" element={<AddMember/>} />
             </Route>
 
               {/* Receptionist Routes */}
