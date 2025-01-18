@@ -3,20 +3,13 @@ import React, { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiLoginBoxFill } from "react-icons/ri";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
-  const [admin, setAdmin] = useState({
-    name: "Dr. Pakhare", // Replace with dynamic data
-    isLoggedIn: false, // Initial login state
-  });
-
-  const handleLogin = () => {
-    setAdmin({ ...admin, isLoggedIn: true });
-    console.log("Logged in");
-  };
+  const { authUser, setAuthUser } = useAuth();
 
   const handleLogout = () => {
-    setAdmin({ ...admin, isLoggedIn: false });
+    setAuthUser((prev) => ({ ...prev, isLoggedIn: false }));
     console.log("Logged out");
   };
 
@@ -43,34 +36,23 @@ const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
         Dental Clinic Dashboard
       </h1>
 
-      {admin.isLoggedIn ? (
-        <div className='flex items-center space-x-3'>
-          {/* Avatar with initials */}
-          <div className='h-10 w-10 bg-blue-500 text-white flex items-center justify-center rounded-full'>
-            {getInitials(admin.name)}
-          </div>
-          {/* Admin name */}
-          {/* <p className='font-semibold text-gray-200'>{admin.name}</p> */}
-          {/* Logout button */}
-          <button
-            onClick={handleLogout}
-            className='text-red-500 py-1 px-4 rounded hover:bg-red-600'>
-            <span className='flex justify-center items-center gap-2'>
-              Logout
-              <RiLogoutBoxFill />
-            </span>
-          </button>
+      <div className='flex items-center space-x-3'>
+        {/* Avatar with initials */}
+        <div className='h-10 w-10 bg-blue-500 text-white flex items-center justify-center rounded-full'>
+          {getInitials(authUser.username)}
         </div>
-      ) : (
+        {/* Admin name */}
+        {/* <p className='font-semibold text-gray-200'>{authUser.name}</p> */}
+        {/* Logout button */}
         <button
-          onClick={handleLogin}
-          className='text-green-500 py-1 px-4 rounded hover:bg-green-600'>
+          onClick={handleLogout}
+          className='text-red-500 py-1 px-4 rounded hover:text-red-600'>
           <span className='flex justify-center items-center gap-2'>
-            Login
-            <RiLoginBoxFill />
+            Logout
+            <RiLogoutBoxFill />
           </span>
         </button>
-      )}
+      </div>
     </div>
   );
 };
