@@ -36,7 +36,7 @@ const SeeAppointment = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/reception/get-patient",
-        { date: formattedDate },{withCredentials:true}
+        { date: formattedDate }, { withCredentials: true }
       );
 
       setAppointments((prev) => ({
@@ -142,6 +142,15 @@ const SeeAppointment = () => {
                       <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
                         Date
                       </th>
+                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                        Operation Status
+                      </th>
+                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                        Amount (₹)
+                      </th>
+                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                        Payment Status
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -164,6 +173,15 @@ const SeeAppointment = () => {
                             {new Date(appointment.date)
                               .toISOString()
                               .split("T")[0]}
+                          </td>
+                          <td className="border px-4 py-2">
+                            {appointment.operationStatus}
+                          </td>
+                          <td className="border px-4 py-2">
+                            {appointment.amount} ₹
+                          </td>
+                          <td className="border px-4 py-2">
+                            {appointment.paymentStatus}
                           </td>
                         </tr>
                       )
@@ -193,8 +211,16 @@ const SeeAppointment = () => {
                         <strong>Time:</strong> {appointment.timeSlot}
                       </p>
                       <p className="text-gray-600">
-                        <strong>Date:</strong>{" "}
-                        {new Date(appointment.date).toISOString().split("T")[0]}
+                        <strong>Date:</strong> {new Date(appointment.date).toISOString().split("T")[0]}
+                      </p>
+                      <p className="text-gray-600">
+                        <strong>Operation Status:</strong> {appointment.operationStatus}
+                      </p>
+                      <p className="text-gray-600">
+                        <strong>Amount:</strong> {appointment.amount} ₹
+                      </p>
+                      <p className="text-gray-600">
+                        <strong>Payment Status:</strong> {appointment.paymentStatus}
                       </p>
                     </div>
                   )
