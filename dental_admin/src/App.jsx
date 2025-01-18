@@ -46,55 +46,44 @@ function App() {
           }}
         />
 
-        <Routes>
-          {/* Admin Login Route */}
-          <Route
-            path='/admin/login'
-            element={
-              <AuthProvider>
-                <LoginPage />
-              </AuthProvider>
-            }
-          />
+        <AuthProvider>
+          <Routes>
+            {/* Admin Login Route */}
+            <Route path='/admin/login' element={<LoginPage />} />
 
-          {/* Admin Dashboard Routes */}
-          <Route
-            path='/admin/dashboard'
-            element={
-              <AuthProvider>
-                <AdminDashboardLayout />
-              </AuthProvider>
-            }>
-            {/* Redirect based on role */}
-            <Route index element={<RoleBasedRedirect />} />
+            {/* Admin Dashboard Routes */}
+            <Route path='/admin/dashboard' element={<AdminDashboardLayout />}>
+              {/* Redirect based on role */}
+              <Route index element={<RoleBasedRedirect />} />
 
-            {/* Doctor Routes */}
-            <Route path='doctor' element={<DoctorLayout />}>
-              {/* Redirect from /admin/dashboard to /admin/dashboard/add-event */}
-              <Route index element={<Navigate to='see-appointment' />} />
+              {/* Doctor Routes */}
+              <Route path='doctor' element={<DoctorLayout />}>
+                {/* Redirect from /admin/dashboard to /admin/dashboard/add-event */}
+                <Route index element={<Navigate to='see-appointment' />} />
 
-              <Route path='add-event' element={<AddEvent />} />
-              <Route path='blogs' element={<Blogs />} />
-              <Route path='see-appointment' element={<SeeAppointment />} />
-              <Route path='updatepassword' element={<UpdatePassword />} />
+                <Route path='add-event' element={<AddEvent />} />
+                <Route path='blogs' element={<Blogs />} />
+                <Route path='see-appointment' element={<SeeAppointment />} />
+                <Route path='updatepassword' element={<UpdatePassword />} />
+              </Route>
+
+              {/* Receptionist Routes */}
+              <Route path='receptionist' element={<ReceptionistLayout />}>
+                {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
+                <Route index element={<Navigate to='user-enquiry' />} />
+                <Route path='user-enquiry' element={<UsersEnquiry />} index />
+                <Route
+                  path='schedule-appointments'
+                  element={<ScheduleAppointment />}
+                />
+                <Route path='book-apointment' element={<BookApointment />} />{" "}
+              </Route>
             </Route>
 
-            {/* Receptionist Routes */}
-            <Route path='receptionist' element={<ReceptionistLayout />}>
-              {/* Redirect from /admin/dashboard to /admin/dashboard/user-enquiry */}
-              <Route index element={<Navigate to='user-enquiry' />} />
-              <Route path='user-enquiry' element={<UsersEnquiry />} index />
-              <Route
-                path='schedule-appointments'
-                element={<ScheduleAppointment />}
-              />
-              <Route path='book-apointment' element={<BookApointment />} />{" "}
-            </Route>
-          </Route>
-
-          {/* Wildcard to catch anything else */}
-          <Route path='*' element={<Navigate to='/admin/login' />} />
-        </Routes>
+            {/* Wildcard to catch anything else */}
+            <Route path='*' element={<Navigate to='/admin/login' />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
