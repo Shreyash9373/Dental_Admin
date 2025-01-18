@@ -203,7 +203,7 @@ const BookApointment = () => {
         </div>
 
         {/* Timeslot */}
-        <div className='flex flex-col gap-6 md:flex-row'>
+        <div className='flex flex-col justify-evenly gap-6 md:flex-row'>
           <div className='flex-1'>
             <label
               htmlFor='timeslot'
@@ -232,6 +232,16 @@ const BookApointment = () => {
                 {errors.timeSlot.message}
               </p>
             )}
+          </div>
+              {/* Profile Phtot File */}
+          <div className="flex-1">
+            <label htmlFor="prescription" className="block text-sm font-medium text-gray-200">Photo (optional)</label>
+            <input
+              type="file"
+              id="prescription"
+              className="w-full p-3 mt-2 border-2  border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
+              {...register('prescription')}
+            />
           </div>
         </div>
 
