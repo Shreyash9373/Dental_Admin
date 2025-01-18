@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Blogs = () => {
   const [isFormVisible, setIsFormVisible] = useState(false); // To toggle the blog form
@@ -19,26 +20,28 @@ const Blogs = () => {
     try {
       const formData = new FormData(); // Using FormData for file upload
       formData.append("title", data.title);
-      formData.append("content", data.content);
+      formData.append("description", data.description);
       formData.append("image", data.image[0]); // File input is an array
 
       // Make a POST request to the API endpoint
-      const response = await axios.post("http://localhost:5000/api/blogs", formData, {
+      const response = await axios.post("http://localhost:4000/api/doctor/add-blog", formData, {
         withCredentials:true,
         headers: {
           "Content-Type": "multipart/form-data",
         }
       });
+      if(response.data.success) {
+        toast.success("Blog Added Successfully")
+      }
 
       console.log("Blog created successfully:", response.data);
 
       // Reset the form and close it
       reset();
       setIsFormVisible(false);
-      alert("Blog post created successfully!");
     } catch (error) {
       console.error("Error creating blog:", error);
-      alert("Failed to create the blog post.");
+      toast.error("Failed to create the blog post.");
     }
   };
 
@@ -69,19 +72,19 @@ const Blogs = () => {
 
           <div className="mb-4">
             <label
-              htmlFor="content"
+              htmlFor="description"
               className="block text-sm font-medium text-gray-700"
             >
-              Blog Content
+              Blog description
             </label>
             <textarea
-              id="content"
-              {...register("content", { required: "Blog content is required" })}
+              id="description"
+              {...register("description", { required: "Blog description is required" })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               rows="5"
-              placeholder="Enter blog content"
+              placeholder="Enter blog description"
             ></textarea>
-            {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>}
+            {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
           </div>
 
           <div className="mb-4">
