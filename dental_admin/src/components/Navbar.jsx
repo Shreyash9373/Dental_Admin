@@ -4,13 +4,27 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { RiLoginBoxFill } from "react-icons/ri";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
 const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
   const { authUser, setAuthUser } = useAuth();
 
   const handleLogout = () => {
-    setAuthUser((prev) => ({ ...prev, isLoggedIn: false }));
-    console.log("Logged out");
+    (async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/dashboard/logout",
+          { withCredentials: true }
+        );
+        console.log(response);
+        setAuthUser((prev) => ({
+          ...prev,
+          isLoggedIn: false,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   };
 
   // Function to extract initials from the name
