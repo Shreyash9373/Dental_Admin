@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiLoginBoxFill } from "react-icons/ri";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
 const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
   const [admin, setAdmin] = useState({
@@ -16,8 +18,21 @@ const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
   };
 
   const handleLogout = () => {
-    setAdmin({ ...admin, isLoggedIn: false });
-    console.log("Logged out");
+    (async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/dashboard/logout",
+          { withCredentials: true }
+        );
+        console.log(response);
+        setAuthUser((prev) => ({
+          ...prev,
+          isLoggedIn: false,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   };
 
   // Function to extract initials from the name
