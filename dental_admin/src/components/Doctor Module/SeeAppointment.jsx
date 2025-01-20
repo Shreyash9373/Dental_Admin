@@ -36,7 +36,8 @@ const SeeAppointment = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/reception/get-patient",
-        { date: formattedDate }, { withCredentials: true }
+        { date: formattedDate },
+        { withCredentials: true }
       );
 
       setAppointments((prev) => ({
@@ -62,6 +63,19 @@ const SeeAppointment = () => {
     const newWeek = new Date(currentWeek);
     newWeek.setDate(newWeek.getDate() + direction * 7);
     setCurrentWeek(newWeek);
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Completed":
+        return "bg-green-500 text-white";
+      case "Postponed":
+        return "bg-yellow-500 text-white";
+      case "Cancelled":
+        return "bg-red-500 text-white";
+      default:
+        return "bg-gray-500 text-white"; // Default color for unknown statuses
+    }
   };
 
   return (
@@ -92,11 +106,10 @@ const SeeAppointment = () => {
         {weekDates.map((date, index) => (
           <button
             key={index}
-            className={`min-w-32 flex-grow p-2 text-white rounded-lg text-xl hover:scale-105 font-bold transform transition ${
-              selectedDate?.toDateString() === date.toDateString()
+            className={`min-w-32 flex-grow p-2 text-white rounded-lg text-xl hover:scale-105 font-bold transform transition ${selectedDate?.toDateString() === date.toDateString()
                 ? "bg-teal-500"
                 : "bg-gradient-to-r from-blue-500 to-blue-700"
-            }`}
+              }`}
             onClick={() => {
               setSelectedDate(date);
               getScheduleAppointments(formatDate(date));
@@ -134,6 +147,9 @@ const SeeAppointment = () => {
                         Contact
                       </th>
                       <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                        Age
+                      </th>
+                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
                         Operation
                       </th>
                       <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
@@ -143,13 +159,13 @@ const SeeAppointment = () => {
                         Date
                       </th>
                       <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
-                        Operation Status
-                      </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
                         Amount (₹)
                       </th>
                       <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
                         Payment Status
+                      </th>
+                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                        Operation Status
                       </th>
                     </tr>
                   </thead>
@@ -164,6 +180,9 @@ const SeeAppointment = () => {
                             {appointment.mobileNo}
                           </td>
                           <td className="border px-4 py-2">
+                            {appointment.age}
+                          </td>
+                          <td className="border px-4 py-2">
                             {appointment.service}
                           </td>
                           <td className="border px-4 py-2">
@@ -175,13 +194,19 @@ const SeeAppointment = () => {
                               .split("T")[0]}
                           </td>
                           <td className="border px-4 py-2">
-                            {appointment.status}
-                          </td>
-                          <td className="border px-4 py-2">
                             {appointment.paymentAmount} ₹
                           </td>
                           <td className="border px-4 py-2">
                             {appointment.paymentStatus}
+                          </td>
+                          <td className="border px-4 py-2">
+                            <span
+                              className={`px-2 py-1 rounded-lg ${getStatusColor(
+                                appointment.status
+                              )}`}
+                            >
+                              {appointment.status}
+                            </span>
                           </td>
                         </tr>
                       )
@@ -205,6 +230,9 @@ const SeeAppointment = () => {
                         <strong>Contact:</strong> {appointment.mobileNo}
                       </p>
                       <p className="text-gray-600">
+                        <strong>Age:</strong> {appointment.age}
+                      </p>
+                      <p className="text-gray-600">
                         <strong>Operation:</strong> {appointment.service}
                       </p>
                       <p className="text-gray-600">
@@ -214,13 +242,20 @@ const SeeAppointment = () => {
                         <strong>Date:</strong> {new Date(appointment.date).toISOString().split("T")[0]}
                       </p>
                       <p className="text-gray-600">
-                        <strong>Operation Status:</strong> {appointment.operationStatus}
-                      </p>
-                      <p className="text-gray-600">
-                        <strong>Amount:</strong> {appointment.amount} ₹
+                        <strong>Amount:</strong> {appointment.paymentAmount} ₹
                       </p>
                       <p className="text-gray-600">
                         <strong>Payment Status:</strong> {appointment.paymentStatus}
+                      </p>
+                      <p className="text-gray-600">
+                        <strong>Operation Status:</strong>{" "}
+                        <span
+                          className={`px-2 py-1 rounded-lg ${getStatusColor(
+                            appointment.status
+                          )}`}
+                        >
+                          {appointment.status}
+                        </span>
                       </p>
                     </div>
                   )
