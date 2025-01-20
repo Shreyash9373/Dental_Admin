@@ -1,99 +1,38 @@
 //ANIKET
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLessThan, FaGreaterThan } from "react-icons/fa";
+import axios from "axios";
+
 
 const UsersEnquiry = () => {
-  const [userEnquiries, setUserEnquiries] = useState([
-    {
-      name: "Shreyas Raut",
-      email: "shreyas@gmail.com",
-      phone: "+1234567890",
-      preferredDate: "2025-01-10",
-      message: "I would like to schedule a dental checkup appointment. Please let me know the available slots.",
-    },
-    {
-      name: "Smit Bharshankar",
-      email: "smit@gmail.com",
-      phone: "+9876543210",
-      preferredDate: "2025-01-15",
-      message: "I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache. Please schedule an appointment for me.I need a consultation for a toothache.",
-    },
-    {
-      name: "Aniket Tambe",
-      email: "aniket@gmail.com",
-      phone: "+8411988255",
-      preferredDate: "2025-01-12",
-      message: "I need a consultation for a toothache. Please schedule an appointment for me.",
-    },
-    {
-      name: "Rohit Sharma",
-      email: "rohit@gmail.com",
-      phone: "+1231231234",
-      preferredDate: "2025-01-20",
-      message: "I am interested in teeth whitening. Please provide available dates.",
-    },
-    {
-      name: "Priya Verma",
-      email: "priya@gmail.com",
-      phone: "+4564564567",
-      preferredDate: "2025-01-25",
-      message: "I need a consultation for braces. Let me know your availability.",
-    },
-    {
-      name: "Anjali Mehta",
-      email: "anjali@gmail.com",
-      phone: "+7897897890",
-      preferredDate: "2025-02-01",
-      message: "I want to book an appointment for a routine dental checkup.",
-    },
-    {
-      name: "Vishal Joshi",
-      email: "vishal@gmail.com",
-      phone: "+9876543210",
-      preferredDate: "2025-02-05",
-      message: "I need to consult for my cavities. Please let me know the slots.",
-    },
-    {
-      name: "Ritika Kaur",
-      email: "ritika@gmail.com",
-      phone: "+7418529630",
-      preferredDate: "2025-02-10",
-      message: "I would like to schedule a dental cleaning appointment. Can you confirm availability?",
-    },
-    {
-      name: "Amit Yadav",
-      email: "amit@gmail.com",
-      phone: "+9712345678",
-      preferredDate: "2025-02-15",
-      message: "I am looking for a consultation regarding dental implants.",
-    },
-    {
-      name: "Neha Gupta",
-      email: "neha@gmail.com",
-      phone: "+7896541230",
-      preferredDate: "2025-02-20",
-      message: "I need to book an appointment for a wisdom tooth extraction.",
-    },
-    {
-      name: "Rahul Deshmukh",
-      email: "rahul@gmail.com",
-      phone: "+8523697410",
-      preferredDate: "2025-02-25",
-      message: "I am interested in a dental consultation for my teeth alignment.",
-    },
-    {
-      name: "Madhuri Patil",
-      email: "madhuri@gmail.com",
-      phone: "+9911223344",
-      preferredDate: "2025-03-01",
-      message: "I need an appointment for a regular dental checkup.",
-    }
-  ]);
-
+  const [userEnquiries, setUserEnquiries] = useState([]);
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const usersPerPage = 10;
+
+  useEffect(() => {
+    
+      const fetchUserEnquiry = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:4000/api/reception/get-Enquiry`,{withCredentials:true}
+          );
+
+          // Assuming the backend sends available slots in `response.data.availableSlots`
+          setUserEnquiries(response.data.enquiryData || []);
+          console.log("users enquiry:",response.data.enquiryData);
+        } catch (error) {
+          console.error("Error fetching User's Inquiries:", error);
+          setUserEnquiries([]); // Reset available slots on error
+        }
+      };
+
+      fetchUserEnquiry();
+    
+  }, []);
 
   const filteredInquiries = userEnquiries.filter(
     (inquiry) =>
@@ -143,56 +82,14 @@ const UsersEnquiry = () => {
             type="text"
             placeholder="Search by name, email, phone no."
             className="w-full p-3 rounded-full border-2 border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            // value={searchTerm}
+            // onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
 
-      {/* Card Layout for Mobile View
-      <div className="md:hidden w-full space-y-4">
-        <input
-          type="checkbox"
-          onChange={handleSelectAll}
-          checked={currentUsers.length === selectedUsers.length}
-        />
-        {currentUsers.length > 0 ? (
-          currentUsers.map((inquiry, index) => (
-            <div
-              key={index}
-              className="p-4 bg-gray-100 rounded-lg shadow-md flex flex-col"
-            >
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold">{inquiry.name}</h3>
-                <input
-                  type="checkbox"
-                  checked={selectedUsers.includes(inquiry.email)}
-                  onChange={() => handleUserSelection(inquiry.email)}
-                />
-              </div>
-              <p className="text-sm text-gray-600 mt-1">
-                <strong>Email:</strong> {inquiry.email}
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                <strong>Phone:</strong> {inquiry.phone}
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                <strong>Preferred Date:</strong> {inquiry.preferredDate}
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                <strong>Message:</strong> {inquiry.message}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-lg text-gray-500">
-            No inquiries found for "{searchTerm}"
-          </p>
-        )}
-      </div> */}
-
-      {/* Card Layout for Mobile View */}
-{/* Card Layout for Mobile View */}
+      
+  {/* Card Layout for Mobile View */}
 <div className="md:hidden w-full space-y-4">
   {currentUsers.length > 0 && (
     <div className="flex items-center justify-between px-4 py-2 bg-gray-200 rounded-lg">
@@ -238,7 +135,7 @@ const UsersEnquiry = () => {
           <strong>Phone:</strong> {inquiry.phone}
         </p>
         <p className="text-sm text-gray-600 mt-1">
-          <strong>Preferred Date:</strong> {inquiry.preferredDate}
+          <strong>Preferred Date:</strong> {inquiry.createdAt}
         </p>
         <p className="text-sm text-gray-600 mt-1">
           <strong>Message:</strong> {inquiry.message}
@@ -276,19 +173,19 @@ const UsersEnquiry = () => {
             </tr>
           </thead>
           <tbody>
-            {currentUsers.map((inquiry, index) => (
+            {userEnquiries.map((inquiry, index) => (
               <tr key={index} className="hover:bg-gray-100">
                 <td className="px-4 py-2 border-b text-sm">
                   <input
                     type="checkbox"
-                    checked={selectedUsers.includes(inquiry.email)}
-                    onChange={() => handleUserSelection(inquiry.email)}
+                    // checked={selectedUsers.includes(inquiry.email)}
+                    // onChange={() => handleUserSelection(inquiry.email)}
                   />
                 </td>
                 <td className="px-4 py-2 border-b text-sm">{inquiry.name}</td>
                 <td className="px-4 py-2 border-b text-sm">{inquiry.email}</td>
                 <td className="px-4 py-2 border-b text-sm">{inquiry.phone}</td>
-                <td className="px-4 py-2 border-b text-sm">{inquiry.preferredDate}</td>
+                <td className="px-4 py-2 border-b text-sm">{inquiry.createdAt}</td>
                 <td className="px-4 py-2 border-b text-sm">{inquiry.message}</td>
               </tr>
             ))}

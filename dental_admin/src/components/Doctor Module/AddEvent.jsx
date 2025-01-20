@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const AddEvent = () => {
   const [isFormVisible, setIsFormVisible] = useState(false); // Toggle form visibility
+  const [ isSubmitting , setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -17,6 +18,7 @@ const AddEvent = () => {
   // Handle form submission
   const onSubmit = async (data) => {
     try {
+      setIsSubmitting(true)
       const formData = new FormData(); // FormData for file upload
       formData.append("title", data.title);
       formData.append("date", data.date);
@@ -36,10 +38,10 @@ const AddEvent = () => {
       // Clear the form
       reset();
       setIsFormVisible(false);
-     
+      setIsSubmitting(false)
     } catch (error) {
-            toast.error(error.response?.data?.message || "Failed to add event. Please try again.");
-      
+        toast.error(error.response?.data?.message || "Failed to add event. Please try again.");
+        setIsSubmitting(false)
       console.error("Error creating event:", error);
     }
   };
@@ -136,10 +138,11 @@ const AddEvent = () => {
           </div>
 
           <button
+            disabled={isSubmitting}
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            className={`${isSubmitting ? 'bg-green-700 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} text-white px-4 py-2 rounded hover:bg-green-600`}
           >
-            Post Event
+            {isSubmitting? 'Posting Event...' : 'Post Event' }
           </button>
         </form>
     </div>

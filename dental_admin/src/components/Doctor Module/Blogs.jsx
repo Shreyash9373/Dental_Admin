@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const Blogs = () => {
   const [isFormVisible, setIsFormVisible] = useState(false); // To toggle the blog form
+  const [ isSubmitting , setIsSubmitting] = useState(false);
 
   // react-hook-form setup
   const {
@@ -18,6 +19,7 @@ const Blogs = () => {
   // Handle form submission
   const onSubmit = async (data) => {
     try {
+      setIsSubmitting(true)
       const formData = new FormData(); // Using FormData for file upload
       formData.append("title", data.title);
       formData.append("description", data.description);
@@ -39,9 +41,11 @@ const Blogs = () => {
       // Reset the form and close it
       reset();
       setIsFormVisible(false);
+      setIsSubmitting(false)
     } catch (error) {
       console.error("Error creating blog:", error);
       toast.error("Failed to create the blog post.");
+      setIsSubmitting(false)
     }
   };
 
@@ -105,10 +109,11 @@ const Blogs = () => {
           </div>
 
           <button
+            disabled={isSubmitting}
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            className={`${isSubmitting ? 'bg-green-700 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} text-white px-4 py-2 rounded hover:bg-green-600 `}
           >
-            Post Blog
+            {isSubmitting ? 'Posting Blog...' : 'Post Blog'}
           </button>
         </form>
     </div>
