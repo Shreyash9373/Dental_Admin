@@ -155,7 +155,7 @@ const UsersEnquiry = () => {
       <div className="w-full max-w-6xl hidden md:table">
         <table className="table-auto w-full border-collapse">
           <thead>
-            <tr>
+            <tr className="bg-blue-500 text-white">
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">
                 <input
                   type="checkbox"
@@ -174,8 +174,8 @@ const UsersEnquiry = () => {
           </thead>
           <tbody>
             {userEnquiries.map((inquiry, index) => (
-              <tr key={index} className="hover:bg-gray-100">
-                <td className="px-4 py-2 border-b text-sm">
+              <tr key={index} className={`${index % 2 == 0 ? 'bg-blue-100':'bg-white'} `}>
+                <td className={`px-4 py-2 ${index % 2 == 0 ? 'bg-blue-200':'bg-white'} border-b text-sm `}>
                   <input
                     type="checkbox"
                     // checked={selectedUsers.includes(inquiry.email)}
