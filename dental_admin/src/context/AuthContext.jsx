@@ -11,9 +11,9 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState({
-    username: "admin",
+    username: "receptionist",
     isLoggedIn: false,
-    role: "doctor",
+    role: "receptionist",
   });
   console.log("From AuthContext", authUser);
 
@@ -33,6 +33,8 @@ const AuthProvider = ({ children }) => {
         // console.log(response.data);
         setAuthUser((prev) => ({
           ...prev,
+          username: response.data.username,
+          role: response.data.role,
           isLoggedIn: response.data.success,
         }));
       } catch (error) {
