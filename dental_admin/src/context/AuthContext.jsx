@@ -1,11 +1,7 @@
 //ANIKET
 import axios from "axios";
-import React, {
-  createContext,
-  useContext,
-  useLayoutEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import Loader from "../components/Loader";
 
 const AuthContext = createContext();
 
@@ -14,12 +10,13 @@ const AuthProvider = ({ children }) => {
     username: "receptionist",
     isLoggedIn: false,
     role: "receptionist",
+    isChecking: true,
   });
   console.log("From AuthContext", authUser);
 
   // api/dashboard/refreshToken
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const checkLogin = async () => {
       try {
         // const response = await axios.get("http://localhost:4000/", {
@@ -41,9 +38,13 @@ const AuthProvider = ({ children }) => {
         // console.log(error.response.data);
         setAuthUser((prev) => ({
           ...prev,
-          isLoggedIn: error.response.data.success,
+          isLoggedIn: false,
         }));
       }
+      setAuthUser((prev) => ({
+        ...prev,
+        isChecking: false,
+      }));
     };
     checkLogin();
   }, []);
@@ -54,7 +55,12 @@ const AuthProvider = ({ children }) => {
         authUser,
         setAuthUser,
       }}>
-      {children}
+      {/* <Loader loading={true} size={85} color={"#062335"} /> */}
+      {authUser.isChecking ? (
+        <Loader loading={authUser.isChecking} size={85} color={"#062335"} />
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };
