@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+axios.defaults.withCredentials = true; // Include credentials (cookies)
+
 
 const getWeekDates = (date) => {
   const currentDate = new Date(date);
@@ -35,7 +37,7 @@ const SeeAppointment = () => {
       const formattedDate = formatDate(new Date(date));
 
       const response = await axios.post(
-        `${process.env.BACKEND_URI}/api/reception/get-patient`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/reception/get-patient`,
         { date: formattedDate }, { withCredentials: true }
       );
 

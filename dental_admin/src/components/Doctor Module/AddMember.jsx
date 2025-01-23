@@ -18,7 +18,7 @@ const AddMember = () => {
     // Log the form data to the console
     console.log(data);
      try {
-      const response=await axios.post(`${process.env.BACKEND_URI}/api/dashboard/addMember`,data,{withCredentials:true})
+      const response=await axios.post(`${import.meta.env.VITE_BACKEND_URI}/api/dashboard/addMember`,data,{withCredentials:true})
       console.log("Response",response.data);
       if(response.data.success){
         toast.success("Member Added Successfully");

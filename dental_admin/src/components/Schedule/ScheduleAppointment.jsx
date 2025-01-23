@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+axios.defaults.withCredentials = true; // Include credentials (cookies)
 
 const getWeekDates = (date) => {
   const currentDate = new Date(date);
@@ -51,7 +52,7 @@ const ScheduleAppointment = () => {
       const formattedDate = formatDate(new Date(date));
 
       const response = await axios.post(
-        `${process.env.BACKEND_URI}/api/reception/get-patient`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/reception/get-patient`,
         { date: formattedDate }, { withCredentials: true }
       );
 
@@ -78,7 +79,7 @@ const ScheduleAppointment = () => {
       console.log(updatedData);
 
       const response = await axios.put(
-        `${process.env.BACKEND_URI}/api/reception/update-patient`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/reception/update-patient`,
         updatedData, { withCredentials: true }
       );
 

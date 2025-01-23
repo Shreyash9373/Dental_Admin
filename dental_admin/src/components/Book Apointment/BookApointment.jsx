@@ -303,7 +303,7 @@ const BookApointment = () => {
       const fetchAvailableSlots = async () => {
         try {
           const response = await axios.get(
-            `${process.env.BACKEND_URI}/api/reception/available-slots?date=${encodeURIComponent(
+            `${import.meta.env.VITE_BACKEND_URI}/api/reception/available-slots?date=${encodeURIComponent(
               selectedDate
             )}`,{withCredentials:true}
           );
@@ -327,7 +327,7 @@ const BookApointment = () => {
       setLoading(true); // Start loading
       setError(null); // Reset any previous error
       const response = await axios.post(
-        `${process.env.BACKEND_URI}/api/reception/book-appointment`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/reception/book-appointment`,
         data,{withCredentials:true}
       );
       setResponseData(response.data);

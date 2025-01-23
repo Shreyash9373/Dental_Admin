@@ -18,7 +18,7 @@ const UsersEnquiry = () => {
       const fetchUserEnquiry = async () => {
         try {
           const response = await axios.get(
-            `${process.env.BACKEND_URI}/api/reception/get-Enquiry`,{withCredentials:true}
+            `${import.meta.env.VITE_BACKEND_URI}/api/reception/get-Enquiry`,{withCredentials:true}
           );
 
           // Assuming the backend sends available slots in `response.data.availableSlots`

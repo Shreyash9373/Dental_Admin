@@ -13,7 +13,7 @@ const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
     (async () => {
       try {
         const response = await axios.get(
-          `${process.env.BACKEND_URI}/api/dashboard/logout`,
+          `${import.meta.env.VITE_BACKEND_URI}/api/dashboard/logout`,
           { withCredentials: true }
         );
         console.log(response);
