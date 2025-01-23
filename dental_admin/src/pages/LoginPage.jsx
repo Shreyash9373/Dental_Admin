@@ -23,7 +23,7 @@ const LoginPage = () => {
       setLoading(true); // Start loading
       setError(null); // Reset any previous error
       const response = await axios.post(
-        "http://localhost:4000/api/dashboard/login",
+        `${import.meta.env.VITE_BACKEND_URI}/api/dashboard/login`,
         data,
         { withCredentials: true }
       );

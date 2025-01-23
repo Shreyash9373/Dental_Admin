@@ -18,7 +18,7 @@ const UsersEnquiry = () => {
       const fetchUserEnquiry = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:4000/api/reception/get-Enquiry`,{withCredentials:true}
+            `${import.meta.env.VITE_BACKEND_URI}/api/reception/get-Enquiry`,{withCredentials:true}
           );
 
           // Assuming the backend sends available slots in `response.data.availableSlots`
@@ -156,13 +156,13 @@ const UsersEnquiry = () => {
         <table className="table-auto w-full border-collapse">
           <thead>
             <tr className="bg-blue-500 text-white">
-              <th className="px-4 py-2 border-b text-left text-sm font-semibold">
+              {/* <th className="px-4 py-2 border-b text-left text-sm font-semibold">
                 <input
                   type="checkbox"
                   onChange={handleSelectAll}
                   checked={currentUsers.length === selectedUsers.length}
                 />
-              </th>
+              </th> */}
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Name</th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Email</th>
               <th className="px-4 py-2 border-b text-left text-sm font-semibold">Phone</th>
@@ -175,13 +175,13 @@ const UsersEnquiry = () => {
           <tbody>
             {userEnquiries.map((inquiry, index) => (
               <tr key={index} className={`${index % 2 == 0 ? 'bg-blue-100':'bg-white'} `}>
-                <td className={`px-4 py-2 ${index % 2 == 0 ? 'bg-blue-200':'bg-white'} border-b text-sm `}>
+                {/* <td className={`px-4 py-2 ${index % 2 == 0 ? 'bg-blue-200':'bg-white'} border-b text-sm `}>
                   <input
                     type="checkbox"
                     // checked={selectedUsers.includes(inquiry.email)}
                     // onChange={() => handleUserSelection(inquiry.email)}
                   />
-                </td>
+                </td> */}
                 <td className="px-4 py-2 border-b text-sm">{inquiry.name}</td>
                 <td className="px-4 py-2 border-b text-sm">{inquiry.email}</td>
                 <td className="px-4 py-2 border-b text-sm">{inquiry.phone}</td>
@@ -215,7 +215,7 @@ const UsersEnquiry = () => {
       </div>
 
       {/* Delete Button */}
-      {selectedUsers.length > 0 && (
+      {/* {selectedUsers.length > 0 && (
         <div className="flex justify-end mt-4">
           <button
             onClick={handleDeleteSelected}
@@ -224,7 +224,7 @@ const UsersEnquiry = () => {
             Delete Selected
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

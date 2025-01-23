@@ -36,7 +36,7 @@ const UpdatePassword = () => {
     try {
       console.log(data);
       const response = await axios.post(
-        "http://localhost:4000/api/dashboard/change-password",
+        `${import.meta.env.VITE_BACKEND_URI}/api/dashboard/change-password`,
         data,
         { withCredentials: true }
       );
