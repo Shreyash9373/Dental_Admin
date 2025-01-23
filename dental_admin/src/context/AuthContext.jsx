@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
       try {
         // const response = await axios.get("http://localhost:4000/", {
         const response = await axios.get(
-          "http://localhost:4000/api/dashboard/refreshToken",
+          `${process.env.BACKEND_URI}/api/dashboard/refreshToken`,
           {
             withCredentials: true,
           }
