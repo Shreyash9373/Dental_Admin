@@ -16,7 +16,7 @@ const UpdatePassword = () => {
   const [role, setRole] = useState("doctor"); // State to manage the selected role
   const [doctors, setDoctors] = useState([]); // State to store doctors list
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
 
@@ -54,7 +54,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div className='p-4 max-w-md mx-auto relative'>
+    <div className='p-4 max-w-md mx-auto'>
       {/* Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -119,30 +119,32 @@ const UpdatePassword = () => {
             className='block text-sm font-medium text-gray-700'>
             New Password
           </label>
-          <input
-            id='newPassword'
-            type={showPassword ? "text" : "password"}
-            {...register("Password", {
-              required: "New password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters long",
-              },
-            })}
-            onChange={(e) => setPassword(e.target.value)}
-            className={`mt-1 block w-full border ${
-              errors.Password ? "border-red-500" : "border-gray-300"
-            } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-            placeholder='Enter new password'
-          />
-          {password.length > 0 && (
-            <button
-              type='button'
-              onClick={() => setShowPassword((prev) => !prev)}
-              className='absolute right-10 top-[12.5rem]'>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          )}
+          <div className='relative'>
+            <input
+              id='newPassword'
+              type={showPassword ? "text" : "password"}
+              {...register("Password", {
+                required: "New password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+              })}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`mt-1 block w-full border ${
+                errors.Password ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+              placeholder='Enter new password'
+            />
+            {password.length > 0 && (
+              <button
+                type='button'
+                onClick={() => setShowPassword((prev) => !prev)}
+                className='absolute top-1/2 -translate-y-1/2 right-2'>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            )}
+          </div>
           {errors.Password && (
             <p className='text-red-500 text-sm mt-1'>
               {errors.Password.message}
@@ -157,30 +159,32 @@ const UpdatePassword = () => {
             className='block text-sm font-medium text-gray-700'>
             Confirm Password
           </label>
-          <input
-            id='confirmPassword'
-            type={showConfirmPassword ? "text" : "password"}
-            {...register("confirmPassword", {
-              required: "Confirm password is required",
-              validate: (value) => {
-                const password = watch("Password"); // Retrieve the value of the Password field
-                return value === password || "Passwords do not match";
-              },
-            })}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className={`mt-1 block w-full border ${
-              errors.confirmPassword ? "border-red-500" : "border-gray-300"
-            } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-            placeholder='Confirm new password'
-          />
-          {confirmpassword.length > 0 && (
-            <button
-              type='button'
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className='absolute right-10 bottom-[6.5rem]'>
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          )}
+          <div className='relative'>
+            <input
+              id='confirmPassword'
+              type={showConfirmPassword ? "text" : "password"}
+              {...register("confirmPassword", {
+                required: "Confirm password is required",
+                validate: (value) => {
+                  const password = watch("Password"); // Retrieve the value of the Password field
+                  return value === password || "Passwords do not match";
+                },
+              })}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={`mt-1 block w-full border ${
+                errors.confirmPassword ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+              placeholder='Confirm new password'
+            />
+            {confirmpassword.length > 0 && (
+              <button
+                type='button'
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className='absolute top-1/2 -translate-y-1/2 right-2'>
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            )}
+          </div>
 
           {errors.confirmPassword && (
             <p className='text-red-500 text-sm mt-1'>
@@ -192,7 +196,7 @@ const UpdatePassword = () => {
         {/* Submit Button */}
         <button
           type='submit'
-          className='bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600'>
+          className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
           Update Password
         </button>
       </form>
