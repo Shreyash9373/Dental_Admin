@@ -13,7 +13,7 @@ const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
     (async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URI}/api/dashboard/logout`,
+          `${import.meta.env.VITE_BACKEND_URI}/api/${authUser.role}s/logout`,
           { withCredentials: true }
         );
         console.log(response);
@@ -53,7 +53,7 @@ const Navbar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
       <div className='flex items-center space-x-3'>
         {/* Avatar with initials */}
         <div className='h-10 w-10 bg-blue-500 text-white flex items-center justify-center rounded-full'>
-          {getInitials(authUser.username)}
+          {getInitials(authUser.name)}
         </div>
         {/* Admin name */}
         {/* <p className='font-semibold text-gray-200'>{authUser.name}</p> */}

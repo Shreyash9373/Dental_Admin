@@ -5,32 +5,53 @@ import Loader from "../components/Loader";
 
 const AuthContext = createContext();
 
+const toggleRole = (currentRole) => {
+  switch (currentRole) {
+    case "receptionist":
+      return "doctor";
+
+    default:
+      return "receptionist";
+  }
+};
+
 const AuthProvider = ({ children }) => {
+  // const [authUser, setAuthUser] = useState({
+  //   name: "receptionist",
+  //   email: "receptionist@gmail.com",
+  //   isLoggedIn: false,
+  //   role: "receptionist",
+  //   isChecking: true,
+  // });
   const [authUser, setAuthUser] = useState({
-    username: "receptionist",
+    name: "receptionist",
+    email: "receptionist@gmail.com",
     isLoggedIn: false,
-    role: "receptionist",
+    role: localStorage.getItem("role") || "receptionist",
     isChecking: true,
   });
   console.log("From AuthContext", authUser);
-
-  // api/dashboard/refreshToken
 
   useEffect(() => {
     const checkLogin = async () => {
       try {
         // const response = await axios.get("http://localhost:4000/", {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URI}/api/dashboard/refreshToken`,
+          `${import.meta.env.VITE_BACKEND_URI}/api/${
+            authUser.role
+          }s/check-refresh`,
           {
             withCredentials: true,
           }
         );
         // console.log(response);
         // console.log(response.data);
+        console.log("localStorage here");
+        localStorage.setItem("role", response.data.role);
         setAuthUser((prev) => ({
           ...prev,
-          username: response.data.username,
+          name: response.data.name,
+          email: response.data.email,
           role: response.data.role,
           isLoggedIn: response.data.success,
         }));
@@ -54,6 +75,7 @@ const AuthProvider = ({ children }) => {
       value={{
         authUser,
         setAuthUser,
+        toggleRole,
       }}>
       {/* <Loader loading={true} size={85} color={"#062335"} /> */}
       {authUser.isChecking ? (
