@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 axios.defaults.withCredentials = true; // Include credentials (cookies)
 
-
 const getWeekDates = (date) => {
   const currentDate = new Date(date);
   const daysOfWeek = [];
@@ -37,8 +36,9 @@ const SeeAppointment = () => {
       const formattedDate = formatDate(new Date(date));
 
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/api/reception/get-patient`,
-        { date: formattedDate }, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URI}/api/receptionists/get-patient`,
+        { date: formattedDate },
+        { withCredentials: true }
       );
 
       setAppointments((prev) => ({
@@ -46,6 +46,7 @@ const SeeAppointment = () => {
         [formattedDate]: response.data.patient || [],
       }));
     } catch (err) {
+      console.log(err);
       setError(err.response?.data?.message || "Failed to fetch appointments.");
       toast.error(err.response?.data?.message || "Failed to get Appointments.");
     } finally {
@@ -67,30 +68,28 @@ const SeeAppointment = () => {
   };
 
   return (
-    <div className="mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className='mx-auto p-6 bg-white shadow-md rounded-lg'>
+      <h2 className='text-3xl font-bold text-gray-800 mb-6 text-center'>
         Dental Clinic Schedule
       </h2>
 
-      <div className="flex justify-between items-center mb-6">
+      <div className='flex justify-between items-center mb-6'>
         <button
-          className="p-2 bg-blue-500 text-white rounded-lg shadow-md font-bold hover:bg-blue-600"
-          onClick={() => handleWeekChange(-1)}
-        >
+          className='p-2 bg-blue-500 text-white rounded-lg shadow-md font-bold hover:bg-blue-600'
+          onClick={() => handleWeekChange(-1)}>
           &lt;
         </button>
-        <div className="text-lg font-bold text-gray-600">
+        <div className='text-lg font-bold text-gray-600'>
           {weekDates[0].toDateString()} - {weekDates[6].toDateString()}
         </div>
         <button
-          className="p-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600"
-          onClick={() => handleWeekChange(1)}
-        >
+          className='p-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600'
+          onClick={() => handleWeekChange(1)}>
           &gt;
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-4 justify-center mb-6">
+      <div className='flex flex-wrap gap-4 justify-center mb-6'>
         {weekDates.map((date, index) => (
           <button
             key={index}
@@ -102,9 +101,8 @@ const SeeAppointment = () => {
             onClick={() => {
               setSelectedDate(date);
               getScheduleAppointments(formatDate(date));
-            }}
-          >
-            <span className="block font-bold">
+            }}>
+            <span className='block font-bold'>
               {date.toDateString().split(" ")[0]}
             </span>
             <span>{date.getDate()}</span>
@@ -113,44 +111,44 @@ const SeeAppointment = () => {
       </div>
 
       {selectedDate && (
-        <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+        <div className='bg-gray-50 p-6 rounded-lg shadow-md'>
+          <h3 className='text-xl font-semibold text-gray-700 mb-4'>
             Appointments for {selectedDate.toDateString()}
           </h3>
 
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
-            <p className="text-red-500">{error}</p>
+            <p className='text-red-500'>{error}</p>
           ) : appointments[formatDate(selectedDate)]?.length > 0 ? (
             <>
               {/* Table for Desktop View */}
-              <div className="hidden md:table w-full overflow-x-auto">
-                <table className="min-w-full table-auto border-collapse border border-gray-300 shadow-lg rounded-lg">
+              <div className='hidden md:table w-full overflow-x-auto'>
+                <table className='min-w-full table-auto border-collapse border border-gray-300 shadow-lg rounded-lg'>
                   <thead>
-                    <tr className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                    <tr className='bg-gradient-to-r from-blue-500 to-blue-700 text-white'>
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Patient
                       </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Contact
                       </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Operation
                       </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Time
                       </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Date
                       </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Operation Status
                       </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Amount (₹)
                       </th>
-                      <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                      <th className='border border-gray-300 px-4 py-2 text-left font-semibold'>
                         Payment Status
                       </th>
                     </tr>
@@ -159,30 +157,32 @@ const SeeAppointment = () => {
                     {appointments[formatDate(selectedDate)]?.map(
                       (appointment) => (
                         <tr key={appointment._id}>
-                          <td className="border px-4 py-2">
+                          <td className='border px-4 py-2'>
                             {appointment.fullName}
                           </td>
-                          <td className="border px-4 py-2">
+                          <td className='border px-4 py-2'>
                             {appointment.mobileNo}
                           </td>
-                          <td className="border px-4 py-2">
+                          <td className='border px-4 py-2'>
                             {appointment.service}
                           </td>
-                          <td className="border px-4 py-2">
+                          <td className='border px-4 py-2'>
                             {appointment.timeSlot}
                           </td>
-                          <td className="border px-4 py-2">
-                            {new Date(appointment.date)
-                              .toISOString()
-                              .split("T")[0]}
+                          <td className='border px-4 py-2'>
+                            {
+                              new Date(appointment.date)
+                                .toISOString()
+                                .split("T")[0]
+                            }
                           </td>
-                          <td className="border px-4 py-2">
+                          <td className='border px-4 py-2'>
                             {appointment.status}
                           </td>
-                          <td className="border px-4 py-2">
+                          <td className='border px-4 py-2'>
                             {appointment.paymentAmount} ₹
                           </td>
-                          <td className="border px-4 py-2">
+                          <td className='border px-4 py-2'>
                             {appointment.paymentStatus}
                           </td>
                         </tr>
@@ -193,44 +193,44 @@ const SeeAppointment = () => {
               </div>
 
               {/* Cards for Mobile View */}
-              <div className="block md:hidden">
-                {appointments[formatDate(selectedDate)]?.map(
-                  (appointment) => (
-                    <div
-                      key={appointment._id}
-                      className="bg-white shadow-md rounded-lg p-4 mb-4"
-                    >
-                      <h4 className="text-lg font-bold text-gray-800">
-                        {appointment.fullName}
-                      </h4>
-                      <p className="text-gray-600">
-                        <strong>Contact:</strong> {appointment.mobileNo}
-                      </p>
-                      <p className="text-gray-600">
-                        <strong>Operation:</strong> {appointment.service}
-                      </p>
-                      <p className="text-gray-600">
-                        <strong>Time:</strong> {appointment.timeSlot}
-                      </p>
-                      <p className="text-gray-600">
-                        <strong>Date:</strong> {new Date(appointment.date).toISOString().split("T")[0]}
-                      </p>
-                      <p className="text-gray-600">
-                        <strong>Operation Status:</strong> {appointment.operationStatus}
-                      </p>
-                      <p className="text-gray-600">
-                        <strong>Amount:</strong> {appointment.amount} ₹
-                      </p>
-                      <p className="text-gray-600">
-                        <strong>Payment Status:</strong> {appointment.paymentStatus}
-                      </p>
-                    </div>
-                  )
-                )}
+              <div className='block md:hidden'>
+                {appointments[formatDate(selectedDate)]?.map((appointment) => (
+                  <div
+                    key={appointment._id}
+                    className='bg-white shadow-md rounded-lg p-4 mb-4'>
+                    <h4 className='text-lg font-bold text-gray-800'>
+                      {appointment.fullName}
+                    </h4>
+                    <p className='text-gray-600'>
+                      <strong>Contact:</strong> {appointment.mobileNo}
+                    </p>
+                    <p className='text-gray-600'>
+                      <strong>Operation:</strong> {appointment.service}
+                    </p>
+                    <p className='text-gray-600'>
+                      <strong>Time:</strong> {appointment.timeSlot}
+                    </p>
+                    <p className='text-gray-600'>
+                      <strong>Date:</strong>{" "}
+                      {new Date(appointment.date).toISOString().split("T")[0]}
+                    </p>
+                    <p className='text-gray-600'>
+                      <strong>Operation Status:</strong>{" "}
+                      {appointment.operationStatus}
+                    </p>
+                    <p className='text-gray-600'>
+                      <strong>Amount:</strong> {appointment.amount} ₹
+                    </p>
+                    <p className='text-gray-600'>
+                      <strong>Payment Status:</strong>{" "}
+                      {appointment.paymentStatus}
+                    </p>
+                  </div>
+                ))}
               </div>
             </>
           ) : (
-            <p className="text-gray-500">No appointments for this day.</p>
+            <p className='text-gray-500'>No appointments for this day.</p>
           )}
         </div>
       )}

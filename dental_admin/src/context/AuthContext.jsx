@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   //   isChecking: true,
   // });
   const [authUser, setAuthUser] = useState({
-    name: "receptionist",
+    name: "Guest",
     email: "receptionist@gmail.com",
     isLoggedIn: false,
     role: localStorage.getItem("role") || "receptionist",
@@ -46,11 +46,10 @@ const AuthProvider = ({ children }) => {
         );
         // console.log(response);
         // console.log(response.data);
-        console.log("localStorage here");
         localStorage.setItem("role", response.data.role);
         setAuthUser((prev) => ({
           ...prev,
-          name: response.data.name,
+          name: response.data.name || "Guest",
           email: response.data.email,
           role: response.data.role,
           isLoggedIn: response.data.success,

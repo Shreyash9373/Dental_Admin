@@ -43,7 +43,7 @@ const LoginPage = () => {
         setAuthUser((prev) => ({
           ...prev,
           email: response.data[authUser.role].email,
-          name: response.data[authUser.role].name,
+          name: response.data[authUser.role].name || "Guest",
           isLoggedIn: true,
         }));
       } else {
@@ -130,7 +130,7 @@ const LoginPage = () => {
               type='button' // react hook form explicitly sets all buttons in form as submit
               className='text-blue-800 underline'
               onClick={handleRoleToggle}>
-              Login as {authUser.role}
+              Login as {toggleRole(authUser.role)}
             </button>
           </span>
         </form>
