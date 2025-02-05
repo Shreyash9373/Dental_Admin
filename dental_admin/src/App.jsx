@@ -15,11 +15,11 @@ import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./context/AuthContext";
 import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
+import Profile from "./components/Doctor Module/Profile";
 import DoctorLayout from "./pages/layouts/DoctorLayout";
 import ReceptionistLayout from "./pages/layouts/ReceptionistLayout";
 import RoleBasedRedirect from "./components/RoleBasedRedirect";
 import AddMember from "./components/Doctor Module/AddMember";
-
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -57,16 +57,16 @@ function App() {
               {/* Redirect based on role */}
               <Route index element={<RoleBasedRedirect />} />
 
-            {/* Doctor Routes */}
-            <Route path='doctor' element={<DoctorLayout />}>
-              {/* Redirect from /admin/dashboard to /admin/dashboard/add-event */}
-              <Route index element={<Navigate to='see-appointment' />} />
-              <Route path='add-event' element={<AddEvent />} />
-              <Route path='blogs' element={<Blogs />} />
-              <Route path='see-appointment' element={<SeeAppointment />} />
-              <Route path='updatepassword' element={<UpdatePassword />} />
-              <Route path="addMember" element={<AddMember/>} />
-            </Route>
+              {/* Doctor Routes */}
+              <Route path='doctor' element={<DoctorLayout />}>
+                {/* Redirect from /admin/dashboard to /admin/dashboard/add-event */}
+                <Route index element={<Navigate to='see-appointment' />} />
+                <Route path='add-event' element={<AddEvent />} />
+                <Route path='blogs' element={<Blogs />} />
+                <Route path='see-appointment' element={<SeeAppointment />} />
+                <Route path='profile' element={<Profile />} />
+                <Route path='addMember' element={<AddMember />} />
+              </Route>
 
               {/* Receptionist Routes */}
               <Route path='receptionist' element={<ReceptionistLayout />}>

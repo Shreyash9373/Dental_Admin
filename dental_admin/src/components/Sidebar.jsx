@@ -130,14 +130,14 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                   <li>
                     <NavLink
                       onClick={(e) => setIsHamburgerOpen(false)}
-                      to='/admin/dashboard/doctor/updatepassword'
+                      to='/admin/dashboard/doctor/profile'
                       className={({ isActive }) =>
                         isActive
                           ? "text-blue-400 font-bold"
                           : "hover:text-gray-300 font-normal" +
                             " w-full inline-block"
                       }>
-                      Update Password
+                      Profile
                     </NavLink>
                   </li>
                   <li>
