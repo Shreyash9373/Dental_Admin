@@ -4,40 +4,37 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const AddMember = () => {
+const defaultFormData = {
+  role: "doctor",
+  email: "",
+  password: "",
+};
+
+const AddAccount = () => {
+  const [formData, setFormData] = useState(defaultFormData);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm();
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
-  const newPassword = watch("password"); // For confirm password validation
-  const newConfirmPassword = watch("confirmPassword"); // For confirm password validation
+  // const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
+  // const newPassword = watch("password"); // For confirm password validation
+  // const newConfirmPassword = watch("confirmPassword"); // For confirm password validation
 
   // Handle form submission
-  const onSubmit = async (data) => {
-    // Check if passwords match
-    if (data.password !== data.confirmPassword) {
-      toast.error("Password and Confirm Password does not match!");
-      return;
-    }
-
-    // Log the form data to the console
-    console.log(data);
+  const handleFormSubmit = async (data) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/api/dashboard/addMember`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/doctors/add-member`,
         data,
         { withCredentials: true }
       );
-      console.log("Response", response.data);
-      if (response.data.success) {
-        toast.success("Member Added Successfully");
-      } else {
-        toast.error("Failed to Add Member");
-      }
+      toast.success(response.data.message);
+      setFormData(defaultFormData);
+      reset();
     } catch (error) {
       console.log(error);
       toast.error(
@@ -45,9 +42,6 @@ const AddMember = () => {
           "Internal server error, Please try again after some time"
       );
     }
-
-    // Simulate member creation (send data to the server here)
-    //alert("Member created successfully!");
   };
 
   return (
@@ -55,9 +49,9 @@ const AddMember = () => {
       <div className='flex justify-center p-6'>
         <div className='w-full max-w-md bg-white p-8 rounded-lg shadow-lg'>
           <h2 className='text-2xl font-semibold text-center text-gray-800 mb-6'>
-            Add Member
+            Add Account
           </h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleFormSubmit)}>
             {/* Role Field */}
             <div className='mb-4'>
               <label
@@ -67,7 +61,12 @@ const AddMember = () => {
               </label>
               <select
                 id='role'
-                {...register("role", { required: "Role is required" })}
+                value={formData.role}
+                {...register("role", {
+                  required: "Role is required",
+                  onChange: (e) =>
+                    setFormData((prev) => ({ ...prev, role: e.target.value })),
+                })}
                 className={`mt-1 block w-full px-3 py-2 border ${
                   errors.role ? "border-red-500" : "border-gray-300"
                 } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}>
@@ -81,24 +80,33 @@ const AddMember = () => {
               )}
             </div>
 
-            {/* Username Field */}
+            {/* Email Field */}
             <div className='mb-4'>
               <label
-                htmlFor='username'
+                htmlFor='email'
                 className='block text-sm font-medium text-gray-700'>
-                Username
+                Email
               </label>
               <input
                 type='text'
-                id='username'
-                {...register("username", { required: "Username is required" })}
+                id='email'
+                value={formData.email}
+                {...register("email", {
+                  required: "Email is required",
+                  onChange: (e) =>
+                    setFormData((prev) => ({ ...prev, email: e.target.value })),
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+                    message: "Invalid email",
+                  },
+                })}
                 className={`mt-1 block w-full px-3 py-2 border ${
-                  errors.username ? "border-red-500" : "border-gray-300"
+                  errors.email ? "border-red-500" : "border-gray-300"
                 } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
               />
-              {errors.username && (
+              {errors.email && (
                 <p className='text-red-500 text-sm mt-1'>
-                  {errors.username.message}
+                  {errors.email.message}
                 </p>
               )}
             </div>
@@ -114,8 +122,14 @@ const AddMember = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   id='password'
+                  value={formData.password}
                   {...register("password", {
                     required: "Password is required",
+                    onChange: (e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      })),
                     minLength: {
                       value: 6,
                       message: "Password must be at least 6 characters long",
@@ -125,7 +139,7 @@ const AddMember = () => {
                     errors.password ? "border-red-500" : "border-gray-300"
                   } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                 />
-                {newPassword?.length > 0 && (
+                {formData.password?.length > 0 && (
                   <button
                     type='button'
                     onClick={() => setShowPassword((prev) => !prev)}
@@ -142,7 +156,7 @@ const AddMember = () => {
             </div>
 
             {/* Confirm Password Field */}
-            <div className='mb-6'>
+            {/* <div className='mb-6'>
               <label
                 htmlFor='confirmPassword'
                 className='block text-sm font-medium text-gray-700'>
@@ -177,14 +191,14 @@ const AddMember = () => {
                   {errors.confirmPassword.message}
                 </p>
               )}
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <div className='flex items-center justify-between'>
               <button
                 type='submit'
                 className='w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'>
-                Add Member
+                Add Account
               </button>
             </div>
           </form>
@@ -194,4 +208,4 @@ const AddMember = () => {
   );
 };
 
-export default AddMember;
+export default AddAccount;

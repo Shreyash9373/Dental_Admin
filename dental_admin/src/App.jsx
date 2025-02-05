@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
 import UsersEnquiry from "./components/Users Enquiry/UsersEnquiry";
 import ScheduleAppointment from "./components/Schedule/ScheduleAppointment";
 import BookApointment from "./components/Book Apointment/BookApointment";
@@ -14,12 +12,11 @@ import SeeAppointment from "./components/Doctor Module/SeeAppointment";
 import AdminDashboardLayout from "./pages/layouts/AdminDashboardLayout";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./context/AuthContext";
-import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
 import Profile from "./components/Doctor Module/Profile";
 import DoctorLayout from "./pages/layouts/DoctorLayout";
 import ReceptionistLayout from "./pages/layouts/ReceptionistLayout";
 import RoleBasedRedirect from "./components/RoleBasedRedirect";
-import AddMember from "./components/Doctor Module/AddMember";
+import AddAccount from "./components/Doctor Module/AddAccount";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -65,7 +62,7 @@ function App() {
                 <Route path='blogs' element={<Blogs />} />
                 <Route path='see-appointment' element={<SeeAppointment />} />
                 <Route path='profile' element={<Profile />} />
-                <Route path='addMember' element={<AddMember />} />
+                <Route path='add-account' element={<AddAccount />} />
               </Route>
 
               {/* Receptionist Routes */}
