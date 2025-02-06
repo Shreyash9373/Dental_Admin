@@ -17,6 +17,7 @@ import DoctorLayout from "./pages/layouts/DoctorLayout";
 import ReceptionistLayout from "./pages/layouts/ReceptionistLayout";
 import RoleBasedRedirect from "./components/RoleBasedRedirect";
 import AddAccount from "./components/Doctor Module/AddAccount";
+import ManageAccount from "./components/Doctor Module/ManageAccount";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -63,6 +64,7 @@ function App() {
                 <Route path='see-appointment' element={<SeeAppointment />} />
                 <Route path='profile' element={<Profile />} />
                 <Route path='add-account' element={<AddAccount />} />
+                <Route path='manage-account' element={<ManageAccount />} />
               </Route>
 
               {/* Receptionist Routes */}
