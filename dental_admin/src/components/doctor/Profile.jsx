@@ -13,6 +13,7 @@ const Profile = () => {
     experience: "",
     description: "",
     image: "",
+    preview: "",
   });
   const {
     register,
@@ -43,10 +44,18 @@ const Profile = () => {
 
   const handleFormSubmit = async (data) => {
     try {
-      console.log(data);
+      const formDataObject = new FormData();
+      formDataObject.append("image", data.image[0]);
+      formDataObject.append("description", data.description);
+      formDataObject.append("name", data.name);
+      formDataObject.append("email", data.email);
+      formDataObject.append("password", data.password);
+      formDataObject.append("qualification", data.qualification);
+      formDataObject.append("experience", data.experience);
+
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URI}/api/doctors/update`,
-        data,
+        formDataObject,
         { withCredentials: true }
       );
       if (response) {
@@ -222,7 +231,7 @@ const Profile = () => {
             {/* <div className='bg-gray-400 w-40 h-40 rounded-full'></div> */}
             <img
               className='mx-auto bg-gray-400 w-40 h-40 rounded-full object-cover'
-              src={formData.preview}
+              src={formData.preview ? formData.preview : formData.image}
               alt=''
             />
             <div className='absolute bottom-0 right-0 z-10'>
@@ -410,7 +419,7 @@ const Profile = () => {
             </div> */}
           {/* TODO */}
           <button
-            className='w-fit mx-auto mt-3 text-white bg-blue-800 outline-none rounded-md px-3 py-1 focus:outline-blue-800 hover:bg-blue-700 md:px-5 md:py-2'
+            className='w-fit mx-auto mt-3 text-white bg-blue-800 outline-none rounded-md px-3 py-1 focus:bg-blue-700 hover:bg-blue-700 md:px-5 md:py-2'
             type='submit'>
             Update
           </button>
