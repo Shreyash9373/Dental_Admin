@@ -36,7 +36,7 @@ const SeeAppointment = () => {
       const formattedDate = formatDate(new Date(date));
 
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/api/receptionists/get-patient`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/receptionists/get-appointment`,
         { date: formattedDate },
         { withCredentials: true }
       );

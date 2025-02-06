@@ -52,16 +52,15 @@ const ScheduleAppointment = () => {
       const formattedDate = formatDate(new Date(date));
 
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/api/reception/get-patient`,
-        { date: formattedDate }, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URI}/api/receptionists/get-appointment`,
+        { date: formattedDate },
+        { withCredentials: true }
       );
 
       setAppointments((prev) => ({
         ...prev,
-        [formattedDate]: response.data.patient || [],
+        [formattedDate]: response.data.appointment || [],
       }));
-
-      console.log("Patient Data: ", response.data.patient);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch appointments.");
       toast.error(err.response?.data?.message || "Failed to get Appointments.");
@@ -79,8 +78,11 @@ const ScheduleAppointment = () => {
       console.log(updatedData);
 
       const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URI}/api/reception/update-patient`,
-        updatedData, { withCredentials: true }
+        `${
+          import.meta.env.VITE_BACKEND_URI
+        }/api/receptionists/update-appointment`,
+        updatedData,
+        { withCredentials: true }
       );
 
       const updatedAppointments = appointments[formatDate(selectedDate)].map(
@@ -128,9 +130,9 @@ const ScheduleAppointment = () => {
       service: appointment.service,
       timeSlot: appointment.timeSlot,
       status: appointment.status,
-      age: appointment.age,  // Add age here for the modal
-      paymentAmount: appointment.paymentAmount || '',
-      paymentStatus: appointment.paymentStatus || ''
+      age: appointment.age, // Add age here for the modal
+      paymentAmount: appointment.paymentAmount || "",
+      paymentStatus: appointment.paymentStatus || "",
     });
   };
 
@@ -165,10 +167,11 @@ const ScheduleAppointment = () => {
         {weekDates.map((date, index) => (
           <button
             key={index}
-            className={`min-w-32 flex-grow p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${selectedDate?.toDateString() === date.toDateString()
-              ? "ring-2 ring-yellow-400"
-              : ""
-              }`}
+            className={`min-w-32 flex-grow p-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-xl hover:scale-105 transform transition ${
+              selectedDate?.toDateString() === date.toDateString()
+                ? "ring-2 ring-yellow-400"
+                : ""
+            }`}
             onClick={() => {
               setSelectedDate(date);
               getScheduleAppointments(formatDate(date));
@@ -182,7 +185,6 @@ const ScheduleAppointment = () => {
       </div>
 
       {selectedDate && (
-
         <div className='bg-gray-50 p-4 rounded-lg shadow-md'>
           <h3 className='text-xl font-semibold text-gray-700 mb-4'>
             Appointments for {selectedDate.toDateString()}
@@ -219,11 +221,20 @@ const ScheduleAppointment = () => {
                         <td className='py-2 px-4'>{appt.service}</td>
                         <td className='py-2 px-4'>{appt.timeSlot}</td>
                         <td className='py-2 px-4'>
-                          {new Date(appt.date).toISOString().split('T')[0]}
+                          {new Date(appt.date).toISOString().split("T")[0]}
                         </td>
-                        <td className='py-2 px-4'>{appt.paymentAmount ? `${appt.paymentAmount}` : 'Not Set'}</td>
-                        <td className='py-2 px-4'>{appt.paymentStatus || 'Pending'}</td>
-                        <td className={`py-2 px-4 ${getStatusColor(appt.status)}`}>
+                        <td className='py-2 px-4'>
+                          {appt.paymentAmount
+                            ? `${appt.paymentAmount}`
+                            : "Not Set"}
+                        </td>
+                        <td className='py-2 px-4'>
+                          {appt.paymentStatus || "Pending"}
+                        </td>
+                        <td
+                          className={`py-2 px-4 ${getStatusColor(
+                            appt.status
+                          )}`}>
                           {appt.status}
                         </td>
                         <td className='py-2 px-4'>
@@ -246,29 +257,37 @@ const ScheduleAppointment = () => {
                     key={appt._id}
                     className='p-4 border border-gray-300 rounded-lg shadow'>
                     <p>
-                      <span className='font-semibold'>Name:</span> {appt.fullName}
+                      <span className='font-semibold'>Name:</span>{" "}
+                      {appt.fullName}
                     </p>
                     <p>
-                      <span className='font-semibold'>Contact:</span> {appt.mobileNo}
+                      <span className='font-semibold'>Contact:</span>{" "}
+                      {appt.mobileNo}
                     </p>
                     <p>
                       <span className='font-semibold'>Age:</span> {appt.age}
                     </p>
                     <p>
-                      <span className='font-semibold'>Operation:</span> {appt.service}
+                      <span className='font-semibold'>Operation:</span>{" "}
+                      {appt.service}
                     </p>
                     <p>
-                      <span className='font-semibold'>Time Slot:</span> {appt.timeSlot}
+                      <span className='font-semibold'>Time Slot:</span>{" "}
+                      {appt.timeSlot}
                     </p>
                     <p>
-                      <span className='font-semibold'>Date:</span>{' '}
-                      {new Date(appt.date).toISOString().split('T')[0]}
+                      <span className='font-semibold'>Date:</span>{" "}
+                      {new Date(appt.date).toISOString().split("T")[0]}
                     </p>
                     <p>
-                      <span className='font-semibold'>Payment Amount:</span> {appt.paymentAmount ? `₹ ${appt.paymentAmount}` : 'Not Set'}
+                      <span className='font-semibold'>Payment Amount:</span>{" "}
+                      {appt.paymentAmount
+                        ? `₹ ${appt.paymentAmount}`
+                        : "Not Set"}
                     </p>
                     <p>
-                      <span className='font-semibold'>Payment Status:</span> {appt.paymentStatus || 'Pending'}
+                      <span className='font-semibold'>Payment Status:</span>{" "}
+                      {appt.paymentStatus || "Pending"}
                     </p>
                     <p>
                       <span className='font-semibold'>Status:</span>
@@ -293,92 +312,93 @@ const ScheduleAppointment = () => {
 
       {/* Modal for editing appointment */}
       {isModalOpen && editingAppointment && (
-  <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center'>
-    <div className='bg-white p-6 rounded-lg shadow-lg w-full max-w-xl max-h-[90vh] overflow-y-auto'>
-      <h3 className='text-2xl font-semibold text-gray-700 mb-4'>
-        Edit Appointment
-      </h3>
-      <form onSubmit={handleSubmit(updatePatient)}>
-        <div className='mb-3'>
-          <label className='block text-gray-700'>Patient Name</label>
-          <input
-            type='text'
-            {...register("fullName")}
-            className='w-full p-2 border border-gray-300 rounded-lg'
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700'>Contact</label>
-          <input
-            type='text'
-            {...register("mobileNo")}
-            className='w-full p-2 border border-gray-300 rounded-lg'
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700'>Age</label>
-          <input
-            type='number'
-            {...register("age")}
-            className='w-full p-2 border border-gray-300 rounded-lg'
-            placeholder='Enter the patient age'
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700'>Time Slot</label>
-          <input
-            type='text'
-            {...register("timeSlot")}
-            className='w-full p-2 border border-gray-300 rounded-lg'
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700'>Payment Amount (₹)</label>
-          <input
-            type='number'
-            {...register("paymentAmount")}
-            className='w-full p-2 border border-gray-300 rounded-lg'
-            placeholder='Enter the payment amount'
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700'>Payment Status</label>
-          <select
-            {...register("paymentStatus")}
-            className='w-full p-2 border border-gray-300 rounded-lg'>
-            <option value='Pending'>Pending</option>
-            <option value='Paid'>Paid</option>
-          </select>
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700'>Status</label>
-          <select
-            {...register("status")}
-            className='w-full p-2 border border-gray-300 rounded-lg'>
-            <option value='Postponed'>Postponed</option>
-            <option value='Completed'>Completed</option>
-            <option value='Cancelled'>Cancelled</option>
-          </select>
-        </div>
+        <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center'>
+          <div className='bg-white p-6 rounded-lg shadow-lg w-full max-w-xl max-h-[90vh] overflow-y-auto'>
+            <h3 className='text-2xl font-semibold text-gray-700 mb-4'>
+              Edit Appointment
+            </h3>
+            <form onSubmit={handleSubmit(updatePatient)}>
+              <div className='mb-3'>
+                <label className='block text-gray-700'>Patient Name</label>
+                <input
+                  type='text'
+                  {...register("fullName")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='block text-gray-700'>Contact</label>
+                <input
+                  type='text'
+                  {...register("mobileNo")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='block text-gray-700'>Age</label>
+                <input
+                  type='number'
+                  {...register("age")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'
+                  placeholder='Enter the patient age'
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='block text-gray-700'>Time Slot</label>
+                <input
+                  type='text'
+                  {...register("timeSlot")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='block text-gray-700'>
+                  Payment Amount (₹)
+                </label>
+                <input
+                  type='number'
+                  {...register("paymentAmount")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'
+                  placeholder='Enter the payment amount'
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='block text-gray-700'>Payment Status</label>
+                <select
+                  {...register("paymentStatus")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'>
+                  <option value='Pending'>Pending</option>
+                  <option value='Paid'>Paid</option>
+                </select>
+              </div>
+              <div className='mb-3'>
+                <label className='block text-gray-700'>Status</label>
+                <select
+                  {...register("status")}
+                  className='w-full p-2 border border-gray-300 rounded-lg'>
+                  <option value='Postponed'>Postponed</option>
+                  <option value='Completed'>Completed</option>
+                  <option value='Cancelled'>Cancelled</option>
+                </select>
+              </div>
 
-        <div className='flex justify-end'>
-          <button
-            type='button'
-            onClick={closeEditModal}
-            className='bg-gray-300 px-4 py-2 rounded-lg mr-4'>
-            Cancel
-          </button>
-          <button
-            type='submit'
-            className='bg-blue-500 text-white px-4 py-2 rounded-lg'>
-            Save
-          </button>
+              <div className='flex justify-end'>
+                <button
+                  type='button'
+                  onClick={closeEditModal}
+                  className='bg-gray-300 px-4 py-2 rounded-lg mr-4'>
+                  Cancel
+                </button>
+                <button
+                  type='submit'
+                  className='bg-blue-500 text-white px-4 py-2 rounded-lg'>
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
-    </div>
-  </div>
-)}
-
+      )}
     </div>
   );
 };
