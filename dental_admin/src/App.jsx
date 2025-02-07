@@ -18,6 +18,8 @@ import ReceptionistLayout from "./pages/layouts/ReceptionistLayout";
 import RoleBasedRedirect from "./components/RoleBasedRedirect";
 import AddAccount from "./components/doctor/AddAccount";
 import ManageAccount from "./components/doctor/ManageAccount";
+import Patients from "./components/Patients";
+import Patient from "./components/Patient";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -76,7 +78,9 @@ function App() {
                   path='schedule-appointments'
                   element={<ScheduleAppointment />}
                 />
-                <Route path='book-apointment' element={<BookApointment />} />{" "}
+                <Route path='book-apointment' element={<BookApointment />} />
+                <Route path='patients' element={<Patients />} />
+                <Route path='patient' element={<Patient />} />
               </Route>
             </Route>
 

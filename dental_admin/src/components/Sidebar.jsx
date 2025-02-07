@@ -85,6 +85,19 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                       Book Appointment
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/receptionist/patients'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      Patients
+                    </NavLink>
+                  </li>
                 </>
               ) : (
                 <>
