@@ -133,7 +133,9 @@ const ManageAccount = () => {
         )}
       </div>
       {isModalOpen && (
-        <div className='absolute inset-0 z-50 flex justify-center items-center'>
+        <div
+          onBlur={(e) => setIsModalOpen(false)}
+          className='absolute inset-0 z-50 flex justify-center items-center'>
           {/* overlay */}
           <div className='absolute inset-0 z-10 bg-black/60'></div>
           {/* form */}
@@ -146,6 +148,7 @@ const ManageAccount = () => {
             </button>
             {/* input field */}
             <input
+              autoFocus={true}
               className='w-1/2 mx-auto px-3 py-1 md:px-5 md:py-2 rounded-md border outline-none border-gray-400 focus:border-blue-500'
               type='text'
               name='password'
