@@ -38,11 +38,11 @@ const SearchPatient = () => {
   }, [debouncedSearchTerm]);
 
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-5'>
       <h1 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
         Search Patient
       </h1>
-      <div className='flex flex-col'>
+      <div className='relative flex flex-col'>
         {/* search input */}
         <input
           className='px-3 py-1 border border-gray-400 rounded-md outline-none focus:border-blue-500 md:px-5 md:py-2'
@@ -59,11 +59,12 @@ const SearchPatient = () => {
               patients?.length > 0
                 ? {
                     overflowY: "scroll",
+                    // top: `${44}px` /* This is a a rough estimate */,
                     maxHeight: `${4 * 72}px` /* This is a a rough estimate */,
                   }
                 : undefined
             }
-            className={`bg-white border border-gray-400 ${
+            className={`absolute top-11 left-0 right-0 bg-white border border-gray-400 ${
               patients?.length > 0 ? "w-min" : undefined
             } flex flex-col px-3 py-6`}>
             {/* loader */}
