@@ -80,7 +80,7 @@ function App() {
                 />
                 <Route path='book-apointment' element={<BookApointment />} />
                 <Route path='patients' element={<Patients />} />
-                <Route path='patient' element={<Patient />} />
+                <Route path='patient/:patientId' element={<Patient />} />
               </Route>
             </Route>
 

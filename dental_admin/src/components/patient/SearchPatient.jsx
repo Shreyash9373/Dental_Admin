@@ -2,15 +2,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AiOutlineLoading } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 import { useDebounce } from "../../hooks/useDebounce";
+import { useAuth } from "../../context/AuthContext";
 
 const SearchPatient = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [patients, setPatients] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { authUser } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -42,10 +45,10 @@ const SearchPatient = () => {
       <h1 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
         Search Patient
       </h1>
-      <div className='relative flex flex-col'>
+      <div className='group/search relative flex flex-col'>
         {/* search input */}
         <input
-          className='px-3 py-1 border border-gray-400 rounded-md outline-none focus:border-blue-500 md:px-5 md:py-2'
+          className='peer/searchf px-3 py-1 border border-gray-400 rounded-md outline-none focus:border-blue-500 md:px-5 md:py-2'
           type='text'
           name='search'
           id='search'
@@ -59,13 +62,12 @@ const SearchPatient = () => {
               patients?.length > 0
                 ? {
                     overflowY: "scroll",
-                    // top: `${44}px` /* This is a a rough estimate */,
                     maxHeight: `${4 * 72}px` /* This is a a rough estimate */,
                   }
                 : undefined
             }
-            className={`absolute top-11 left-0 right-0 bg-white border border-gray-400 ${
-              patients?.length > 0 ? "w-min" : undefined
+            className={`absolute top-11 left-0 right-0 w-full bg-white border border-gray-400 hidden group-focus-within/search:block ${
+              patients?.length > 0 ? "md:w-min" : undefined
             } flex flex-col px-3 py-6`}>
             {/* loader */}
             {isLoading && (
@@ -77,7 +79,8 @@ const SearchPatient = () => {
             {patients.length > 0 ? (
               <div className='flex flex-col gap-2 divide-y divide-gray-400'>
                 {patients.map((p, index) => (
-                  <div
+                  <Link
+                    to={`/admin/dashboard/${authUser.role}/patient/${p._id}`}
                     key={index}
                     className='flex justify-between gap-16 items-center lg:gap-40'>
                     <div className='flex flex-col'>
@@ -87,7 +90,7 @@ const SearchPatient = () => {
                       </span>
                     </div>
                     <span className='text-sm'>{p.email}</span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             ) : (
