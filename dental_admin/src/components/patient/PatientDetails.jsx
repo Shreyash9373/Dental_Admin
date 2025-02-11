@@ -30,7 +30,6 @@ const PatientDetails = ({ patient, patientId }) => {
             withCredentials: true,
           }
         );
-        console.log(response);
         toast.success(response.data.message);
       })();
     } catch (error) {
@@ -151,11 +150,6 @@ const PatientDetails = ({ patient, patientId }) => {
             />
           </div>
         </div>
-        {/* <button
-          className='px-3 py-1 w-11/12 mx-auto text-white rounded-md bg-blue-800 outline-none focus:bg-blue-500 hover:bg-blue-500 md:px-5 md:py-2 md:w-1/3'
-          type='submit'>
-          Save
-        </button> */}
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ import AddAccount from "./components/doctor/AddAccount";
 import ManageAccount from "./components/doctor/ManageAccount";
 import Patients from "./components/Patients";
 import Patient from "./components/Patient";
+import Visit from "./components/Visit";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -81,6 +82,7 @@ function App() {
                 <Route path='book-apointment' element={<BookApointment />} />
                 <Route path='patients' element={<Patients />} />
                 <Route path='patient/:patientId' element={<Patient />} />
+                <Route path='visit/:visitId' element={<Visit />} />
               </Route>
             </Route>
 

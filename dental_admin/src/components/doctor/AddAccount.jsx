@@ -80,6 +80,37 @@ const AddAccount = () => {
               )}
             </div>
 
+            {formData.role === "doctor" && (
+              <div className='mb-4'>
+                <label
+                  htmlFor='name'
+                  className='block text-sm font-medium text-gray-700'>
+                  Name
+                </label>
+                <input
+                  type='text'
+                  id='name'
+                  value={formData.name}
+                  {...register("name", {
+                    required: "Name is required",
+                    onChange: (e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        name: e.target.value,
+                      })),
+                  })}
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    errors.name ? "border-red-500" : "border-gray-300"
+                  } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                />
+                {errors.name && (
+                  <p className='text-red-500 text-sm mt-1'>
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+            )}
+
             {/* Email Field */}
             <div className='mb-4'>
               <label

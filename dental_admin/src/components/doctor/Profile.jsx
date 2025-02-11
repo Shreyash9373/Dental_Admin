@@ -265,7 +265,7 @@ const Profile = () => {
           </div>
           {/* details */}
           <div className='basis-1/2 flex flex-col gap-3'>
-            <div className='text-2xl md:text-4xl'>Dr. Pakhre</div>
+            <div className='text-2xl md:text-4xl'>{formData.name}</div>
             <textarea
               className='resize-none w-[90vw] mx-auto h-40 border outline-none border-gray-400 px-3 py-1 rounded-md focus:border-blue-800 md:px-5 md:py-2 md:mx-0 md:w-auto'
               name='description'
