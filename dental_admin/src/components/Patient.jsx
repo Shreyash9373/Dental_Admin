@@ -36,7 +36,7 @@ const Patient = () => {
       ) : (
         <>
           <PatientDetails patient={patient} patientId={patientId} />
-          <PatientHistory patientId={patientId} />
+          <PatientHistory patientId={patientId} patient={patient} />
         </>
       )}
     </div>
