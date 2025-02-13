@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { MdAddCard } from "react-icons/md";
+import { MdAddCard, MdDelete } from "react-icons/md";
+import { SlOptionsVertical } from "react-icons/sl";
 
 import { useAuth } from "../../context/AuthContext";
 import SimpleLoader from "../SimpleLoader";
@@ -42,6 +43,25 @@ const VisitPayments = ({ visitId }) => {
           { amount },
           { withCredentials: true }
         );
+        toast.success(response.data.message);
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response?.data?.message || "Something went wrong");
+      } finally {
+        setAmount("");
+        setIsModalOpen(false);
+      }
+    })();
+  };
+
+  const handlePaymentDelete = (id) => {
+    (async () => {
+      try {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_BACKEND_URI}/api/visits/payment/${visit._id}`,
+          { data: { id }, withCredentials: true }
+        );
+        console.log(response.data.visit);
         toast.success(response.data.message);
       } catch (error) {
         console.log(error);
@@ -125,17 +145,24 @@ const VisitPayments = ({ visitId }) => {
                   {new Date(payment.date).toLocaleTimeString()} - Payment #
                   {index + 1}
                 </span>
-                <div className='text-green-500 bg-green-200 font-semibold w-min text-nowrap px-3 py-1 md:px-5 md:py-2'>
-                  {payment.amount}
+                <div className='flex items-center gap-3'>
+                  <div className='text-green-500 bg-green-200 font-semibold w-min text-nowrap px-3 py-1 md:px-5 md:py-2'>
+                    {payment.amount}
+                  </div>
+                  <div className='relative group'>
+                    <button className='text-gray-400 outline-none hover:text-gray-600'>
+                      <SlOptionsVertical />
+                    </button>
+                    <div className='absolute bg-white shadow-md px-3 py-1 right-2/3 hidden flex-col gap-1 group-focus-within:flex'>
+                      <button
+                        onClick={(e) => handlePaymentDelete(payment._id)}
+                        className='text-red-500 flex items-center gap-3 text-lg hover:text-red-600'>
+                        <span>Delete</span>
+                        <MdDelete />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                {/* <div
-                  className={`${
-                    payment.paymentStatus === "PAID"
-                      ? "text-green-500 bg-green-200"
-                      : "text-orange-500 bg-orange-200"
-                  } w-min text-nowrap px-3 py-1 rounded-md self-end md:px-5 md:py-2`}>
-                  {payment.paymentStatus}
-                </div> */}
               </div>
             ))}
           </>
