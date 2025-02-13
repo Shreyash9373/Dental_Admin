@@ -25,8 +25,6 @@ const PatientHistory = ({ patientId, patient }) => {
 
   const { authUser } = useAuth();
 
-  console.log(formData);
-
   // fetch doctors
   useEffect(() => {
     (async () => {
@@ -138,7 +136,7 @@ const PatientHistory = ({ patientId, patient }) => {
           visits.map((visit, index) => (
             <Link
               to={`/admin/dashboard/${authUser.role}/visit/${visit._id}`}
-              state={visit}
+              state={patient}
               key={index}
               className='flex justify-between items-center px-3 py-1 md:px-5 md:py-2'>
               <span className='text-gray-600'>

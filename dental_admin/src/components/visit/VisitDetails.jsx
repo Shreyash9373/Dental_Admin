@@ -6,7 +6,7 @@ import axios from "axios";
 import SimpleLoader from "../SimpleLoader";
 import { toast } from "react-toastify";
 
-const VisitDetails = ({ visitId }) => {
+const VisitDetails = ({ visitId, patient }) => {
   const [formData, setFormData] = useState(undefined);
   const [isEditing, setIsEditing] = useState(false);
   const [doctors, setDoctors] = useState(undefined);
@@ -186,6 +186,24 @@ const VisitDetails = ({ visitId }) => {
                 </select>
               )}
             </div>
+          </div>
+          <div className='flex flex-col gap-2'>
+            <label
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
+              htmlFor='name'>
+              Patient Name
+            </label>
+            <input
+              className='w-full rounded-md outline-none border border-gray-400 px-3 py-1 focus:border-blue-500 disabled:border-none disabled:bg-gray-200 md:px-5 md:py-2 md:text-lg'
+              type='text'
+              name='name'
+              id='name'
+              disabled={true}
+              value={patient?.name}
+              placeholder='No name'
+            />
           </div>
           <div className='flex flex-col gap-2'>
             <label

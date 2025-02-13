@@ -5,10 +5,10 @@ import VisitPayments from "./visit/VisitPayments";
 
 const Visit = () => {
   const { visitId } = useParams();
-  // const location = useLocation();
+  const location = useLocation();
   // const [visit, setVisit] = useState(location.state || null);
 
-  const visit = location.state || null;
+  const patient = location.state || null;
 
   return (
     <div className='flex flex-col gap-10'>
@@ -18,7 +18,7 @@ const Visit = () => {
         </div>
       ) : (
         <>
-          <VisitDetails visitId={visitId} />
+          <VisitDetails visitId={visitId} patient={patient} />
           <VisitPayments
             visitId={visitId}
             // visit={visit}
