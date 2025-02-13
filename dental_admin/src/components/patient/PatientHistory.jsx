@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaNotesMedical } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { SlOptionsVertical } from "react-icons/sl";
 
 import { useAuth } from "../../context/AuthContext";
 import SimpleLoader from "../SimpleLoader";
@@ -62,6 +64,25 @@ const PatientHistory = ({ patientId, patient }) => {
   useEffect(() => {
     fetchVisits();
   }, []);
+
+  const handleVisitDelete = (visitId) => {
+    (async () => {
+      try {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_BACKEND_URI}/api/visits/${visitId}`,
+          { withCredentials: true }
+        );
+        toast.success(response.data.message);
+        await fetchVisits();
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Something went wrong");
+      } finally {
+        // activeElement is a property of document
+        // Reference - https://stackoverflow.com/questions/54056596/reactjs-unfocusing-a-button-element-using-blur
+        document.activeElement.blur();
+      }
+    })();
+  };
 
   const pendingVisits = useMemo(() => {
     return visits?.filter((visit) => visit.paymentStatus !== "PAID").length;
@@ -148,13 +169,33 @@ const PatientHistory = ({ patientId, patient }) => {
                 })}
                 - Visit #{index + 1}
               </span>
-              <div
-                className={`${
-                  visit.paymentStatus === "PAID"
-                    ? "text-green-500 bg-green-200"
-                    : "text-orange-500 bg-orange-200"
-                } w-min text-nowrap px-3 py-1 rounded-md self-end md:px-5 md:py-2`}>
-                {visit.paymentStatus}
+              <div className='flex items-center gap-3'>
+                <div
+                  className={`${
+                    visit.paymentStatus === "PAID"
+                      ? "text-green-500 bg-green-200"
+                      : "text-orange-500 bg-orange-200"
+                  } w-min text-nowrap px-3 py-1 rounded-md self-end md:px-5 md:py-2`}>
+                  {visit.paymentStatus}
+                </div>
+                <div className='relative group'>
+                  <button
+                    onClick={(e) => e.preventDefault()}
+                    className='text-gray-400 outline-none hover:text-gray-600'>
+                    <SlOptionsVertical />
+                  </button>
+                  <div className='absolute bg-white shadow-md px-3 py-1 right-2/3 hidden flex-col gap-1 group-focus-within:flex'>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleVisitDelete(visit._id);
+                      }}
+                      className='text-red-500 flex items-center gap-3 text-lg hover:text-red-600'>
+                      <span>Delete</span>
+                      <MdDelete />
+                    </button>
+                  </div>
+                </div>
               </div>
             </Link>
           ))
