@@ -92,7 +92,8 @@ const VisitPayments = ({ visitId }) => {
           {/* payment status */}
           {pendingAmount ? (
             <div className='w-min text-nowrap px-3 py-1 text-sm rounded-md self-end text-orange-500 bg-orange-200 md:px-5 md:py-2 md:text-base'>
-              Payment Pending ({pendingAmount})
+              Payment Pending (
+              <span className='font-bold'>{pendingAmount}</span>)
             </div>
           ) : (
             <div className='w-min text-nowrap px-3 py-1 text-sm rounded-md self-end text-green-500 bg-green-200 md:px-5 md:py-2 md:text-base'>
@@ -179,6 +180,7 @@ const VisitPayments = ({ visitId }) => {
                 console.log(e);
                 setAmount(e.target.value);
               }}
+              onKeyDown={(e) => e.key === "Enter" && handleAddPayment()}
             />
             <button
               onClick={handleAddPayment}

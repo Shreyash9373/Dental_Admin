@@ -120,7 +120,7 @@ const PatientHistory = ({ patientId, patient }) => {
         {/* payment status */}
         {pendingVisits ? (
           <div className='w-min text-nowrap px-3 py-1 text-sm rounded-md self-end text-orange-500 bg-orange-200 md:px-5 md:py-2 md:text-base'>
-            ({pendingVisits}) Payment Pending
+            (<span className='font-bold'>{pendingVisits}</span>) Payment Pending
           </div>
         ) : (
           <div className='w-min text-nowrap px-3 py-1 text-sm rounded-md self-end text-green-500 bg-green-200 md:px-5 md:py-2 md:text-base'>
