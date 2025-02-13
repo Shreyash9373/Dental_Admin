@@ -67,8 +67,9 @@ const VisitPayments = ({ visitId }) => {
         console.log(error);
         toast.error(error.response?.data?.message || "Something went wrong");
       } finally {
-        setAmount("");
-        setIsModalOpen(false);
+        // activeElement is a property of document
+        // Reference - https://stackoverflow.com/questions/54056596/reactjs-unfocusing-a-button-element-using-blur
+        document.activeElement.blur();
       }
     })();
   };
