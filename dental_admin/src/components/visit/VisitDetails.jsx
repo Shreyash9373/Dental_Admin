@@ -122,12 +122,20 @@ const VisitDetails = ({ visitId }) => {
                   }
                 />
                 <label
-                  className='text-gray-400 text-lg peer-checked:text-blue-500 peer-checked:font-semibold'
+                  className={`text-gray-600 text-lg peer-checked:text-blue-500 peer-checked:font-semibold ${
+                    isEditing
+                      ? "cursor-pointer"
+                      : "text-gray-400 peer-checked:text-blue-200"
+                  }`}
                   htmlFor='is-doctor-visiting'>
                   Is Doctor Visiting
                 </label>
               </div>
-              <label className='text-lg font-medium text-left' htmlFor='doctor'>
+              <label
+                className={`text-lg font-medium text-left ${
+                  isEditing ? "" : "text-gray-400"
+                }`}
+                htmlFor='doctor'>
                 {formData.isDoctorVisiting
                   ? "Enter Visiting Doctor name"
                   : "Select doctor"}
@@ -181,7 +189,9 @@ const VisitDetails = ({ visitId }) => {
           </div>
           <div className='flex flex-col gap-2'>
             <label
-              className='text-lg font-medium text-left'
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
               htmlFor='condition'>
               Condition
             </label>
@@ -200,7 +210,9 @@ const VisitDetails = ({ visitId }) => {
           </div>
           <div className='flex flex-col gap-2'>
             <label
-              className='text-lg font-medium text-left'
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
               htmlFor='prescription'>
               Prescription
             </label>
@@ -222,7 +234,7 @@ const VisitDetails = ({ visitId }) => {
           </div>
           {/* <div className='flex flex-col gap-2'>
             <label
-              className='text-lg font-medium text-left'
+              className={`text-lg font-medium text-left ${isEditing ? "" : "text-gray-400"}`}
               htmlFor='payment-status'>
               Payment Status
             </label>
@@ -244,7 +256,7 @@ const VisitDetails = ({ visitId }) => {
           </div> */}
           {/* <div className='flex flex-col gap-2'>
             <label
-              className='text-lg font-medium text-left'
+              className={`text-lg font-medium text-left ${isEditing ? "" : "text-gray-400"}`}
               htmlFor='payment-amount'>
               Paid Amount
             </label>
@@ -266,7 +278,9 @@ const VisitDetails = ({ visitId }) => {
           </div> */}
           <div className='flex flex-col gap-2'>
             <label
-              className='text-lg font-medium text-left'
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
               htmlFor='total-amount'>
               Total Amount
             </label>
