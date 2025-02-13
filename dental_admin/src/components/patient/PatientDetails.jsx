@@ -62,7 +62,11 @@ const PatientDetails = ({ patient, patientId }) => {
 
         <div className='grid grid-cols-1 gap-10 md:grid-cols-2'>
           <div className='flex flex-col gap-2'>
-            <label className='text-lg font-medium text-left' htmlFor='prn'>
+            <label
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
+              htmlFor='prn'>
               PRN
             </label>
             <div className='relative'>
@@ -82,7 +86,11 @@ const PatientDetails = ({ patient, patientId }) => {
             </div>
           </div>
           <div className='flex flex-col gap-2'>
-            <label className='text-lg font-medium text-left' htmlFor='name'>
+            <label
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
+              htmlFor='name'>
               Name
             </label>
             <input
@@ -99,7 +107,11 @@ const PatientDetails = ({ patient, patientId }) => {
             />
           </div>
           <div className='flex flex-col gap-2'>
-            <label className='text-lg font-medium text-left' htmlFor='mobile'>
+            <label
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
+              htmlFor='mobile'>
               Mobile
             </label>
             <input
@@ -116,7 +128,11 @@ const PatientDetails = ({ patient, patientId }) => {
             />
           </div>
           <div className='flex flex-col gap-2'>
-            <label className='text-lg font-medium text-left' htmlFor='age'>
+            <label
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
+              htmlFor='age'>
               Age
             </label>
             <input
@@ -133,7 +149,11 @@ const PatientDetails = ({ patient, patientId }) => {
             />
           </div>
           <div className='flex flex-col gap-2'>
-            <label className='text-lg font-medium text-left' htmlFor='email'>
+            <label
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
+              htmlFor='email'>
               Email
             </label>
             <input
