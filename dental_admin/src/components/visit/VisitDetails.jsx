@@ -2,14 +2,44 @@ import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { IoIosSave } from "react-icons/io";
 import axios from "axios";
+import { FaWhatsapp } from "react-icons/fa";
+import { IoCopy } from "react-icons/io5";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 import SimpleLoader from "../SimpleLoader";
-import { toast } from "react-toastify";
 
 const VisitDetails = ({ visitId, patient }) => {
+  //   const WHATSAPP_REVIEW_MSG = `Thank you for visiting Pakhare Dental Clinic.
+  // Use the following link to leave a review fo `
+  const REVIEW_LINK = `${import.meta.env.VITE_MAIN_SITE_URI}/${visitId}/review`;
+  const WHATSAPP_REVIEW_MSG = `Hi ${patient.name}! 👋
+
+We hope you had a great experience during your recent visit to Pakhare Dental Clinic! 😊 We'd love to hear your feedback and kindly ask if you could take a moment to leave us a review. Your thoughts are important to us and help us improve our services!
+
+Please click the link below to share your experience:
+
+${encodeURI(REVIEW_LINK)}
+
+Thank you for choosing Pakhare Dental Clinic! 🦷✨
+
+Best regards,
+The Pakhare Dental Team`;
+
   const [formData, setFormData] = useState(undefined);
   const [isEditing, setIsEditing] = useState(false);
   const [doctors, setDoctors] = useState(undefined);
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(`${import.meta.env.VITE_MAIN_SITE_URI}/${visitId}/review`)
+      .then(() => {
+        toast.success("Review link copied to clipboard");
+      })
+      .catch(() => {
+        toast.error("Error copying to clipboard. Please copy manually");
+      });
+  };
 
   const fetchPatients = async () => {
     try {
@@ -38,7 +68,6 @@ const VisitDetails = ({ visitId, patient }) => {
           `${import.meta.env.VITE_BACKEND_URI}/api/visits/doctors`,
           { withCredentials: true }
         );
-        // console.log(response.data);
         setDoctors(response.data.doctors);
       } catch (error) {
         console.log(error);
@@ -103,6 +132,40 @@ const VisitDetails = ({ visitId, patient }) => {
         )}
 
         <div className='grid grid-cols-1 gap-10 md:grid-cols-2'>
+          <div className='flex flex-col gap-2'>
+            <label
+              className={`text-lg font-medium text-left ${
+                isEditing ? "" : "text-gray-400"
+              }`}
+              htmlFor='review-link'>
+              Review Link
+            </label>
+            <div className='relative'>
+              <input
+                className='w-full rounded-md outline-none border border-gray-400 focus:border-blue-500 disabled:border-none disabled:bg-gray-200 px-3 py-1 md:px-5 md:py-2 md:text-lg'
+                type='text'
+                name='review-link'
+                id='review-link'
+                disabled={true}
+                value={REVIEW_LINK}
+              />
+              <button
+                onClick={handleCopy}
+                className='absolute top-1/2 -translate-y-1/2 right-2 text-lg text-gray-600'>
+                <IoCopy />
+              </button>
+              <Link
+                // to={`https://wa.me/+91${patient.mobile}?text=Hello world`}
+                to={`https://web.whatsapp.com/send?phone=+91${
+                  patient.mobile
+                }&text=${encodeURIComponent(WHATSAPP_REVIEW_MSG)}`}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='absolute top-1/2 -translate-y-1/2 right-8 text-lg text-gray-600'>
+                <FaWhatsapp />
+              </Link>
+            </div>
+          </div>
           <div className='flex flex-col gap-2'>
             <div className='flex flex-col gap-2'>
               <div className='flex items-center gap-1'>
@@ -169,7 +232,6 @@ const VisitDetails = ({ visitId, patient }) => {
                   disabled={!isEditing}
                   value={doctors[0]._id}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     setFormData((prev) => ({
                       ...prev,
                       doctor: e.target.value,

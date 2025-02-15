@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import PatientDetails from "./patient/PatientDetails";
 import PatientHistory from "./patient/PatientHistory";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 import Loader from "./Loader";
 
 const Patient = () => {
@@ -20,6 +22,7 @@ const Patient = () => {
         );
         setPatient(response.data.patient);
       } catch (error) {
+        toast.error(error.response?.data?.message || "Something went wrong");
         setPatient(null);
       }
     })();
@@ -35,7 +38,11 @@ const Patient = () => {
         </div>
       ) : (
         <>
-          <PatientDetails patient={patient} patientId={patientId} />
+          <PatientDetails
+            patient={patient}
+            setPatient={setPatient}
+            patientId={patientId}
+          />
           <PatientHistory patientId={patientId} patient={patient} />
         </>
       )}

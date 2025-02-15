@@ -5,7 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import { IoIosSave } from "react-icons/io";
 import axios from "axios";
 
-const PatientDetails = ({ patient, patientId }) => {
+const PatientDetails = ({ patient, setPatient, patientId }) => {
   const [formData, setFormData] = useState(patient);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -31,6 +31,7 @@ const PatientDetails = ({ patient, patientId }) => {
           }
         );
         toast.success(response.data.message);
+        setPatient((prev) => formData);
       })();
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
