@@ -117,12 +117,19 @@ The Pakhare Dental Team`;
       </h1>
       <div className='flex flex-col gap-2.5 px-2.5 py-5 border border-gray-400'>
         {isEditing ? (
-          <button
-            onClick={handleVisitUpdate}
-            autoFocus={false}
-            className='flex justify-center items-center gap-1 self-end outline-none transition-all duration-200 text-green-600 hover:text-green-900'>
-            Save <IoIosSave />
-          </button>
+          <div className='flex self-end items-center gap-4'>
+            <button
+              onClick={(e) => setIsEditing(false)}
+              className='flex justify-center items-center gap-1 outline-none text-gray-600 hover:text-gray-900'>
+              Cancel &times;
+            </button>
+            <button
+              onClick={handleVisitUpdate}
+              autoFocus={false}
+              className='flex justify-center items-center gap-1 outline-none transition-all duration-200 text-green-600 hover:text-green-900'>
+              Save <IoIosSave />
+            </button>
+          </div>
         ) : (
           <button
             onClick={(e) => setIsEditing(true)}
