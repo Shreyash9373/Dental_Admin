@@ -39,7 +39,7 @@ const PatientHistory = ({ patientId, patient }) => {
         setDoctors(response.data.doctors);
         setFormData((prev) => ({
           ...prev,
-          doctor: response.data.doctors[0]._id,
+          doctor: authUser?.id ? authUser?.id : doctors ? doctors[0]._id : "",
         }));
       } catch (error) {
         console.log(error);
@@ -229,7 +229,13 @@ const PatientHistory = ({ patientId, patient }) => {
                   setFormData((prev) => ({
                     ...prev,
                     isDoctorVisiting: e.target.checked,
-                    doctor: e.target.checked ? "" : doctors[0]._id,
+                    doctor: e.target.checked
+                      ? ""
+                      : authUser?.id
+                      ? authUser?.id
+                      : doctors
+                      ? doctors[0]._id
+                      : "",
                   }))
                 }
               />
@@ -256,7 +262,7 @@ const PatientHistory = ({ patientId, patient }) => {
                     type='text'
                     name='doctor'
                     id='doctor'
-                    value={formData?.doctor}
+                    value={formData.doctor}
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
@@ -275,7 +281,7 @@ const PatientHistory = ({ patientId, patient }) => {
                   <select
                     className='px-3 py-1 outline-none border border-gray-400 focus:border-blue-500 disabled:border-none md:px-5 md:py-2'
                     id='doctor'
-                    value={doctors[0]._id}
+                    value={formData.doctor}
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,

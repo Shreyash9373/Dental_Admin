@@ -41,7 +41,7 @@ The Pakhare Dental Team`;
       });
   };
 
-  const fetchPatients = async () => {
+  const fetchVisit = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URI}/api/visits/visit/${visitId}`,
@@ -57,7 +57,7 @@ The Pakhare Dental Team`;
 
   // fetch visit for this patient
   useEffect(() => {
-    fetchPatients();
+    fetchVisit();
   }, []);
 
   // fetch doctors
@@ -89,7 +89,7 @@ The Pakhare Dental Team`;
         toast.success(response.data.message);
       } catch (error) {
         toast.error(error.response?.data?.message || "Something went wrong");
-        await fetchPatients();
+        await fetchVisit();
       } finally {
         setIsEditing(false);
       }
@@ -230,7 +230,7 @@ The Pakhare Dental Team`;
                   className='px-3 py-1 outline-none border border-gray-400 focus:border-blue-500 disabled:border-none md:px-5 md:py-2'
                   id='doctor'
                   disabled={!isEditing}
-                  value={doctors[0]._id}
+                  value={formData.doctor._id}
                   onChange={(e) => {
                     setFormData((prev) => ({
                       ...prev,
