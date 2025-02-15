@@ -68,6 +68,9 @@ function App() {
                 <Route path='profile' element={<Profile />} />
                 <Route path='add-account' element={<AddAccount />} />
                 <Route path='manage-account' element={<ManageAccount />} />
+                <Route path='patients' element={<Patients />} />
+                <Route path='patient/:patientId' element={<Patient />} />
+                <Route path='visit/:visitId' element={<Visit />} />
               </Route>
 
               {/* Receptionist Routes */}

@@ -179,6 +179,19 @@ const Sidebar = ({ isHamburgerOpen, setIsHamburgerOpen }) => {
                       Manage Account
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink
+                      onClick={(e) => setIsHamburgerOpen(false)}
+                      to='/admin/dashboard/doctor/patients'
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-blue-400 font-bold"
+                          : "hover:text-gray-300 font-normal" +
+                            " w-full inline-block"
+                      }>
+                      Patients
+                    </NavLink>
+                  </li>
                 </>
               )}
             </ul>
