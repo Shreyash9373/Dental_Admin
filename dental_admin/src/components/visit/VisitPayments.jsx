@@ -100,21 +100,21 @@ const VisitPayments = ({ visitId }) => {
           <h1 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
             Payments
           </h1>
-          <div className='text-xl md:text-3xl'>
-            Total <span className='font-semibold'>{visit.totalAmount}</span>
+          <div className='bg-gray-200/40 rounded-md text-xl px-3 py-1 md:text-3xl md:px-5 md:py-2'>
+            Total <span className='font-semibold'>₹{visit.totalAmount}</span>
           </div>
         </div>
-        <div className='flex justify-between items-center px-3 py-1 md:px-5 md:py-2'>
+        <div className='flex justify-between items-center gap-2 py-1 md:px-5 md:py-2'>
           <button
             onClick={(e) => setIsModalOpen((prev) => true)}
-            className='flex items-center gap-2 border border-green-500 text-green-500 self-start rounded-md px-3 py-1 hover:bg-green-500 hover:text-white focus:bg-green-500 focus:text-white md:px-5 md:py-2'>
+            className='text-xs flex items-center gap-2 border border-green-500 text-green-500 self-start rounded-md px-3 py-1 hover:bg-green-500 hover:text-white focus:bg-green-500 focus:text-white md:px-5 md:py-2 md:text-base'>
             Add Payment <MdAddCard />
           </button>
           {/* payment status */}
           {pendingAmount ? (
             <div className='w-min text-nowrap px-3 py-1 text-sm rounded-md self-end text-orange-500 bg-orange-200 md:px-5 md:py-2 md:text-base'>
               Payment Pending (
-              <span className='font-bold'>{pendingAmount}</span>)
+              <span className='font-bold'>₹{pendingAmount}</span>)
             </div>
           ) : (
             <div className='w-min text-nowrap px-3 py-1 text-sm rounded-md self-end text-green-500 bg-green-200 md:px-5 md:py-2 md:text-base'>
@@ -128,14 +128,14 @@ const VisitPayments = ({ visitId }) => {
         {/* payment */}
         {visit.payments?.length > 0 ? (
           <>
-            <div className='text-2xl font-bold flex justify-between items-center px-3 py-1 md:px-5 md:py-2'>
+            <div className='text-2xl font-bold flex justify-between items-center py-1 md:px-5 md:py-2'>
               <span>Amount paid</span>
-              <span className='text-green-500'>{visit.payedAmount}</span>
+              <span className='text-green-500'>₹{visit.payedAmount}</span>
             </div>
             {visit.payments.map((payment, index) => (
               <div
                 key={index}
-                className='flex justify-between items-center px-3 py-1 md:px-5 md:py-2'>
+                className='flex justify-between items-center py-1 md:px-5 md:py-2'>
                 <span className='text-gray-600'>
                   {new Date(payment.date).toLocaleDateString("en-US", {
                     weekday: "long",
@@ -148,7 +148,7 @@ const VisitPayments = ({ visitId }) => {
                 </span>
                 <div className='flex items-center gap-3'>
                   <div className='text-green-500 bg-green-200 font-semibold w-min text-nowrap px-3 py-1 md:px-5 md:py-2'>
-                    {payment.amount}
+                    ₹{payment.amount}
                   </div>
                   <div className='relative group'>
                     <button className='text-gray-400 outline-none hover:text-gray-600'>
@@ -202,12 +202,10 @@ const VisitPayments = ({ visitId }) => {
               type='text'
               name='amount'
               id='amount'
+              autoComplete='off'
               placeholder='Enter new amount'
               value={amount}
-              onChange={(e) => {
-                console.log(e);
-                setAmount(e.target.value);
-              }}
+              onChange={(e) => setAmount(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleAddPayment()}
             />
             <button

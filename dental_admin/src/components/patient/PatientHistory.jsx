@@ -132,7 +132,7 @@ const PatientHistory = ({ patientId, patient }) => {
           Patient History
         </h1>
       </div>
-      <div className='flex justify-between items-center px-3 py-1 md:px-5 md:py-2'>
+      <div className='flex justify-between items-center py-1 md:px-5 md:py-2'>
         <button
           onClick={(e) => setIsModalOpen((prev) => true)}
           className='flex items-center gap-2 border border-blue-800 text-blue-800 self-start rounded-md px-3 py-1 hover:bg-blue-800 hover:text-white focus:bg-blue-800 focus:text-white md:px-5 md:py-2'>
@@ -159,7 +159,7 @@ const PatientHistory = ({ patientId, patient }) => {
               to={`/admin/dashboard/${authUser.role}/visit/${visit._id}`}
               state={patient}
               key={index}
-              className='flex justify-between items-center px-3 py-1 md:px-5 md:py-2'>
+              className='flex justify-between items-center py-1 md:px-5 md:py-2'>
               <span className='text-gray-600'>
                 {new Date(visit.createdAt).toLocaleDateString("en-US", {
                   weekday: "long",

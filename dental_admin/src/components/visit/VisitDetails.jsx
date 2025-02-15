@@ -147,7 +147,7 @@ The Pakhare Dental Team`;
                 name='review-link'
                 id='review-link'
                 disabled={true}
-                value={REVIEW_LINK}
+                value={REVIEW_LINK.substring(0, 25) + "..."}
               />
               <button
                 onClick={handleCopy}
@@ -362,7 +362,7 @@ The Pakhare Dental Team`;
                 isEditing ? "" : "text-gray-400"
               }`}
               htmlFor='total-amount'>
-              Total Amount
+              Total Amount (₹)
             </label>
             <input
               className='w-full rounded-md outline-none border border-gray-400 px-3 py-1 focus:border-blue-500 disabled:border-none md:px-5 md:py-2 md:text-lg'
