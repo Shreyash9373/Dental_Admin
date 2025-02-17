@@ -21,6 +21,7 @@ import ManageAccount from "./components/doctor/ManageAccount";
 import Patients from "./components/Patients";
 import Patient from "./components/Patient";
 import Visit from "./components/Visit";
+import Reviews from "./components/doctor/Reviews";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -71,6 +72,7 @@ function App() {
                 <Route path='patients' element={<Patients />} />
                 <Route path='patient/:patientId' element={<Patient />} />
                 <Route path='visit/:visitId' element={<Visit />} />
+                <Route path='reviews' element={<Reviews />} />
               </Route>
 
               {/* Receptionist Routes */}
