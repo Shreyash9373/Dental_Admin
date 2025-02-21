@@ -27,8 +27,119 @@ const SearchPatient = () => {
               withCredentials: true,
             }
           );
-          setPatients(response.data.patients);
+          // console.log(response.data.patients);
+          const patients = response.data.patients.map((patient) => {
+            // let transformedPatient = patient;
+            // for (const s of patient.name) {
+            //   patient.name = patient.name.replace(
+            //     s,
+            //     `<div className="text-blue-800 font-medium">${s}</div>`
+            //   );
+            //   break;
+            // }
+
+            // console.log(
+            //   debouncedSearchTerm
+            //     .split("")
+            //     .map((l) => `([${l}])`)
+            //     .join("|")
+            // );
+
+            // console.log(
+            //   patient.name.replace(
+            //     new RegExp(
+            //       debouncedSearchTerm
+            //         .split("")
+            //         .map((l) => `([${l}])`)
+            //         .join("|")
+            //     ),
+            //     (match, letters) => {
+            //       console.log(letters);
+            //       // Check which letter was matched and surround it with double quotes
+            //       /* for (let letter of letters) {
+            //         if (letter)
+            //           return `<span class="text-blue-800 font-bold p-0 m-0">${letter}</span>`;
+            //       } */
+            //       // if (j) return `"${j}"`;
+            //       // if (a) return `"${a}"`;
+            //       // if (y) return `"${y}"`;
+            //     }
+            //   )
+            // );
+
+            // const regex = new RegExp(
+            //   `([${debouncedSearchTerm.split("").join(".*")}])`,
+            //   "gi"
+            // );
+            const letters = debouncedSearchTerm.split("");
+            let i = 0,
+              j = 0,
+              k = 0;
+
+            /* console.log(
+              patient.name
+                .split("")
+                .map((char, index) =>
+                  letters[i++] === char
+                    ? `<span class="text-blue-800 font-bold p-0 m-0">${char}</span>`
+                    : char
+                )
+            ); */
+
+            return {
+              ...patient,
+              name: patient.name
+                .split("")
+                .map((char) => {
+                  if (letters[i] === char) {
+                    i++;
+                    return `<span class="text-blue-800 font-bold p-0 m-0">${char}</span>`;
+                  } else return char;
+                })
+                .join(""),
+              email: patient.email
+                ?.split("")
+                .map((char) => {
+                  if (letters[j] === char) {
+                    j++;
+                    return `<span class="text-blue-800 font-bold p-0 m-0">${char}</span>`;
+                  } else return char;
+                })
+                .join(""),
+              mobile: patient.mobile
+                .split("")
+                .map((char) => {
+                  if (letters[k] === char) {
+                    k++;
+                    return `<span class="text-blue-800 font-bold p-0 m-0">${char}</span>`;
+                  } else return char;
+                })
+                .join(""),
+            };
+
+            /* return {
+              ...patient,
+              name: patient.name.replace(
+                new RegExp(
+                  debouncedSearchTerm
+                    .split("")
+                    .map((l) => `([${l}])`)
+                    .join("|")
+                ),
+                (match, ...letters) => {
+                  // Check which letter was matched and surround it with double quotes
+                  for (let letter of letters) {
+                    if (letter)
+                      return `<span class='text-blue-800 font-bold p-0 m-0'>${letter}</span>`;
+                  }
+                }
+              ),
+            }; */
+          });
+          // setPatients(response.data.patients);
+          setPatients(patients);
         } catch (error) {
+          console.log(error);
           setPatients([]);
           toast.error(error.response?.data?.message || "Something went wrong");
         } finally {
@@ -53,6 +164,7 @@ const SearchPatient = () => {
           name='search'
           id='search'
           placeholder='Search Patient by name, mobile or email'
+          autoComplete='off'
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         {/* results */}
@@ -84,12 +196,19 @@ const SearchPatient = () => {
                     key={index}
                     className='flex justify-between gap-16 items-center lg:gap-40'>
                     <div className='flex flex-col'>
-                      <span className='text-nowrap'>{p.name}</span>
-                      <span className='text-sm text-nowrap text-gray-600'>
-                        {p.mobile}
-                      </span>
+                      <span
+                        className='text-nowrap'
+                        dangerouslySetInnerHTML={{ __html: p.name }}
+                      />
+                      <span
+                        className='text-sm text-nowrap text-gray-600'
+                        dangerouslySetInnerHTML={{ __html: p.mobile }}
+                      />
                     </div>
-                    <span className='text-sm'>{p.email}</span>
+                    <span
+                      className='text-sm'
+                      dangerouslySetInnerHTML={{ __html: p.email }}
+                    />
                   </Link>
                 ))}
               </div>
